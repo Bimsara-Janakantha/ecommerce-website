@@ -1,0 +1,198 @@
+/* Header */
+
+.header{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 30px;
+    background: #E3E6F3;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+    z-index:10;
+    position:sticky;
+    top:0;
+    left:0;
+		border-bottom: 4px solid #088178;
+}
+
+.header .logo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.header .logo h1{
+    font-family: "Montserrat", sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* Navigation Menu */
+.navbar {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar li {
+	list-style: none;
+	padding: 0 20px;
+	position: relative;
+}
+
+.navbar li a {
+    text-decoration: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    transition: color 0.3s ease-in-out;
+}
+  
+.navbar li a:hover {
+	color: #088178;
+}
+
+.navbar li a.active {
+	color: #088178;
+	font-weight: bold;
+}
+
+.navbar li a.active::after {
+	content: "";
+	width: 30%;
+	height: 2px;
+	background: #088178;
+	position: absolute;
+	bottom: -4px;
+	left: 50%;
+	transform: translateX(-50%);
+	transition: width 0.3s ease-in-out;
+}
+
+.navbar li a:hover::after {
+	content: "";
+	width: 80%;
+	height: 2px;
+	background: #088178;
+	position: absolute;
+	bottom: -4px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+/* Login Button */
+
+.login-btn {
+	background-color: #088178;
+	color: white;
+	border: none;
+	padding: 10px 30px;
+	font-size: 18px;
+	font-weight: 600;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+	background-color: #06685f;
+}
+
+/* Cart Button */
+.icon-container {
+	position: relative;
+	width: 25px;
+	height: 25px;
+}
+
+.icon-container i {
+	font-size: 25px;
+}
+
+.badge {
+	position: absolute;
+	top: -15px;
+	right: -15px;
+	background-color: #e74d70;
+	color: white;
+	font-size: 14px;
+	font-weight: 600;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+	line-height: 1;
+}
+
+/* Avatar */
+.user-avatar-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.user-avatar-dropdown .avatarBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #088178;
+    object-fit: cover;
+}
+
+/* .user-avatar-dropdown .avatar-dropdown-menu {
+    transform: translateY(-300%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 250ms ease-in-out, opacity 250ms ease-in-out;
+    position: absolute;
+} */
+
+.user-avatar-dropdown .avatar-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 100;
+    min-width: 140px;
+    transition: transform 250ms ease-in-out;
+}
+
+.user-avatar-dropdown .avatar-dropdown-menu.visible {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.user-avatar-dropdown .avatar-dropdown-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.user-avatar-dropdown .avatar-dropdown-menu a i {
+    margin-right: 10px;
+    color: #088178;
+}
+
+.user-avatar-dropdown .avatar-dropdown-menu a:hover {
+    background-color: #f3f3f3;
+}
