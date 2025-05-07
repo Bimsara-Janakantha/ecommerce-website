@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./assets/logos/logo.svg" />
+    <title>Sole Heven</title>
+
+    <!-- Custom Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+  </head>
+
+  <body>
+    <!-- App Bar -->
+    <header id="header" class="header">
+      <a class="logo" href="/home" data-link>
+        <img
+          src="../../assets/logos/logo.svg"
+          height="80px"
+          class="logo"
+          alt="Sole Haven Logo"
+        />
+        <h1>SOLE HAVEN</h1>
+      </a>
+
+      <nav>
+        <ul id="navbar" class="navbar">
+          <!-- Public links -->
+          <li><a class="active" href="/home" data-link>Home</a></li>
+          <li><a href="/shop" data-link>Shop</a></li>
+          <li><a href="/about" data-link>About Us</a></li>
+          <li><a href="/contact" data-link>Contact Us</a></li>
+
+          <!-- Show this only if NOT logged in -->
+          <li id="loginButtonContainer">
+            <button class="login-btn" onclick="location.href='/login'">
+              Log in
+            </button>
+          </li>
+
+          <!-- Show these only if logged in -->
+          <li id="cartButtonContainer">
+            <a href="/cart" data-link>
+              <div class="icon-container">
+                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                <div class="badge">4</div>
+              </div>
+            </a>
+          </li>
+
+          <li id="userAvatarContainer" class="user-avatar-dropdown">
+            <img
+              src="../../assets/users/user1.jpeg"
+              alt="user"
+              class="avatarBtn"
+              id="avatarBtn"
+            />
+
+            <div
+              class="avatar-dropdown-menu"
+              id="avatar-dropdown-menu"
+              data-visible="false"
+            >
+              <a href="/settings" data-link
+                ><i class="fa fa-cog"></i> Settings</a
+              >
+              <a href="/orders" data-link
+                ><i class="fa fa-box"></i> My Orders</a
+              >
+              <a href="/home" id="logoutBtn" data-link>
+                <i class="fa fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Body -->
+
+    <main>Hello This is home</main>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <img
+          style="width: 170px"
+          src="../../assets/logos/logo.svg"
+          alt="Sole Haven Logo"
+        />
+      </div>
+
+      <div class="col">
+        <h3>Contact</h3>
+        <p><strong>Address:</strong> 456 Kandy Road, Street 23, Kurunegala</p>
+        <p><strong>Phone:</strong> 0723456788 / 0372234566</p>
+      </div>
+
+      <div class="col">
+        <h3>Follow Us</h3>
+        <div class="icon">
+          <a href="https://www.facebook.com" target="_blank"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="https://www.twitter.com" target="_blank"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="https://www.instagram.com" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://www.youtube.com" target="_blank"
+            ><i class="fab fa-youtube"></i
+          ></a>
+        </div>
+      </div>
+
+      <div class="col about">
+        <h3>About</h3>
+        <a href="/about">About Us</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms & Conditions</a>
+        <a href="/support">Customer Support</a>
+      </div>
+
+      <div class="payment">
+        <p>Secured Payment Gateways</p>
+        <img src="../../assets/logos/google_Pay.png" alt="Google Pay" />
+      </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+    <!--<script src="../../components/header/header.js"></script> -->
+  </body>
+</html>
