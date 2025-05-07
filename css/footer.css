@@ -72,11 +72,10 @@ footer {
     color: #088178;
     font-weight: bold;
     font-size: 17px;
-    margin-bottom: 10px;
   }
   
   footer .payment img {
-    width: 150px;
+    width: 120px;
     border-radius: 15px;
   }
   
@@ -94,12 +93,12 @@ footer {
     }
   
     footer .icon a {
-      font-size: 24px;
+      font-size: 23px;
       margin: 10px;
     }
   
     footer .payment img {
-      width: 150px;
+      width: 120px;
     }
   }
   
