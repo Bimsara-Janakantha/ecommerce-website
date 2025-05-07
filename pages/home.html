@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="./assets/logos/logo.svg" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logos/logo.svg" />
     <title>Sole Heven</title>
 
     <!-- Custom Icons -->
@@ -25,7 +25,7 @@
   <body>
     <!-- App Bar -->
     <header id="header" class="header">
-      <a class="logo" href="/home" data-link>
+      <a class="logo" href="home.html" data-link>
         <img
           src="../../assets/logos/logo.svg"
           height="80px"
@@ -36,60 +36,11 @@
       </a>
 
       <nav>
-        <ul id="navbar" class="navbar">
-          <!-- Public links -->
-          <li><a class="active" href="/home" data-link>Home</a></li>
-          <li><a href="/shop" data-link>Shop</a></li>
-          <li><a href="/about" data-link>About Us</a></li>
-          <li><a href="/contact" data-link>Contact Us</a></li>
-
-          <!-- Show this only if NOT logged in -->
-          <li id="loginButtonContainer">
-            <button class="login-btn" onclick="location.href='/login'">
-              Log in
-            </button>
-          </li>
-
-          <!-- Show these only if logged in -->
-          <li id="cartButtonContainer">
-            <a href="/cart" data-link>
-              <div class="icon-container">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                <div class="badge">4</div>
-              </div>
-            </a>
-          </li>
-
-          <li id="userAvatarContainer" class="user-avatar-dropdown">
-            <img
-              src="../../assets/users/user1.jpeg"
-              alt="user"
-              class="avatarBtn"
-              id="avatarBtn"
-            />
-
-            <div
-              class="avatar-dropdown-menu"
-              id="avatar-dropdown-menu"
-              data-visible="false"
-            >
-              <a href="/settings" data-link
-                ><i class="fa fa-cog"></i> Settings</a
-              >
-              <a href="/orders" data-link
-                ><i class="fa fa-box"></i> My Orders</a
-              >
-              <a href="/home" id="logoutBtn" data-link>
-                <i class="fa fa-sign-out-alt"></i> Logout
-              </a>
-            </div>
-          </li>
-        </ul>
+        <ul id="navbar" class="navbar"></ul>
       </nav>
     </header>
 
     <!-- Body -->
-
     <main>Hello This is home</main>
 
     <!-- Footer -->
@@ -97,7 +48,7 @@
       <div>
         <img
           style="width: 170px"
-          src="../../assets/logos/logo.svg"
+          src="../assets/logos/logo.svg"
           alt="Sole Haven Logo"
         />
       </div>
@@ -128,19 +79,18 @@
 
       <div class="col about">
         <h3>About</h3>
-        <a href="/about">About Us</a>
-        <a href="/privacy">Privacy Policy</a>
-        <a href="/terms">Terms & Conditions</a>
-        <a href="/support">Customer Support</a>
+        <a href="about.html">About Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="support.html">Customer Support</a>
       </div>
 
       <div class="payment">
         <p>Secured Payment Gateways</p>
-        <img src="../../assets/logos/google_Pay.png" alt="Google Pay" />
+        <img src="../assets/logos/google_Pay.png" alt="Google Pay" />
       </div>
     </footer>
 
-    <script src="../../script.js"></script>
-    <!--<script src="../../components/header/header.js"></script> -->
+    <script src="../js/header.js"></script>
   </body>
 </html>
