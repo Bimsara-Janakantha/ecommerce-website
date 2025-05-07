@@ -2,13 +2,17 @@ const routes = {
   "/home": "./pages/home/home.html",
   "/about": "./pages/about/about.html",
   "/contact": "./pages/contact/contact.html",
+  "/login": "./pages/auth/login.html",
+  "/register": "./pages/auth/register.html",
 };
+
+const excludedPaths = ["/login", "/register"]; // Full path match
 
 const navigate = (event) => {
   event.preventDefault();
   const path = event.target.getAttribute("href");
   history.pushState({}, "", path);
-  renderRoute(path);
+  renderApp(path);
 };
 
 const bindLinks = () => {
@@ -43,12 +47,21 @@ const loadComponent = async (selector, file) => {
   container.innerHTML = html;
 };
 
-window.onpopstate = () => renderRoute(window.location.pathname);
+const renderApp = async (path) => {
+  await renderRoute(path);
+  if (!excludedPaths.includes(path)) {
+    await loadComponent("#appbar", "./components/header/header.html");
+    await loadComponent("#footer", "./components/footer/footer.html");
+  } else {
+    document.getElementById("appbar").innerHTML = "";
+    document.getElementById("footer").innerHTML = "";
+  }
+};
 
-if (window.location.pathname === "/") {
-  history.replaceState({}, "", "/home");
-}
+window.onpopstate = () => renderApp(window.location.pathname);
 
-renderRoute(window.location.pathname);
-loadComponent("#appbar", "./components/header/header.html");
-loadComponent("#footer", "./components/footer/footer.html");
+// Initial load
+const initialPath =
+  window.location.pathname === "/" ? "/home" : window.location.pathname;
+history.replaceState({}, "", initialPath);
+renderApp(initialPath);
