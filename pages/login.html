@@ -1,0 +1,83 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logos/logo.svg" />
+    <title>Sole Heven</title>
+
+    <link rel="stylesheet" href="../css/login.css" />
+
+    <!-- Custom Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="login-page" role="main">
+      <div class="left">
+        <img
+          alt="login Image"
+          height="300"
+          src="https://storage.googleapis.com/a1aa/image/f7269497-f420-434d-4ba2-f5ca6a56814e.jpg"
+          width="300"
+        />
+
+        <p class="signup-link">
+          Don't have an account? &nbsp;
+          <a href="signup.html" tabindex="0"> Create an account</a>
+        </p>
+      </div>
+
+      <div class="right">
+        <h2>Login</h2>
+        <form>
+          <div class="input-group">
+            <span aria-hidden="true" class="input-icon-left">
+              <i class="fa fa-user" aria-hidden="true"></i>
+            </span>
+            <input
+              id="email"
+              name="email"
+              placeholder="Email address"
+              type="text"
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="input-group">
+            <span aria-hidden="true" class="input-icon-left">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
+            <input
+              id="password"
+              name="password"
+              placeholder="Password"
+              type="password"
+              autocomplete="current-password"
+            />
+            <span aria-hidden="true" class="input-icon-right">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </span>
+          </div>
+
+          <label class="checkbox-group" for="remember">
+            <input id="remember" name="remember" type="checkbox" />
+            Remember me
+          </label>
+
+          <button type="submit">Login</button>
+        </form>
+
+        <p class="bottom-links">
+          <a href="forgot.html" tabindex="0">Forgot Password</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
