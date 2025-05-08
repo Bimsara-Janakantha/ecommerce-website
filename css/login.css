@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
     box-sizing: border-box;
   }
@@ -72,8 +74,9 @@
     justify-content: center;
   }
   h2 {
+    font-family: "Montserrat";
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: #088178;
     margin: 0 0 1.5rem 0;
     text-align: center;
@@ -168,3 +171,22 @@
     color: #374151;
   }
   
+  /* Forgot Page */
+  .forgot-page{
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .forgot-page p{
+    font-family: "Montserrat";
+    font-size: 15px;font-weight: 500;
+  }
