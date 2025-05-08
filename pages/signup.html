@@ -19,30 +19,16 @@
   </head>
 
   <body>
-    <div class="login-page" role="main">
-      <div class="left">
-        <img
-          alt="login Image"
-          height="300"
-          src="https://storage.googleapis.com/a1aa/image/f7269497-f420-434d-4ba2-f5ca6a56814e.jpg"
-          width="300"
-        />
-
-        <p class="signup-link">
-          Don't have an account? &nbsp;
-          <a href="signup.html" tabindex="0"> Create an account</a>
-        </p>
-      </div>
-
+    <div class="signup-page" role="main">
       <div class="right">
-        <h2>Login</h2>
+        <h2>Signup</h2>
         <form>
           <div class="input-group">
             <span aria-hidden="true" class="input-icon-left">
               <i class="fa fa-envelope" aria-hidden="true"></i>
             </span>
             <input
-              id="login-email"
+              id="signup-email"
               name="email"
               placeholder="Email address"
               type="text"
@@ -55,30 +41,46 @@
               <i class="fa fa-lock" aria-hidden="true"></i>
             </span>
             <input
-              id="login-password"
+              id="signup-password"
               name="password"
               placeholder="Password"
               type="password"
-              autocomplete="password"
             />
-            <span aria-hidden="true" class="input-icon-right">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-            </span>
           </div>
 
-          <label class="checkbox-group" for="remember">
-            <input id="remember" name="remember" type="checkbox" />
-            Remember me
+          <div class="input-group">
+            <span aria-hidden="true" class="input-icon-left">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
+            <input
+              id="signup-confirmPwd"
+              name="confirmPwd"
+              placeholder="Confirm password"
+              type="password"
+            />
+          </div>
+
+          <label class="checkbox-group" for="agreed">
+            <input id="agreed" name="agreed" type="checkbox" />
+            I have read & accept all
+            <a href="terms.html">terms and conditions</a>
           </label>
 
-          <button type="submit">
-            <i class="fa fa-spinner fa-spin fa-fw"></i>
-            Login
-          </button>
+          <button type="submit">Signup</button>
         </form>
+      </div>
 
-        <p class="bottom-links">
-          <a href="forgot.html" tabindex="0">Forgot Password</a>
+      <div class="left">
+        <img
+          alt="login Image"
+          height="280"
+          src="../assets/pageImages/register.svg"
+          width="280"
+        />
+
+        <p class="signup-link" style="margin-top: 20px">
+          Already have an account? &nbsp;
+          <a href="login.html" tabindex="0">Login</a>
         </p>
       </div>
     </div>

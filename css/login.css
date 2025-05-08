@@ -25,7 +25,7 @@
   }
 
   /* Container */
-  .login-page {
+  .login-page, .signup-page {
     background: white;
     border-radius: 0.5rem;
     box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
@@ -37,26 +37,26 @@
     gap: 2rem;
   }
   @media (min-width: 768px) {
-    .login-page {
+    .login-page, .signup-page {
       flex-direction: row;
       padding: 3rem;
     }
   }
 
   /* Left side image */
-  .login-page .left {
+  .left {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  .login-page .left img {
+  .left img {
     max-width: 100%;
     height: auto;
     display: block;
   }
-  .login-page .signup-link{
+  .signup-link{
     margin-top: 0;
     display: flex;
     font-weight: 600;
@@ -65,13 +65,13 @@
   }
 
   /* Right side form */
-  .login-page .right {
+  .right {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
-  .login-page h2 {
+  h2 {
     font-weight: 700;
     font-size: 1.5rem;
     color: #088178;
@@ -79,17 +79,17 @@
     text-align: center;
     width: 100%;
   }  
-  .login-page form {
+  form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
 
   /* Input container */
-  .login-page .input-group {
+  .input-group {
     position: relative;
   }
-  .login-page .input-group .input-icon-left, .login-page .input-group .input-icon-right {
+  .input-group .input-icon-left, .input-group .input-icon-right {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -97,10 +97,10 @@
     font-size: 1rem;
     pointer-events: none;
   }
-  .login-page .input-group .input-icon-left {
+  .input-group .input-icon-left {
     left: 0.75rem;
   }
-  .login-page .input-group .input-icon-right {
+  .input-group .input-icon-right {
     right: 0.75rem;
     cursor: pointer;
     pointer-events: auto;
@@ -127,7 +127,7 @@
   }
 
   /* Checkbox */
-  .login-page .checkbox-group {
+  .checkbox-group {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -135,7 +135,7 @@
     font-size: 0.875rem;
     color: #374151;
   }
-  .login-page input[type="checkbox"] {
+  input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
     accent-color: #399a93;
@@ -143,7 +143,7 @@
   }
 
   /* Button */
-  .login-page button[type="submit"] {
+  button[type="submit"] {
     background-color: #088178;
     color: white;
     border-radius: 0.25rem;
@@ -156,12 +156,12 @@
     align-self: center;
     transition: background-color 0.2s;
   }
-  .login-page button[type="submit"]:hover {
+  button[type="submit"]:hover {
     background-color: #066760;
   }
 
   /* Bottom links container */
-  .login-page .bottom-links {
+  .bottom-links {
     text-align: center;
     font-weight: 600;
     font-size: 0.875rem;
