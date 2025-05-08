@@ -188,5 +188,34 @@
 
   .forgot-page p{
     font-family: "Montserrat";
-    font-size: 15px;font-weight: 500;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .forgot-page form p{
+    font-family: "Montserrat";
+    font-size: 15px;
+    font-weight: 500;
+    color: #088178;
+  }
+
+  .forgot-page .input-group {
+    position: relative;
+    width: 400px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .forgot-page button[type="submit"] {
+    background-color: #088178;
+    color: white;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    max-width: 220px;
+    width: 100%;
+    align-self: center;
+    transition: background-color 0.2s;
   }
