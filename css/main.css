@@ -1,14 +1,216 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-
+/* Base styles */
 body {
   margin: 0;
   font-family: "Montserrat", sans-serif;
   background-color: #f9f9f9;
   color: #333;
 }
-  
-main {
-  padding: 20px;
+
+body .content-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
 }
-  
+
+/* Headings */
+h1 {
+  font-size: 50px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+}
+
+h5 {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
+}
+
+h6 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Body text styles */
+.body1 {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.body2 {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Subtitles */
+.subtitle1 {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.subtitle2 {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Caption */
+.caption {
+  font-size: 12px;
+  font-weight: 400;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* Responsive Typography */
+@media (max-width: 1024px) {
+  h1 { font-size: 42px; }
+  h2 { font-size: 34px; }
+  h3 { font-size: 28px; }
+  h4 { font-size: 22px; }
+  h5 { font-size: 18px; }
+  h6 { font-size: 16px; }
+
+  .body1 { font-size: 15px; }
+  .body2 { font-size: 13px; }
+  .subtitle1 { font-size: 15px; }
+  .subtitle2 { font-size: 13px; }
+  .caption { font-size: 11px; }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 36px; }
+  h2 { font-size: 28px; }
+  h3 { font-size: 24px; }
+  h4 { font-size: 20px; }
+  h5 { font-size: 16px; }
+  h6 { font-size: 15px; }
+
+  .body1 { font-size: 14px; }
+  .body2 { font-size: 12.5px; }
+  .subtitle1 { font-size: 14px; }
+  .subtitle2 { font-size: 12.5px; }
+  .caption { font-size: 10.5px; }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 30px; }
+  h2 { font-size: 24px; }
+  h3 { font-size: 20px; }
+  h4 { font-size: 18px; }
+  h5 { font-size: 15px; }
+  h6 { font-size: 14px; }
+
+  .body1 { font-size: 13.5px; }
+  .body2 { font-size: 12px; }
+  .subtitle1 { font-size: 13.5px; }
+  .subtitle2 { font-size: 12px; }
+  .caption { font-size: 10px; }
+}
+
+/* Shared Button Base */
+button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s, box-shadow 0.2s, border 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+/* Variants */
+button.primary {
+  background-color: #088178;
+  color: #fff;
+}
+button.primary:hover {
+  background-color: #066760;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+button.secondary {
+  background-color: #333;
+  color: #fff;
+}
+button.secondary:hover {
+  background-color: #1a1a1a;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+button.error {
+  background-color: #d32f2f;
+  color: #fff;
+}
+button.error:hover {
+  background-color: #b71c1c;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+button.warning {
+  background-color: #ffa000;
+  color: black;
+}
+button.warning:hover {
+  background-color: #ff8f00;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+button.default {
+  background-color: #e0e0e0;
+  color: #333;
+}
+button.default:hover {
+  background-color: #cfcfcf;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Disabled Style */
+button:disabled {
+  background-color: #ccc;
+  color: #777;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Optional: add .full-width for MUI fullWidth behavior */
+button.full-width {
+  width: 100%;
+}
