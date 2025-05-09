@@ -59,7 +59,7 @@ h6 {
 }
 
 /* Body text styles */
-.body1 {
+.p {
   font-size: 16px;
   font-weight: 400;
   line-height: 1.6;
@@ -101,7 +101,7 @@ h6 {
   h5 { font-size: 18px; }
   h6 { font-size: 16px; }
 
-  .body1 { font-size: 15px; }
+  .p { font-size: 15px; }
   .body2 { font-size: 13px; }
   .subtitle1 { font-size: 15px; }
   .subtitle2 { font-size: 13px; }
@@ -116,7 +116,7 @@ h6 {
   h5 { font-size: 16px; }
   h6 { font-size: 15px; }
 
-  .body1 { font-size: 14px; }
+  .p { font-size: 14px; }
   .body2 { font-size: 12.5px; }
   .subtitle1 { font-size: 14px; }
   .subtitle2 { font-size: 12.5px; }
@@ -131,7 +131,7 @@ h6 {
   h5 { font-size: 15px; }
   h6 { font-size: 14px; }
 
-  .body1 { font-size: 13.5px; }
+  .p { font-size: 13.5px; }
   .body2 { font-size: 12px; }
   .subtitle1 { font-size: 13.5px; }
   .subtitle2 { font-size: 12px; }
