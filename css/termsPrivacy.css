@@ -1,5 +1,5 @@
 /* Privacy Policy Section */
-.privacy-policy-section {
+.terms-privacy-section {
     max-width: 900px;
     margin: 40px auto;
     background: white;
@@ -9,39 +9,39 @@
     text-align: justify;
 }
 
-.privacy-policy-section h3 {
+.terms-privacy-section h3 {
     color: #088178;
     text-align: center;
     margin-bottom: 10px;
 }
 
-.privacy-policy-section h4{
+.terms-privacy-section h4{
     color: #088178;
     margin-top: 30px;
 }
 
-.privacy-policy-section p {
+.terms-privacy-section p {
     margin: 8px 0;
     line-height: 1.5rem;
 }
 
-.privacy-policy-section ul {
+.terms-privacy-section ul {
     margin: 5px 0;
     line-height: 1.7rem;
     padding-left: 20px;
 }
 
-.privacy-policy-section ul li {
+.terms-privacy-section ul li {
     margin-bottom: 5px;
 }
 
-.privacy-policy-section a{
+.terms-privacy-section a{
     text-decoration: none;
     color: #666666;
     font-weight: 600;
 }
 
-.privacy-policy-section a:hover{
+.terms-privacy-section a:hover{
     text-decoration: underline;
     color: #666666;
 }
