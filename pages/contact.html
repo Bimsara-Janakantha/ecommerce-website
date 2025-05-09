@@ -48,12 +48,13 @@
         <form id="contact-form">
           <div>
             <caption>
-              Full Name
+              Name with initials
             </caption>
             <input
               type="text"
-              id="full-name"
-              placeholder="What's your full name?"
+              maxlength="50"
+              id="contact"
+              placeholder="What's your name?"
             />
           </div>
           <div>
@@ -65,6 +66,7 @@
             <textarea
               id="message"
               placeholder="Write your message for the team here"
+              maxlength="200"
             ></textarea>
           </div>
           <button class="primary" type="submit">Submit</button>
@@ -72,7 +74,7 @@
       </section>
 
       <section class="image-section">
-        <img src="../assets/pageImages/contact.svg" alt="contact us" />
+        <img src="../assets/pageImages/contactUs.svg" alt="contact us" />
       </section>
     </div>
 
