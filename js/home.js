@@ -80,30 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const images = document.querySelectorAll(".carousel img");
 
-  // Wait for all images to load
-  let loaded = 0;
-  images.forEach((img) => {
-    img.addEventListener("load", () => {
-      loaded++;
-      if (loaded === images.length) {
-        // Get widths of all images
-        images.forEach((img, i) => {
-          const w = img.clientWidth;
-          imageWidths.push(w);
-          console.log(`Image ${i + 1} width: ${w}px`);
-        });
-
-        // Start carousel
-        setInterval(showNextImage, 3000);
-      }
-    });
-
-    // Trigger load manually for cached images
-    if (img.complete) {
-      img.dispatchEvent(new Event("load"));
-    }
-  });
-
   const showNextImage = () => {
     if (index >= imageCount - 1) {
       index = 0;
@@ -119,6 +95,30 @@ document.addEventListener("DOMContentLoaded", function () {
     carousel.style.transition = "transform 0.5s ease-in-out";
     carousel.style.transform = `translateX(-${offset}px)`;
   };
+
+  // Wait for all images to load
+  let loaded = 0;
+  images.forEach((img) => {
+    img.addEventListener("load", () => {
+      loaded++;
+      if (loaded === images.length) {
+        // Get widths of all images
+        images.forEach((img, i) => {
+          const w = img.clientWidth;
+          imageWidths.push(w);
+          //console.log(`Image ${i + 1} width: ${w}px`);
+        });
+
+        // Start carousel
+        setInterval(showNextImage, 3000);
+      }
+    });
+
+    // Trigger load manually for cached images
+    if (img.complete) {
+      img.dispatchEvent(new Event("load"));
+    }
+  });
 
   /* Featured Items */
   const product = document.querySelector(".product-grid");
