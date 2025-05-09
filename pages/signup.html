@@ -21,9 +21,36 @@
   <body>
     <div class="signup-page" role="main">
       <div class="right">
+        <!-- Header -->
         <h2>Signup</h2>
+
+        <!-- Stepper -->
+        <div class="signup-stepper">
+          <!-- Step 1 -->
+          <div class="step">
+            <div class="circle completed"><i class="fas fa-check"></i></div>
+            <div class="label">Add Email</div>
+          </div>
+          <div class="line"></div>
+
+          <!-- Step 2 -->
+          <div class="step">
+            <div class="circle current">2</div>
+            <div class="label">Verification</div>
+          </div>
+          <div class="line inactive"></div>
+
+          <!-- Step 3 -->
+          <div class="step">
+            <div class="circle upcoming">3</div>
+            <div class="label inactive">Setup Password</div>
+          </div>
+        </div>
+
+        <!-- Form -->
         <form>
-          <div class="input-group">
+          <h4 style="display: none">Enter your email address</h4>
+          <div class="input-group" style="display: none">
             <span aria-hidden="true" class="input-icon-left">
               <i class="fa fa-envelope" aria-hidden="true"></i>
             </span>
@@ -37,6 +64,23 @@
             />
           </div>
 
+          <h4 style="display: none">
+            Enter the OTP sent to your email address
+          </h4>
+          <div class="input-group" style="display: none">
+            <span aria-hidden="true" class="input-icon-left">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
+            <input
+              id="signup-otp"
+              name="otp"
+              placeholder="Your OTP"
+              type="password"
+              required
+            />
+          </div>
+
+          <h4>Setup your password</h4>
           <div class="input-group">
             <span aria-hidden="true" class="input-icon-left">
               <i class="fa fa-lock" aria-hidden="true"></i>
@@ -63,7 +107,7 @@
             />
           </div>
 
-          <label class="checkbox-group" for="agreed">
+          <label class="checkbox-group" for="agreed" style="display: none">
             <input id="agreed" name="agreed" type="checkbox" />
             I have read & accept all
             <a href="terms.html">terms and conditions</a>

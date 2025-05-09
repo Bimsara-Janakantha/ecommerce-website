@@ -78,19 +78,27 @@
     font-weight: 700;
     font-size: 1.6rem;
     color: #088178;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 2rem 0;
     text-align: center;
     width: 100%;
-  }  
+  } 
+  h4{
+    font-family: "Montserrat";
+    font-weight: 500;
+    font-size: 1rem;
+    color: #088178;
+    width: 100%;
+    margin-bottom: 20px;
+  } 
   form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
   }
 
   /* Input container */
   .input-group {
     position: relative;
+    margin-bottom: 20px;
   }
   .input-group .input-icon-left, .input-group .input-icon-right {
     position: absolute;
@@ -133,6 +141,7 @@
   .checkbox-group {
     display: flex;
     align-items: center;
+    margin-top: 10px;
     gap: 0.5rem;
     font-weight: 600;
     font-size: 0.875rem;
@@ -153,7 +162,7 @@
     padding: 0.5rem 1.5rem;
     font-weight: 600;
     font-size: 1rem;
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
     max-width: 200px;
     width: 100%;
     align-self: center;
@@ -183,7 +192,6 @@
     align-items: center;
     padding: 2.5rem;
     text-align: center;
-    gap: 10px;
   }
 
   .forgot-page p{
@@ -195,6 +203,7 @@
   .forgot-page form p{
     font-family: "Montserrat";
     font-size: 15px;
+    margin-top: 2rem;
     font-weight: 500;
     color: #088178;
   }
@@ -213,9 +222,80 @@
     padding: 0.5rem 1.5rem;
     font-weight: 600;
     font-size: 1rem;
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
     max-width: 220px;
     width: 100%;
     align-self: center;
     transition: background-color 0.2s;
   }
+
+
+  /* Steppper */
+   .signup-stepper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "Montserrat", sans-serif;
+      margin-bottom: 20px;
+      width: 400px;
+    }
+    .signup-stepper .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+      min-width: 40px;
+    }
+    .signup-stepper .circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 40px;
+      text-align: center;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .signup-stepper .circle.completed {
+      background-color: #088178;
+      color: white;
+    }
+    .signup-stepper .circle.completed i {
+      font-size: 18px;
+    }
+    .signup-stepper .circle.current {
+      border: 2px solid #088178;
+      color: #088178;
+      background-color: white;
+      font-weight: 700;
+    }
+    .signup-stepper .circle.upcoming {
+      border: 2px solid #9ccdc9;
+      color: #9ccdc9;
+      background-color: white;
+      font-weight: 700;
+    }
+    .signup-stepper .line {
+      height: 2px;
+      flex-grow: 0.5;
+      background-color: #088178;
+      margin-bottom: 20px;
+    }
+    .signup-stepper .line.inactive {
+      background-color: #9ccdc9
+    }
+    .signup-stepper .label {
+      font-size: 14px;
+      color: #088178;
+      user-select: none;
+    }
+    .signup-stepper .label.inactive {
+      color: #9ccdc9;
+      font-size: 14px;
+      font-style: normal;
+    }
+    
