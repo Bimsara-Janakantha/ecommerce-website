@@ -1,0 +1,94 @@
+.contact-us-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border: 2px solid #e6e6e6;
+  border-radius: 10px;
+  max-width: 960px;
+  margin: 22px auto;
+  padding: 30px;
+  background-color: #fff;
+}
+@media (min-width: 768px) {
+  .contact-us-section {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.contact-form-section {
+  width: 100%;
+  max-width: 420px;
+}
+.contact-form-section #contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.contact-form-section #contact-form div{
+  width: 100%;
+}
+
+.contact-form-section input[type="text"],
+.contact-form-section input[type="email"],
+.contact-form-section textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin-top: 5px;
+    padding: 10px 12px;
+    font-size: 1rem;
+    color: #64748b;
+    font-family: "Montserrat", sans-serif;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-form-section input::placeholder,
+.contact-form-section textarea::placeholder {
+    color: #94a3b8;
+}
+.contact-form-section input[type="text"]:focus,
+.contact-form-section input[type="email"]:focus,
+.contact-form-section textarea:focus {
+    outline: none;
+    border-color: #218e86;
+    box-shadow: 0 0 0 2px #cee6e4;
+    color: #1e293b;
+}
+.contact-form-section textarea {
+    resize: none;
+    min-height: 96px;
+}
+
+.contact-form-section button{
+  font-size: large;
+  min-width: 200px;
+  width: 50%;
+}
+
+.contact-us-section section.image-section {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+}
+.contact-us-section img {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.marquee-section{
+    display: flex;
+    align-items: center;
+    background: #088178;
+    color: white;
+    padding: 15px;
+    margin-top: 20px;
+    font-weight: 600;
+}

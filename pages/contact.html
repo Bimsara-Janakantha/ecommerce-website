@@ -1,7 +1,138 @@
-<main>
-  <h1>Contact Us</h1>
-  <p>
-    Email us at
-    <a href="mailto:support@soleheaven.com">support@soleheaven.com</a>.
-  </p>
-</main>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logos/logo.svg" />
+    <title>Sole Heven</title>
+
+    <!-- Custom Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/contact.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+  </head>
+
+  <body>
+    <!-- App Bar -->
+    <header id="header" class="header">
+      <a class="logo" href="home.html" data-link>
+        <img
+          src="../../assets/logos/logo.svg"
+          height="80px"
+          class="logo"
+          alt="Sole Haven Logo"
+        />
+        <h1>SOLE HAVEN</h1>
+      </a>
+
+      <nav>
+        <ul id="navbar" class="navbar"></ul>
+      </nav>
+    </header>
+
+    <!-- Body -->
+    <div class="contact-us-section">
+      <section class="contact-form-section">
+        <h3>Drop us a line</h3>
+        <form id="contact-form">
+          <div>
+            <caption>
+              Full Name
+            </caption>
+            <input
+              type="text"
+              id="full-name"
+              placeholder="What's your full name?"
+            />
+          </div>
+          <div>
+            <label for="email">Email address</label>
+            <input type="email" id="email" placeholder="you@example.com" />
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              placeholder="Write your message for the team here"
+            ></textarea>
+          </div>
+          <button class="primary" type="submit">Submit</button>
+        </form>
+      </section>
+
+      <section class="image-section">
+        <img src="../assets/pageImages/contact.svg" alt="contact us" />
+      </section>
+    </div>
+
+    <!-- marquee -->
+    <section class="marquee-section">
+      <marquee>
+        <caption>
+          SOLE HAVEN (Your Perfect Pair of Shoes Awaits..)
+        </caption>
+      </marquee>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <img
+          style="width: 170px"
+          src="../assets/logos/logo.svg"
+          alt="Sole Haven Logo"
+        />
+      </div>
+
+      <div class="col">
+        <h3>Contact</h3>
+        <p><strong>Address:</strong> 456 Kandy Road, Street 23, Kurunegala</p>
+        <p><strong>Phone:</strong> 0723456788 / 0372234566</p>
+      </div>
+
+      <div class="col">
+        <h3>Follow Us</h3>
+        <div class="icon">
+          <a href="https://www.facebook.com" target="_blank"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="https://www.twitter.com" target="_blank"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="https://www.instagram.com" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://www.youtube.com" target="_blank"
+            ><i class="fab fa-youtube"></i
+          ></a>
+        </div>
+      </div>
+
+      <div class="col about">
+        <h3>About</h3>
+        <a href="about.html">About Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="support.html">Customer Support</a>
+      </div>
+
+      <div class="payment">
+        <p>Secured Payment Gateways</p>
+        <img src="../assets/logos/google_Pay.png" alt="Google Pay" />
+      </div>
+    </footer>
+
+    <script src="../js/header.js"></script>
+  </body>
+</html>
