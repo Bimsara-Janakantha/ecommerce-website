@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return `
     <div class="grid-item">
       <div class="product">
-        <img src="${item.url}" alt="Product Image" />
+        <img src="${item.url}" alt="${item.url.split("/").pop()}" />
         <div class="description">
           <h6>${item.brand}</h6>
           <h5>${item.description}</h5>
