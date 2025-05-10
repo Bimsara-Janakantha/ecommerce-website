@@ -197,15 +197,6 @@ ul {
     gap: 10px;
 }
 
-/* Live Chat */
-.support-live-chat{
-    position: fixed;
-    bottom: 50px;
-    right: 70px;
-    width: 380px;
-    height: 50vh;
-}
-
 /* Chat Icon */
 .support-live-chat .chat-button {
     position: fixed;
@@ -231,13 +222,17 @@ ul {
 
 /* Chat Box */
 .support-live-chat .chat-body {
-  display: none;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  height: 50vh;
-  flex-direction: column;
-  justify-content: space-between;
+    position: fixed;
+    bottom: 50px;
+    right: 70px;
+    width: 380px;
+    height: 50vh;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .support-live-chat .chat-messages {
