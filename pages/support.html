@@ -50,7 +50,7 @@
         </caption>
 
         <form
-          class="search-form"
+          class="support-search-form"
           role="search"
           aria-label="Search support questions"
         >
@@ -63,13 +63,13 @@
             placeholder="Type your question here..."
             aria-label="Search support questions"
           />
-          <button type="submit">Search</button>
+          <button class="support-search-btn" type="submit">Search</button>
         </form>
       </div>
 
       <!-- Card Section -->
       <section class="cards" aria-label="Support categories">
-        <article class="card">
+        <article class="card" id="support-get-started" onclick="">
           <div class="icon-circle" aria-hidden="true">
             <i class="fas fa-building"></i>
           </div>
@@ -77,7 +77,7 @@
           <p>Learn the basics to start using our platform with ease.</p>
         </article>
 
-        <article class="card">
+        <article class="card" id="support-video-tutorials">
           <div class="icon-circle" aria-hidden="true">
             <i class="fas fa-play"></i>
           </div>
@@ -88,7 +88,7 @@
           </p>
         </article>
 
-        <article class="card">
+        <article class="card" id="support-faqs">
           <div class="icon-circle" aria-hidden="true">
             <i class="fas fa-question"></i>
           </div>
@@ -112,7 +112,7 @@
 
     <!-- Live Chat -->
     <section class="support-live-chat">
-      <button class="chat-button" onclick="toggleChat()">
+      <button class="chat-button">
         <i class="fa fa-comments-o" aria-hidden="true"></i>
       </button>
 
