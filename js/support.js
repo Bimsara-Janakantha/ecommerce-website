@@ -98,6 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
   /* FAQ Section */
   const faqList = document.querySelector(".articles-box");
   const maxIndex = FAQs.length;
+  const searchForm = document.querySelector(".support-search-form");
+  const searchInput = searchForm.querySelector("input[type='search']");
 
   const generateFAQHTML = (item) => {
     return `
@@ -109,14 +111,43 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   };
 
-  faqList.innerHTML = FAQs.map((faq) => generateFAQHTML(faq)).join("");
+  const renderFAQs = (data) => {
+    faqList.innerHTML = data.map((faq) => generateFAQHTML(faq)).join("");
+  };
+
+  // Initial rendering
+  renderFAQs(FAQs);
+
+  searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const query = searchInput.value.trim().toLowerCase();
+    const keyWords = query.split(/\W+/).filter((key) => key.length > 0);
+    //console.log("Searching:", keyWords);
+
+    if (keyWords.length === 0) {
+      return;
+    }
+
+    const filteredFAQs = FAQs.filter((faq) =>
+      keyWords.some(
+        (word) =>
+          faq.title.toLowerCase().includes(word) ||
+          faq.answer.toLowerCase().includes(word)
+      )
+    );
+
+    renderFAQs(filteredFAQs);
+  });
 
   /* Support Video Tutorials */
   const videoList = document.querySelector(".video-grid-container");
 
   const generateVideoHTML = (item) => {
     return `
-        <div class="grid-item">
+        <div class="grid-item" ${
+          item.id === 1 ? 'id="first-support-video"' : ""
+        }>
           <div class="video-card">
           <h4>${item.name}</h4>
             <iframe
@@ -137,6 +168,64 @@ document.addEventListener("DOMContentLoaded", function () {
   videoList.innerHTML = TUTORIALS.map((item) => generateVideoHTML(item)).join(
     ""
   );
+
+  /* Navigations */
+  const gettingStartedCard = document.getElementById("support-get-started");
+  if (gettingStartedCard) {
+    gettingStartedCard.addEventListener("click", () => {
+      const target = document.getElementById("first-support-video");
+      if (target) {
+        const rect = target.getBoundingClientRect();
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        const offset =
+          rect.top + scrollTop - window.innerHeight / 2 + rect.height / 2;
+
+        window.scrollTo({
+          top: offset,
+          behavior: "smooth",
+        });
+      }
+    });
+  }
+
+  const videoTutorialCard = document.getElementById("support-video-tutorials");
+  if (videoTutorialCard) {
+    videoTutorialCard.addEventListener("click", () => {
+      const target = document.querySelector(".support-video-section h2");
+      if (target) {
+        const rect = target.getBoundingClientRect();
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        const offset =
+          rect.top + scrollTop - window.innerHeight / 2 + rect.height / 2;
+
+        window.scrollTo({
+          top: offset,
+          behavior: "smooth",
+        });
+      }
+    });
+  }
+
+  const faqCard = document.getElementById("support-faqs");
+  if (faqCard) {
+    faqCard.addEventListener("click", () => {
+      const target = document.querySelector(".support-faq-section h2");
+      if (target) {
+        const rect = target.getBoundingClientRect();
+        const scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        const offset =
+          rect.top + scrollTop - window.innerHeight / 2 + rect.height / 2;
+
+        window.scrollTo({
+          top: offset,
+          behavior: "smooth",
+        });
+      }
+    });
+  }
 
   /* Live Chat Section */
   const chatBtn = document.querySelector(".chat-button");
