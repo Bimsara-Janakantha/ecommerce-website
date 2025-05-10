@@ -118,28 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial rendering
   renderFAQs(FAQs);
 
-  searchForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const query = searchInput.value.trim().toLowerCase();
-    const keyWords = query.split(/\W+/).filter((key) => key.length > 0);
-    //console.log("Searching:", keyWords);
-
-    if (keyWords.length === 0) {
-      return;
-    }
-
-    const filteredFAQs = FAQs.filter((faq) =>
-      keyWords.some(
-        (word) =>
-          faq.title.toLowerCase().includes(word) ||
-          faq.answer.toLowerCase().includes(word)
-      )
-    );
-
-    renderFAQs(filteredFAQs);
-  });
-
   /* Support Video Tutorials */
   const videoList = document.querySelector(".video-grid-container");
 
@@ -208,24 +186,52 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  const navigateToFAQ = () => {
+    const target = document.querySelector(".support-faq-section h2");
+    if (target) {
+      const rect = target.getBoundingClientRect();
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const offset =
+        rect.top + scrollTop - window.innerHeight / 2 + rect.height / 2;
+
+      window.scrollTo({
+        top: offset,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const faqCard = document.getElementById("support-faqs");
   if (faqCard) {
     faqCard.addEventListener("click", () => {
-      const target = document.querySelector(".support-faq-section h2");
-      if (target) {
-        const rect = target.getBoundingClientRect();
-        const scrollTop =
-          window.pageYOffset || document.documentElement.scrollTop;
-        const offset =
-          rect.top + scrollTop - window.innerHeight / 2 + rect.height / 2;
-
-        window.scrollTo({
-          top: offset,
-          behavior: "smooth",
-        });
-      }
+      navigateToFAQ();
     });
   }
+
+  /* Searching */
+  searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const query = searchInput.value.trim().toLowerCase();
+    const keyWords = query.split(/\W+/).filter((key) => key.length > 0);
+    //console.log("Searching:", keyWords);
+
+    if (keyWords.length === 0) {
+      return;
+    }
+
+    const filteredFAQs = FAQs.filter((faq) =>
+      keyWords.some(
+        (word) =>
+          faq.title.toLowerCase().includes(word) ||
+          faq.answer.toLowerCase().includes(word)
+      )
+    );
+
+    renderFAQs(filteredFAQs);
+    navigateToFAQ();
+  });
 
   /* Live Chat Section */
   const chatBtn = document.querySelector(".chat-button");
