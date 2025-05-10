@@ -24,7 +24,7 @@ ul {
 }
 
 /* Search form */
-.support-header-section form.search-form {
+.support-header-section .support-search-form {
     max-width: 500px;
     width: 100%;
     margin-left: auto;
@@ -43,7 +43,7 @@ ul {
     font-size: 14px;
 }
 
-.support-header-section form.search-form input[type="search"] {
+.support-header-section .support-search-form input[type="search"] {
     flex-grow: 1;
     border: none;
     padding: 10px;
@@ -55,10 +55,10 @@ ul {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
-.support-header-section form.search-form input[type="search"]::placeholder {
+.support-header-section .support-search-form input[type="search"]::placeholder {
     color: #7f7f7f;
 }
-.support-header-section form.search-form button {
+.support-header-section .support-search-btn{
     color: white;
     background-color: #2f2f2f;
     border: none;
@@ -70,7 +70,7 @@ ul {
     white-space: nowrap;
     transition: background-color 0.2s ease;
 }
-.support-header-section form.search-form button:hover {
+.support-header-section .support-search-btn:hover {
     background-color: #1f1f1f;
 }
 /* Cards container */
