@@ -18,7 +18,7 @@
 
     <!-- Global Styles -->
     <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/shop.css" />
+    <link rel="stylesheet" href="../css/products.css" />
     <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/footer.css" />
   </head>
@@ -41,71 +41,35 @@
       </nav>
     </header>
 
-    <section class="shop-banner-container">
-      <div class="shop-header">
-        <h1>Discover Our Footwear Collection</h1>
-        <caption>
-          Find the perfect shoes for every style and season. Choose your
-          favourite catagory.
-        </caption>
-      </div>
+    <!-- Product Area -->
+    <main>
+      <!-- Hero Section -->
+      <section class="product-hero">
+        <h1>Sneakers</h1>
+        <p>Explore our latest collection of premium sneakers.</p>
+      </section>
 
-      <div class="shop-section">
-        <div class="category-grid">
-          <div class="grid-item">
-            <article class="category-card" onclick="location.href='men.html'">
-              <img src="../assets/pageImages/man.png" alt="Sneakers" />
-              <h4>MEN</h4>
-              <caption>
-                Collection
-              </caption>
-            </article>
-          </div>
+      <!-- Product Grid Section -->
+      <section class="product-grid">
+        <div class="grid-item">
+          <div class="product">
+            <img src="../assets/shoes/shoe_7.webp" alt="shoe_7" />
+            <div class="description">
+              <h6>Puma</h6>
+              <h5>Running Shoes</h5>
 
-          <div class="grid-item">
-            <article class="category-card" onclick="location.href='women.html'">
-              <img
-                src="../assets/pageImages/woman.png"
-                alt="Women Collection"
-              />
-              <h4>WOMEN</h4>
-              <caption>
-                Collection
-              </caption>
-            </article>
-          </div>
+              <div class="star">★★★★★</div>
 
-          <div class="grid-item">
-            <article class="category-card" onclick="location.href='boys.html'">
-              <img src="../assets/pageImages/boy.png" alt="Boys Collection" />
-              <h4>BOYS</h4>
-              <caption>
-                Collection
-              </caption>
-            </article>
-          </div>
+              <h4 style="color: #088178">LKR 50000</h4>
+            </div>
 
-          <div class="grid-item">
-            <article class="category-card" onclick="location.href='girls.html'">
-              <img src="../assets/pageImages/girl.png" alt="Girls Collection" />
-              <h4>GIRLS</h4>
-              <caption>
-                Collection
-              </caption>
-            </article>
+            <button class="icon-button">
+              <i class="fa fa-cart-plus" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
-
-        <div class="slider-wrapper">
-          <div class="slider"></div>
-          <div class="slider-nav">
-            <a href="#slide-1"></a>
-            <a href="#slide-2"></a>
-            <a href="#slide-3"></a>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -156,6 +120,5 @@
     </footer>
 
     <script src="../js/header.js"></script>
-    <script src="../js/shop.js"></script>
   </body>
 </html>
