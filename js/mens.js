@@ -134,8 +134,27 @@ const SHOE_LIST = [
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
-  const shoeGrid = document.querySelector(".product-grid");
+  const categoryGroup = document.querySelector(
+    ".shop-by-category .checkbox-group"
+  );
+  const brandGroup = document.querySelector(".shop-by-brand .checkbox-group");
+  const minInput = document.querySelector(
+    '.price-inputs input[placeholder="min"]'
+  );
+  const maxInput = document.querySelector(
+    '.price-inputs input[placeholder="max"]'
+  );
+  const filterButton = document.querySelector(".shop-by-price button");
+  const sortSelect = document.querySelector(".sort-section .orderby");
 
+  /* Global Variables */
+  let selectedCategories = [];
+  let selectedBrands = [];
+  let minimum_price = 0;
+  let maximum_price = Math.max(...SHOE_LIST.map((shoe) => shoe.price)) ?? 0;
+  let orderby = "rating";
+
+  /* Function to generate the HTML card for a shoe */
   function generateProductHTML(item) {
     const maxStars = 5;
     const roundRating = Math.round(item.rating);
@@ -182,7 +201,117 @@ document.addEventListener("DOMContentLoaded", function () {
     `;
   }
 
-  shoeGrid.innerHTML = SHOE_LIST.map((item) => generateProductHTML(item)).join(
-    ""
-  );
+  /* Functoin to filter the shoe list */
+  function filterShoes() {
+    console.log({
+      selectedCategories,
+      selectedBrands,
+      minimum_price,
+      maximum_price,
+    });
+
+    // Filter by category
+    const cat_Filtered = selectedCategories.length
+      ? SHOE_LIST.filter((shoe) =>
+          selectedCategories.includes(shoe.category.toLowerCase())
+        )
+      : SHOE_LIST;
+
+    // Filter by brand
+    const brand_Filtered = selectedBrands.length
+      ? cat_Filtered.filter((shoe) =>
+          selectedBrands.includes(shoe.brand.toLowerCase())
+        )
+      : cat_Filtered;
+
+    // Filter by price
+    const filtered = brand_Filtered.filter((shoe) => {
+      const originalPrice = shoe.price;
+      const finalPrice =
+        shoe.discount > 0
+          ? originalPrice * (100 - shoe.discount) * 0.01
+          : originalPrice;
+
+      return minimum_price <= finalPrice && finalPrice <= maximum_price;
+    });
+
+    return filtered || [];
+  }
+
+  /* Function to sort shoe list */
+  function sortShoes() {
+    // Filtering
+    const filtered = filterShoes();
+
+    // sorting
+    switch (orderby) {
+      case "rating":
+        return filtered.sort((a, b) => b.rating - a.rating);
+
+      case "price":
+        return filtered.sort((a, b) => a.price - b.price);
+
+      case "price-desc":
+        return filtered.sort((a, b) => b.price - a.price);
+
+      default:
+        return filtered ?? [];
+    }
+  }
+
+  /* Function to render the shoe list */
+  function renderAll() {
+    const sorted = sortShoes();
+
+    // Rendeering Shoe Grid
+    document.querySelector(".product-grid").innerHTML = sorted
+      .map((item) => generateProductHTML(item))
+      .join("");
+
+    // Rendering Price Range
+    document.querySelector(
+      ".price-range"
+    ).innerHTML = `Price: LKR ${minimum_price} - LKR ${maximum_price}`;
+
+    // Rendering Result Count
+    document.querySelector(
+      ".products-area .sort-section h6"
+    ).innerHTML = `Showing ${sorted.length} results`;
+  }
+
+  /* Initial Call */
+  renderAll();
+
+  /* Event listner - categories */
+  categoryGroup.addEventListener("change", () => {
+    selectedCategories = Array.from(
+      document.querySelectorAll('input[name="category"]:checked')
+    ).map((checkbox) => checkbox.value.toLowerCase());
+
+    renderAll();
+  });
+
+  /* Event listner - brand */
+  brandGroup.addEventListener("change", () => {
+    selectedBrands = Array.from(
+      document.querySelectorAll('input[name="brand"]:checked')
+    ).map((checkbox) => checkbox.value.toLowerCase());
+
+    renderAll();
+  });
+
+  /* Event listner - Price */
+  filterButton.addEventListener("click", () => {
+    minimum_price = parseFloat(minInput.value) || minimum_price;
+    maximum_price = parseFloat(maxInput.value) || maximum_price;
+
+    renderAll();
+  });
+
+  /* Event listenr - Sorting */
+  sortSelect.addEventListener("change", (e) => {
+    orderby = e.target.value;
+    console.log("sort: ", orderby);
+    renderAll();
+  });
 });

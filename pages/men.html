@@ -88,7 +88,7 @@
               -
               <input type="text" aria-label="Maximum price" placeholder="max" />
             </div>
-            <p class="price-range">Price: LKR 370 - LKR 37,500</p>
+            <p class="price-range"></p>
             <button class="primary" type="button">FILTER</button>
           </div>
 
@@ -118,15 +118,11 @@
         <!-- Product Grid Section -->
         <div class="products-area">
           <div class="sort-section">
-            <h6>Showing 135 results</h6>
+            <h6></h6>
             <select name="orderby" class="orderby" aria-label="Shop order">
-              <option value="popularity">Sort by popularity</option>
-              <option value="rating">Sort by average rating</option>
-              <option value="date">Sort by latest</option>
+              <option value="rating" selected>Sort by rating</option>
               <option value="price">Sort by price: low to high</option>
-              <option value="price-desc" selected="selected">
-                Sort by price: high to low
-              </option>
+              <option value="price-desc">Sort by price: high to low</option>
             </select>
           </div>
 
@@ -184,6 +180,6 @@
     </footer>
 
     <script src="../js/header.js"></script>
-    <script src="../js/mens.js"></script>
+    <script type="module" src="../js/mens.js"></script>
   </body>
 </html>
