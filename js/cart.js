@@ -66,6 +66,12 @@ document.addEventListener("DOMContentLoaded", async function () {
   const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
   const user = JSON.parse(localStorage.getItem("user")) || null;
 
+  /* Global Variables */
+  let subTotal = 0;
+  let shipping = 0;
+  let totalDiscount = 0;
+  let coupon = 0;
+
   /* Validate Page */
   if (!user || isNaN(user.userId)) {
     alert("Please login.");
@@ -79,12 +85,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   /* Rendering - Cart Table Body */
   function generateCartHTML(item) {
-    const totalPrice = (
-      item.unitPrice *
-      (100 - item.discount) *
-      0.01 *
-      item.quantity
-    ).toFixed(2);
+    const itemTotal = item.unitPrice * item.quantity;
+    const itemDiscount = item.unitPrice * item.discount * 0.01 * item.quantity;
+    const totalPrice = itemTotal - itemDiscount;
+
+    subTotal += itemTotal;
+    totalDiscount += itemDiscount;
 
     console.log("Total Price: ", totalPrice);
 
@@ -118,14 +124,79 @@ document.addEventListener("DOMContentLoaded", async function () {
 					</div>
 				</td>
 			
-				<td class="total-price">LKR ${totalPrice}</td>
+				<td class="total-price">LKR ${totalPrice.toFixed(2)}</td>
 			</tr>
     `;
   }
 
-  document.querySelector("#cart-table tbody").innerHTML = cartList
-    .map((item) => generateCartHTML(item))
-    .join("");
+  function renderCartTable() {
+    let innerHTML = cartList.map((item) => generateCartHTML(item)).join("");
+    innerHTML += `
+			<tr>
+				<td colspan="4" class="coupon-row">
+					<div class="coupon-container">
+						<div class="coupon-element">
+							<input type="text" placeholder="Coupon code" />
+							<button class="primary" type="button" disabled>
+								Apply coupon
+							</button>
+						</div>
+					
+						<button
+							type="button"
+							class="update"
+							onclick="location.href='shop.html'"
+							>
+							Update cart
+						</button>
+					</div>
+				</td>
+			</tr>
+		`;
+
+    document.querySelector("#cart-table tbody").innerHTML = innerHTML;
+  }
 
   /* Rendering - Purchase Body */
+  function generateCheckoutHTML() {
+    const shippingString = shipping === 0 ? `( FREE )` : shipping.toFixed(2);
+
+    const totalPrice = (subTotal + shipping - totalDiscount - coupon).toFixed(
+      2
+    );
+
+    return `
+			<tbody>
+        <tr>
+          <th>Subtotal</th>
+          <td>LKR ${subTotal.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <th>Shipping </i></th>
+          <td>${shippingString}</td>
+        </tr>
+        <tr>
+          <th>Discount</th>
+          <td>- LKR ${totalDiscount.toFixed(2)}</td>
+        </tr>
+				<tr>
+          <th>Coupon </th>
+          <td>- LKR ${coupon.toFixed(2)}</td>
+        </tr>
+        <tr>
+          <th>Total</th>
+          <td>LKR ${totalPrice}</td>
+        </tr>
+      </tbody>
+		`;
+  }
+
+  function renderCheckoutSummary() {
+    const checkoutHTML = generateCheckoutHTML();
+    document.querySelector(".cart-totals table").innerHTML = checkoutHTML;
+  }
+
+  /* Initial Rendering */
+  renderCartTable();
+  renderCheckoutSummary();
 });
