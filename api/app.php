@@ -1,4 +1,15 @@
 <?php
+// Allow CORS
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Handle preflight
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
+
 // Allowed HTTP methods
 $allowedMethods = ['GET', 'POST', 'PATCH', 'DELETE'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
@@ -14,18 +25,28 @@ if (!in_array($requestMethod, $allowedMethods)) {
 
 // Routing table: map request paths to handler files
 $routes = [
-    '/login'  => './routes/login.php',
-    '/user'   => './routes/user.php',
-    '/delete' => './routes/delete.php',
-    '/update' => './routes/update.php'
+    'login'  => './routes/login.php',
+    'user'   => './routes/user.php',
+    'products' => './routes/products.php',
+    'update' => './routes/update.php'
 ];
 
-// Remove '/api/app.php' from the beginning of the path
-$normalizedPath = str_replace('/api/app.php', '', $requestUri);
+// Normalize path: remove everything up to and including '/api/app.php'
+$basePath = '/api/app.php';
+$normalizedPath = $requestUri;
+if (strpos($requestUri, $basePath) === 0) {
+    $normalizedPath = substr($requestUri, strlen($basePath));
+}
+$normalizedPath = trim($normalizedPath, '/'); // remove leading/trailing slashes
+
+$route = explode("/", $normalizedPath)[0];
+
+//echo "path: " . $normalizedPath . "\n";
+//echo "redirect: " . $route . "\n";
 
 // Forward request to matched route
-if (array_key_exists($normalizedPath, $routes)) {
-    require $routes[$normalizedPath];
+if (array_key_exists($route, $routes)) {
+    require $routes[$route];
 } else {
     http_response_code(404); // Not Found
     header('Content-Type: application/json');
