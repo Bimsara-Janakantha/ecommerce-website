@@ -274,7 +274,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 201,
 		"brand" => "NIKE",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Sneakers",
 		"description" => "Lightweight kids sneakers with breathable upper",
 		"price" => 1499.0,
@@ -285,7 +285,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 202,
 		"brand" => "PUMA",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Sneakers",
 		"description" => "Sporty sneakers with cushioned sole for all-day comfort",
 		"price" => 1599.0,
@@ -296,7 +296,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 203,
 		"brand" => "BATA",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "School Shoes",
 		"description" => "Formal school shoes with strong grip and durability",
 		"price" => 899.0,
@@ -307,7 +307,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 204,
 		"brand" => "SPARX",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Sandals",
 		"description" => "Velcro strap sandals perfect for playtime",
 		"price" => 799.0,
@@ -318,7 +318,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 205,
 		"brand" => "ACTION",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Sneakers",
 		"description" => "Active wear sneakers with flexible outsole",
 		"price" => 1399.0,
@@ -329,7 +329,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 206,
 		"brand" => "ACTION",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Boots",
 		"description" => "Stylish ankle boots for kids' outings",
 		"price" => 1799.0,
@@ -340,7 +340,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 207,
 		"brand" => "NIKE",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Sneakers",
 		"description" => "Trendy sneakers for everyday wear",
 		"price" => 1699.0,
@@ -351,7 +351,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 208,
 		"brand" => "SPARX",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Sandals",
 		"description" => "Comfortable sandals for summer days",
 		"price" => 699.0,
@@ -362,7 +362,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 209,
 		"brand" => "PUMA",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Boots",
 		"description" => "Durable boots with padded interior",
 		"price" => 1899.0,
@@ -373,7 +373,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 210,
 		"brand" => "ACTION",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "School Shoes",
 		"description" => "Black school shoes with anti-slip sole",
 		"price" => 999.0,
@@ -384,7 +384,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 211,
 		"brand" => "BATA",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Sandals",
 		"description" => "Soft padded sandals with cartoon prints",
 		"price" => 749.0,
@@ -395,7 +395,7 @@ $SHOE_LIST_BOYS = [
 	[
 		"shoeId" => 212,
 		"brand" => "ACTION",
-		"gender" => "KIDS",
+		"gender" => "BOYS",
 		"category" => "Boots",
 		"description" => "Cool boots with sturdy rubber outsole",
 		"price" => 1999.0,
@@ -409,7 +409,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 301,
 		"brand" => "NIKE",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Sneakers",
 		"description" => "Colorful lightweight sneakers with mesh upper",
 		"price" => 1599.0,
@@ -420,7 +420,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 302,
 		"brand" => "PUMA",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Sneakers",
 		"description" => "Girls' sporty sneakers with pastel design",
 		"price" => 1699.0,
@@ -431,7 +431,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 303,
 		"brand" => "BATA",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "School Shoes",
 		"description" => "Comfortable and durable school shoes",
 		"price" => 899.0,
@@ -442,7 +442,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 304,
 		"brand" => "SPARX",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Sandals",
 		"description" => "Stylish pink sandals with easy straps",
 		"price" => 799.0,
@@ -453,7 +453,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 305,
 		"brand" => "LEE COOPER",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Ballet Flats",
 		"description" => "Chic ballet flats with bow detail",
 		"price" => 999.0,
@@ -464,7 +464,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 306,
 		"brand" => "NIKE",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Sneakers",
 		"description" => "Performance sneakers with high grip",
 		"price" => 1699.0,
@@ -475,7 +475,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 307,
 		"brand" => "SPARX",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Sandals",
 		"description" => "Colorful sandals perfect for summer outings",
 		"price" => 749.0,
@@ -486,7 +486,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 308,
 		"brand" => "PUMA",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Ballet Flats",
 		"description" => "Comfortable flats with elastic strap",
 		"price" => 1099.0,
@@ -497,7 +497,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 309,
 		"brand" => "BATA",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "School Shoes",
 		"description" => "Easy-strap school shoes with padded collar",
 		"price" => 899.0,
@@ -508,7 +508,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 310,
 		"brand" => "LEE COOPER",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Ballet Flats",
 		"description" => "Shiny ballet flats for parties",
 		"price" => 1299.0,
@@ -519,7 +519,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 311,
 		"brand" => "NIKE",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Sneakers",
 		"description" => "Trendy pink sneakers with comfort insole",
 		"price" => 1599.0,
@@ -530,7 +530,7 @@ $SHOE_LIST_GIRLS = [
 	[
 		"shoeId" => 312,
 		"brand" => "PUMA",
-		"gender" => "KIDS",
+		"gender" => "GIRLS",
 		"category" => "Sandals",
 		"description" => "Adjustable velcro sandals with soft sole",
 		"price" => 849.0,
