@@ -42,9 +42,11 @@
     </header>
 
     <main>
-      <div class="container">
-        <p class="caption">DSI FOOTCANDY • CART</p>
-        <h1>CART</h1>
+      <div class="cart-hero">
+        <h2>CART</h2>
+      </div>
+
+      <div class="cart-container">
         <table>
           <thead>
             <tr>
@@ -54,47 +56,132 @@
               <th>Subtotal</th>
             </tr>
           </thead>
+
           <tbody>
             <tr>
-              <td>
+              <td class="product-desciption">
                 <button class="remove" aria-label="Remove item">
                   <i class="fas fa-times"></i>
                 </button>
+
                 <img
                   class="product-image"
-                  src="https://storage.googleapis.com/a1aa/image/e213e52a-61fb-4fe3-19f8-57c502c61dee.jpg"
-                  alt="Small image of BEAT Men Casual FLATS Flip Flops in multiple colors"
+                  src="../assets/men_shoes/shoe_9.jpeg"
+                  alt="shoe_9"
                 />
-                BEAT Men Casual FLATS Flip Flops Blue , Aqua , Orange , Maroon ,
+                BEAT Men Casual FLATS Flip Flops Blue Green - Blue, 04 Flops
+                Blue Green - Blue, 04 Flops Blue Green - Blue, 04 Flops Blue
                 Green - Blue, 04
               </td>
-              <td>LKR 1,799.00</td>
-              <td>
+
+              <td class="unit-price">LKR 1,799.00</td>
+
+              <td class="quantity">
                 <div
                   class="quantity-control"
                   role="group"
                   aria-label="Quantity selector"
                 >
-                  <button aria-label="Decrease quantity">-</button>
+                  <button class="inc" aria-label="Decrease quantity">-</button>
                   <input type="text" aria-label="Quantity" value="1" readonly />
-                  <button aria-label="Increase quantity">+</button>
+                  <button class="dec" aria-label="Increase quantity">+</button>
                 </div>
               </td>
-              <td>LKR 1,799.00</td>
+
+              <td class="total-price">LKR 1,799.00</td>
             </tr>
-            <tr class="coupon-row">
-              <td colspan="4">
-                <input type="text" placeholder="Coupon code" />
-                <button type="button">Apply coupon</button>
-                <button type="button" class="update" disabled>
-                  Update cart
+
+            <tr>
+              <td class="product-desciption">
+                <button class="remove" aria-label="Remove item">
+                  <i class="fas fa-times"></i>
                 </button>
+
+                <img
+                  class="product-image"
+                  src="../assets/men_shoes/shoe_9.jpeg"
+                  alt="shoe_9"
+                />
+                BEAT Men Casual FLATS Flip Flops Blue Green - Blue, 04 Flops
+                Blue Green - Blue, 04 Flops Blue Green - Blue, 04 Flops Blue
+                Green - Blue, 04
+              </td>
+
+              <td class="unit-price">LKR 1,799.00</td>
+
+              <td class="quantity">
+                <div
+                  class="quantity-control"
+                  role="group"
+                  aria-label="Quantity selector"
+                >
+                  <button class="inc" aria-label="Decrease quantity">-</button>
+                  <input type="text" aria-label="Quantity" value="1" readonly />
+                  <button class="dec" aria-label="Increase quantity">+</button>
+                </div>
+              </td>
+
+              <td class="total-price">LKR 1,799.00</td>
+            </tr>
+
+            <tr>
+              <td class="product-desciption">
+                <button class="remove" aria-label="Remove item">
+                  <i class="fas fa-times"></i>
+                </button>
+
+                <img
+                  class="product-image"
+                  src="../assets/men_shoes/shoe_9.jpeg"
+                  alt="shoe_9"
+                />
+                BEAT Men Casual FLATS Flip Flops Blue Green - Blue, 04 Flops
+                Blue Green - Blue, 04 Flops Blue Green - Blue, 04 Flops Blue
+                Green - Blue, 04
+              </td>
+
+              <td class="unit-price">LKR 1,799.00</td>
+
+              <td class="quantity">
+                <div
+                  class="quantity-control"
+                  role="group"
+                  aria-label="Quantity selector"
+                >
+                  <button class="inc" aria-label="Decrease quantity">-</button>
+                  <input type="text" aria-label="Quantity" value="1" readonly />
+                  <button class="dec" aria-label="Increase quantity">+</button>
+                </div>
+              </td>
+
+              <td class="total-price">LKR 1,799.00</td>
+            </tr>
+
+            <tr>
+              <td colspan="4" class="coupon-row">
+                <div class="coupon-container">
+                  <div class="coupon-element">
+                    <input type="text" placeholder="Coupon code" />
+                    <button class="primary" type="button" disabled>
+                      Apply coupon
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    class="update"
+                    onclick="location.href='shop.html'"
+                  >
+                    Update cart
+                  </button>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
+
         <div class="cart-totals">
-          <h2>Cart totals</h2>
+          <h5>Cart Totals</h5>
+
           <table>
             <tbody>
               <tr>
@@ -103,16 +190,19 @@
               </tr>
               <tr>
                 <th>Shipping</th>
-                <td>
-                  Calculate shipping <i class="fas fa-truck shipping-icon"></i>
-                </td>
+                <td>( FREE ) <i class="fas fa-truck shipping-icon"></i></td>
+              </tr>
+              <tr>
+                <th>Discount</th>
+                <td>LKR 799.00</td>
               </tr>
               <tr>
                 <th>Total</th>
-                <td>LKR 1,799.00</td>
+                <td>LKR 1,000.00</td>
               </tr>
             </tbody>
           </table>
+
           <button class="checkout-button" type="button">
             Proceed to checkout
           </button>
@@ -169,6 +259,6 @@
     </footer>
 
     <script src="../js/header.js"></script>
-    <script src="../js/home.js"></script>
+    <script src="../js/cart.js"></script>
   </body>
 </html>
