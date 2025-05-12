@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     return `
         <div class="grid-item">
-            <article class="product" onclick="location.href='product?id=${item.shoeId}.html'">
+            <article class="product" onclick="location.href='details.html?id=${item.shoeId}'">
                 ${discount}
                 <img
                   class="product-image"
