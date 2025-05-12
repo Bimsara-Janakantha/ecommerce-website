@@ -245,7 +245,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (newPurchase.quantity <= availableQty) {
         console.log("Preparing for purchase:", newPurchase);
         localStorage.setItem("purchase", JSON.stringify(newPurchase));
-        location.href = "payment.html";
+        location.href = "cart.html";
       } else {
         console.log("Too much quantity requested");
         alert("Cannot buy more than available stock.");
