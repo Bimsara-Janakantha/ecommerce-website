@@ -405,6 +405,140 @@ $SHOE_LIST_BOYS = [
 	]
 ];
 
+$SHOE_LIST_GIRLS = [
+	[
+		"shoeId" => 301,
+		"brand" => "NIKE",
+		"gender" => "KIDS",
+		"category" => "Sneakers",
+		"description" => "Colorful lightweight sneakers with mesh upper",
+		"price" => 1599.0,
+		"discount" => 10,
+		"rating" => 4.4,
+		"url" => "../assets/girls_shoes/shoe_1.jpg",
+	],
+	[
+		"shoeId" => 302,
+		"brand" => "PUMA",
+		"gender" => "KIDS",
+		"category" => "Sneakers",
+		"description" => "Girls' sporty sneakers with pastel design",
+		"price" => 1699.0,
+		"discount" => 12,
+		"rating" => 4.3,
+		"url" => "../assets/girls_shoes/shoe_2.jpg",
+	],
+	[
+		"shoeId" => 303,
+		"brand" => "BATA",
+		"gender" => "KIDS",
+		"category" => "School Shoes",
+		"description" => "Comfortable and durable school shoes",
+		"price" => 899.0,
+		"discount" => 8,
+		"rating" => 4.1,
+		"url" => "../assets/girls_shoes/shoe_3.jpg",
+	],
+	[
+		"shoeId" => 304,
+		"brand" => "SPARX",
+		"gender" => "KIDS",
+		"category" => "Sandals",
+		"description" => "Stylish pink sandals with easy straps",
+		"price" => 799.0,
+		"discount" => 7,
+		"rating" => 4.0,
+		"url" => "../assets/girls_shoes/shoe_4.jpg",
+	],
+	[
+		"shoeId" => 305,
+		"brand" => "LEE COOPER",
+		"gender" => "KIDS",
+		"category" => "Ballet Flats",
+		"description" => "Chic ballet flats with bow detail",
+		"price" => 999.0,
+		"discount" => 10,
+		"rating" => 4.2,
+		"url" => "../assets/girls_shoes/shoe_5.jpeg",
+	],
+	[
+		"shoeId" => 306,
+		"brand" => "NIKE",
+		"gender" => "KIDS",
+		"category" => "Sneakers",
+		"description" => "Performance sneakers with high grip",
+		"price" => 1699.0,
+		"discount" => 12,
+		"rating" => 4.3,
+		"url" => "../assets/girls_shoes/shoe_6.webp",
+	],
+	[
+		"shoeId" => 307,
+		"brand" => "SPARX",
+		"gender" => "KIDS",
+		"category" => "Sandals",
+		"description" => "Colorful sandals perfect for summer outings",
+		"price" => 749.0,
+		"discount" => 5,
+		"rating" => 4.0,
+		"url" => "../assets/girls_shoes/shoe_7.jpg",
+	],
+	[
+		"shoeId" => 308,
+		"brand" => "PUMA",
+		"gender" => "KIDS",
+		"category" => "Ballet Flats",
+		"description" => "Comfortable flats with elastic strap",
+		"price" => 1099.0,
+		"discount" => 10,
+		"rating" => 4.2,
+		"url" => "../assets/girls_shoes/shoe_8.jpeg",
+	],
+	[
+		"shoeId" => 309,
+		"brand" => "BATA",
+		"gender" => "KIDS",
+		"category" => "School Shoes",
+		"description" => "Easy-strap school shoes with padded collar",
+		"price" => 899.0,
+		"discount" => 6,
+		"rating" => 4.1,
+		"url" => "../assets/girls_shoes/shoe_9.jpg",
+	],
+	[
+		"shoeId" => 310,
+		"brand" => "LEE COOPER",
+		"gender" => "KIDS",
+		"category" => "Ballet Flats",
+		"description" => "Shiny ballet flats for parties",
+		"price" => 1299.0,
+		"discount" => 14,
+		"rating" => 4.3,
+		"url" => "../assets/girls_shoes/shoe_10.jpeg",
+	],
+	[
+		"shoeId" => 311,
+		"brand" => "NIKE",
+		"gender" => "KIDS",
+		"category" => "Sneakers",
+		"description" => "Trendy pink sneakers with comfort insole",
+		"price" => 1599.0,
+		"discount" => 9,
+		"rating" => 4.4,
+		"url" => "../assets/girls_shoes/shoe_11.webp",
+	],
+	[
+		"shoeId" => 312,
+		"brand" => "PUMA",
+		"gender" => "KIDS",
+		"category" => "Sandals",
+		"description" => "Adjustable velcro sandals with soft sole",
+		"price" => 849.0,
+		"discount" => 8,
+		"rating" => 4.1,
+		"url" => "../assets/girls_shoes/shoe_12.jpg",
+	],
+];
 
 
 // Ensure GET
@@ -427,6 +561,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 	} else if ($collection === "boys") {
 		http_response_code(200);
 		echo json_encode(array_values($SHOE_LIST_BOYS));
+	} else if ($collection === "girls") {
+		http_response_code(200);
+		echo json_encode(array_values($SHOE_LIST_GIRLS));
 	} else {
 		http_response_code(400);
 		echo json_encode(['error' => 'Invalid collection']);
