@@ -2,7 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM fully loaded");
 
   const isLoggedIn = !!localStorage.getItem("user");
-  const cartItems = localStorage.getItem("cart") ?? 0;
+  const cart = JSON.parse(localStorage.getItem("cart")) || null;
+  const cartItems = cart !== null ? cart.cart.length : 0;
+
   const path = window.location.pathname;
   const currentPath = path.split("/").pop().toLowerCase();
 
