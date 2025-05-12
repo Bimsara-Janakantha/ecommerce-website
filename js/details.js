@@ -110,9 +110,17 @@ document.addEventListener("DOMContentLoaded", async function () {
               aria-label="Quantity"
               class="quantity-input"
             />
-            <button class="add-to-cart-button">Add to Cart</button>
+            <button class="add-to-cart-button" ${
+              selectedSize === 0 ? "disabled" : ""
+            }>
+              Add to Cart
+            </button>
 
-            <button class="buy-now-button">Buy Now</button>
+            <button class="buy-now-button" ${
+              selectedSize === 0 ? "disabled" : ""
+            }>
+              Buy Now
+            </button>
           </div>
 
           <div class="product-meta">
@@ -185,6 +193,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Add 'active' to the clicked button
     button.classList.add("active");
+
+    // Enable "Add to Cart" and "Buy Now" buttons
+    const addToCartBtn = document.querySelector(".add-to-cart-button");
+    const buyNowBtn = document.querySelector(".buy-now-button");
+
+    if (addToCartBtn) addToCartBtn.disabled = false;
+    if (buyNowBtn) buyNowBtn.disabled = false;
   });
 
   /* Event handler - select shoes */
