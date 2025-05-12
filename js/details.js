@@ -217,15 +217,22 @@ document.addEventListener("DOMContentLoaded", async function () {
       return;
     }
 
-    const newPurchase = {
-      shoeId: product.shoeId,
-      quantity: selectedShoes,
-      size: selectedSize,
-    };
-
     // Get the quantity for the selected size
     const sizeObj = product.sizes.find((s) => s.size === selectedSize);
     const availableQty = sizeObj ? sizeObj.quantity : 0;
+
+    const newPurchase = {
+      shoeId: product.shoeId,
+      brand: product.brand,
+      gender: product.gender,
+      description: product.description,
+      url: product.url,
+      unitPrice: product.price,
+      discount: product.discount,
+      availableQty,
+      quantity: selectedShoes,
+      size: selectedSize,
+    };
 
     // Get existing cart object or default
     const curCart = JSON.parse(localStorage.getItem("cart")) || [];
