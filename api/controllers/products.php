@@ -270,6 +270,142 @@ $SHOE_LIST_WOMEN = [
 	]
 ];
 
+$SHOE_LIST_BOYS = [
+	[
+		"shoeId" => 201,
+		"brand" => "NIKE",
+		"gender" => "KIDS",
+		"category" => "Sneakers",
+		"description" => "Lightweight kids sneakers with breathable upper",
+		"price" => 1499.0,
+		"discount" => 10,
+		"rating" => 4.3,
+		"url" => "../assets/boys_shoes/shoe_1.jpg",
+	],
+	[
+		"shoeId" => 202,
+		"brand" => "PUMA",
+		"gender" => "KIDS",
+		"category" => "Sneakers",
+		"description" => "Sporty sneakers with cushioned sole for all-day comfort",
+		"price" => 1599.0,
+		"discount" => 12,
+		"rating" => 4.2,
+		"url" => "../assets/boys_shoes/shoe_2.jpg",
+	],
+	[
+		"shoeId" => 203,
+		"brand" => "BATA",
+		"gender" => "KIDS",
+		"category" => "School Shoes",
+		"description" => "Formal school shoes with strong grip and durability",
+		"price" => 899.0,
+		"discount" => 8,
+		"rating" => 4.1,
+		"url" => "../assets/boys_shoes/shoe_3.jpg",
+	],
+	[
+		"shoeId" => 204,
+		"brand" => "SPARX",
+		"gender" => "KIDS",
+		"category" => "Sandals",
+		"description" => "Velcro strap sandals perfect for playtime",
+		"price" => 799.0,
+		"discount" => 5,
+		"rating" => 4.0,
+		"url" => "../assets/boys_shoes/shoe_4.jpg",
+	],
+	[
+		"shoeId" => 205,
+		"brand" => "ACTION",
+		"gender" => "KIDS",
+		"category" => "Sneakers",
+		"description" => "Active wear sneakers with flexible outsole",
+		"price" => 1399.0,
+		"discount" => 10,
+		"rating" => 4.2,
+		"url" => "../assets/boys_shoes/shoe_5.jpg",
+	],
+	[
+		"shoeId" => 206,
+		"brand" => "ACTION",
+		"gender" => "KIDS",
+		"category" => "Boots",
+		"description" => "Stylish ankle boots for kids' outings",
+		"price" => 1799.0,
+		"discount" => 15,
+		"rating" => 4.4,
+		"url" => "../assets/boys_shoes/shoe_6.jpeg",
+	],
+	[
+		"shoeId" => 207,
+		"brand" => "NIKE",
+		"gender" => "KIDS",
+		"category" => "Sneakers",
+		"description" => "Trendy sneakers for everyday wear",
+		"price" => 1699.0,
+		"discount" => 12,
+		"rating" => 4.3,
+		"url" => "../assets/boys_shoes/shoe_7.jpg",
+	],
+	[
+		"shoeId" => 208,
+		"brand" => "SPARX",
+		"gender" => "KIDS",
+		"category" => "Sandals",
+		"description" => "Comfortable sandals for summer days",
+		"price" => 699.0,
+		"discount" => 7,
+		"rating" => 4.0,
+		"url" => "../assets/boys_shoes/shoe_8.jpg",
+	],
+	[
+		"shoeId" => 209,
+		"brand" => "PUMA",
+		"gender" => "KIDS",
+		"category" => "Boots",
+		"description" => "Durable boots with padded interior",
+		"price" => 1899.0,
+		"discount" => 14,
+		"rating" => 4.5,
+		"url" => "../assets/boys_shoes/shoe_9.jpeg",
+	],
+	[
+		"shoeId" => 210,
+		"brand" => "ACTION",
+		"gender" => "KIDS",
+		"category" => "School Shoes",
+		"description" => "Black school shoes with anti-slip sole",
+		"price" => 999.0,
+		"discount" => 6,
+		"rating" => 4.1,
+		"url" => "../assets/boys_shoes/shoe_10.jpg",
+	],
+	[
+		"shoeId" => 211,
+		"brand" => "BATA",
+		"gender" => "KIDS",
+		"category" => "Sandals",
+		"description" => "Soft padded sandals with cartoon prints",
+		"price" => 749.0,
+		"discount" => 5,
+		"rating" => 4.0,
+		"url" => "../assets/boys_shoes/shoe_11.jpg",
+	],
+	[
+		"shoeId" => 212,
+		"brand" => "ACTION",
+		"gender" => "KIDS",
+		"category" => "Boots",
+		"description" => "Cool boots with sturdy rubber outsole",
+		"price" => 1999.0,
+		"discount" => 18,
+		"rating" => 4.3,
+		"url" => "../assets/boys_shoes/shoe_12.jpeg",
+	]
+];
+
+
 
 // Ensure GET
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -288,6 +424,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 	} else if ($collection === "women") {
 		http_response_code(200);
 		echo json_encode(array_values($SHOE_LIST_WOMEN));
+	} else if ($collection === "boys") {
+		http_response_code(200);
+		echo json_encode(array_values($SHOE_LIST_BOYS));
 	} else {
 		http_response_code(400);
 		echo json_encode(['error' => 'Invalid collection']);

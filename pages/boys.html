@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logos/logo.svg" />
+    <title>Sole Heven</title>
+
+    <!-- Custom Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/products.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+  </head>
+
+  <body>
+    <!-- App Bar -->
+    <header id="header" class="header">
+      <a class="logo" href="home.html" data-link>
+        <img
+          src="../../assets/logos/logo.svg"
+          height="80px"
+          class="logo"
+          alt="Sole Haven Logo"
+        />
+        <h1>SOLE HAVEN</h1>
+      </a>
+
+      <nav>
+        <ul id="navbar" class="navbar"></ul>
+      </nav>
+    </header>
+
+    <!-- Product Area -->
+    <main>
+      <!-- Hero Section -->
+      <section class="product-hero">
+        <h1>Boys' Footwear</h1>
+        <p>
+          Our Boys' Footwear collection features the very best shoes for boys.
+          From sturdy school shoes to colourful flip-flops, explore our range of
+          kids' shoes for boys.
+        </p>
+      </section>
+
+      <!-- Product Sale Section -->
+      <section class="product-sale">
+        <!-- Filter Section -->
+        <div class="filter-section">
+          <h3>Shop by</h3>
+
+          <div class="shop-by-category">
+            <h6>Categories</h6>
+            <div class="checkbox-group" aria-label="Categories">
+              <label>
+                <input type="checkbox" name="category" value="sneakers" />
+                Sneakers
+              </label>
+              <label>
+                <input type="checkbox" name="category" value="boots" />
+                Boots
+              </label>
+              <label>
+                <input type="checkbox" name="category" value="sandals" />
+                Sandals
+              </label>
+              <label>
+                <input type="checkbox" name="category" value="school shoes" />
+                School Shoes
+              </label>
+            </div>
+          </div>
+
+          <div class="shop-by-price">
+            <h6>Filter by price</h6>
+            <div class="price-inputs">
+              <input type="text" aria-label="Minimum price" placeholder="min" />
+              -
+              <input type="text" aria-label="Maximum price" placeholder="max" />
+            </div>
+            <p class="price-range"></p>
+            <button class="primary" type="button">FILTER</button>
+          </div>
+
+          <div class="shop-by-brand">
+            <h6>Brands</h6>
+            <div class="checkbox-group" aria-label="Brands">
+              <label>
+                <input type="checkbox" name="brand" value="bata" />
+                BATA
+              </label>
+              <label>
+                <input type="checkbox" name="brand" value="nike" />
+                NIKE
+              </label>
+              <label>
+                <input type="checkbox" name="brand" value="puma" />
+                PUMA
+              </label>
+              <label>
+                <input type="checkbox" name="brand" value="sparx" />
+                SPARX
+              </label>
+              <label>
+                <input type="checkbox" name="brand" value="action" />
+                ACTION
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Grid Section -->
+        <div class="products-area">
+          <div class="sort-section">
+            <h6></h6>
+            <select name="orderby" class="orderby" aria-label="Shop order">
+              <option value="rating" selected>Sort by rating</option>
+              <option value="price">Sort by price: low to high</option>
+              <option value="price-desc">Sort by price: high to low</option>
+            </select>
+          </div>
+
+          <div class="product-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <img
+          style="width: 170px"
+          src="../assets/logos/logo.svg"
+          alt="Sole Haven Logo"
+        />
+      </div>
+
+      <div class="col">
+        <h3>Contact</h3>
+        <p><strong>Address:</strong> 456 Kandy Road, Street 23, Kurunegala</p>
+        <p><strong>Phone:</strong> 0723456788 / 0372234566</p>
+      </div>
+
+      <div class="col">
+        <h3>Follow Us</h3>
+        <div class="icon">
+          <a href="https://www.facebook.com" target="_blank"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="https://www.twitter.com" target="_blank"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="https://www.instagram.com" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://www.youtube.com" target="_blank"
+            ><i class="fab fa-youtube"></i
+          ></a>
+        </div>
+      </div>
+
+      <div class="col about">
+        <h3>About</h3>
+        <a href="about.html">About Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="support.html">Customer Support</a>
+      </div>
+
+      <div class="payment">
+        <p>Secured Payment Gateways</p>
+        <img src="../assets/logos/google_Pay.png" alt="Google Pay" />
+      </div>
+    </footer>
+
+    <script src="../js/header.js"></script>
+    <script type="module" src="../js/products.js"></script>
+  </body>
+</html>
