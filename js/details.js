@@ -228,17 +228,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const availableQty = sizeObj ? sizeObj.quantity : 0;
 
     // Get existing cart object or default
-    const curCart = JSON.parse(localStorage.getItem("cart")) || {
-      userId: user.userId,
-      cart: [],
-    };
-
-    // Check cart ownership
-    if (curCart.userId !== user.userId) {
-      alert("Unauthorized access.");
-      console.log("User tried to access someone else's cart");
-      return;
-    }
+    const curCart = JSON.parse(localStorage.getItem("cart")) || [];
 
     // --- BUY NOW ---
     if (action === "buy") {
@@ -254,7 +244,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // --- ADD TO CART ---
     else {
-      const existingItem = curCart.cart.find(
+      const existingItem = curCart.find(
         (item) =>
           item.shoeId === newPurchase.shoeId && item.size === newPurchase.size
       );
@@ -271,7 +261,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
       } else {
         if (newPurchase.quantity <= availableQty) {
-          curCart.cart.push(newPurchase);
+          curCart.push(newPurchase);
           console.log("Added new item to cart:", newPurchase);
         } else {
           console.log("Too much quantity requested");
