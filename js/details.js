@@ -3,39 +3,22 @@ import { getData } from "../utils/connection.js";
 const getProductInfo = async (productId) => {
   const url = `products/item/${productId}`;
 
-  console.log("requesting: ", url);
+  //console.log("requesting: ", url);
 
-  return {
-    shoeId: 1,
-    brand: "NIKE",
-    gender: "MEN",
-    category: "Sneakers",
-    description: "Lightweight breathable sneakers for daily wear",
-    price: 1799.0,
-    discount: 15,
-    sizes: [4, 5, 6, 7, 8, 9, 10],
-    instock: [4, 5, 8, 10],
-    sku: "T00069",
-    rating: 4.2,
-    color: "Black",
-    weight: "700 g",
-    url: "../assets/men_shoes/shoe_6.jpeg",
-  };
-
-  /* try {
+  try {
     const serverResponse = await getData(url);
 
-    console.log("Server Reponse: ", serverResponse.json());
-
     if (serverResponse.status === 200) {
-      return serverResponse.json();
+      const data = await serverResponse.json();
+      console.log("Server Reponse: ", data);
+      return data;
     }
     return null;
   } catch (error) {
     console.error("Error:", error);
     alert("Something went wrong. Please try again.");
     return [];
-  } */
+  }
 };
 
 document.addEventListener("DOMContentLoaded", async function () {
@@ -51,13 +34,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   const bodySection = document.querySelector(".detail-page-body");
 
-  function generateDetailHTML(item) {
-    if (item === null) {
+  function generateDetailHTML() {
+    if (product === null) {
       return `<h5 style="margin-top: 50px">No information!</h5>`;
     }
 
     const maxStars = 5;
-    const roundRating = Math.round(item.rating);
+    const roundRating = Math.round(product.rating);
     let starsHTML = "";
 
     for (let i = 1; i <= maxStars; i++) {
@@ -68,14 +51,14 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
     }
 
-    const oldPrice = item.discount
-      ? `<h5 class="price-old">LKR ${item.price.toFixed(2)}</h5>`
+    const oldPrice = product.discount
+      ? `<h5 class="price-old">LKR ${product.price.toFixed(2)}</h5>`
       : "";
-    const newPrice = item.discount
-      ? (item.price * (100 - item.discount) * 0.01).toFixed(2)
-      : item.price.toFixed(2);
+    const newPrice = product.discount
+      ? (product.price * (100 - product.discount) * 0.01).toFixed(2)
+      : product.price.toFixed(2);
 
-    const saleMark = item.discount
+    const saleMark = product.discount
       ? `
 			<h5 class="price-sale">
         SALE
@@ -84,26 +67,26 @@ document.addEventListener("DOMContentLoaded", async function () {
 		`
       : "";
 
-    const sizes = item.sizes
+    const sizes = product.sizes
       .map((size) => {
-        return item.instock.includes(size)
+        return size.quantity > 0
           ? `<button class="size-button instock ${
-              selectedSize === size ? "active" : ""
-            }" type="button" value="${size}">${size}</button>`
-          : `<button class="size-button" type="button" value="${size}" disabled>${size}</button>`;
+              selectedSize === size.size ? "active" : ""
+            }" type="button" value="${size.size}">${size.size}</button>`
+          : `<button class="size-button" type="button" value="${size.size}" disabled>${size.size}</button>`;
       })
       .join("");
 
-    const allSizes = item.sizes.map((size) => size).join(", ");
+    const allSizes = product.sizes.map((size) => size.size).join(", ");
 
     return `
 			<section class="main-detail-section">
         <div class="detail-imager">
-          <img src="${item.url}" alt="shoe_${item.shoeId}" />
+          <img src="${product.url}" alt="shoe_${product.shoeId}" />
         </div>
 
         <div class="product-details">
-          <h2>${item.brand} ${item.gender} ${item.description}</h2>
+          <h2>${product.brand} ${product.gender} ${product.description}</h2>
 
           <div class="price-row">
             ${oldPrice}
@@ -133,9 +116,9 @@ document.addEventListener("DOMContentLoaded", async function () {
           </div>
 
           <div class="product-meta">
-            <p><strong>SKU:</strong> ${item.sku}</p>
+            <p><strong>SKU:</strong> ${product.sku}</p>
             <p>
-              <strong>Tags:</strong> ${item.brand.toLowerCase()}, ${item.gender.toLowerCase()}, footwear, ${item.category.toLowerCase()}
+              <strong>Tags:</strong> ${product.brand.toLowerCase()}, ${product.gender.toLowerCase()}, footwear, ${product.category.toLowerCase()}
             </p>				
             <a href="#">Share Reviews</a>
           </div>
@@ -155,15 +138,15 @@ document.addEventListener("DOMContentLoaded", async function () {
             <tbody>
               <tr>
                 <th>Weight</th>
-                <td>${item.weight}</td>
+                <td>${product.weight}</td>
               </tr>
               <tr>
                 <th>Digi</th>
-                <td style="text-transform: uppercase">${item.category.toUpperCase()}</td>
+                <td style="text-transform: uppercase">${product.category.toUpperCase()}</td>
               </tr>
               <tr>
                 <th>Color</th>
-                <td>${item.color.toUpperCase()}</td>
+                <td>${product.color.toUpperCase()}</td>
               </tr>
               <tr>
                 <th>Size</th>
@@ -171,11 +154,11 @@ document.addEventListener("DOMContentLoaded", async function () {
               </tr>
               <tr>
                 <th>Brand</th>
-                <td>${item.brand}</td>
+                <td>${product.brand}</td>
               </tr>
               <tr>
                 <th>Gender</th>
-                <td>${item.gender}</td>
+                <td>${product.gender}</td>
               </tr>
             </tbody>
           </table>
@@ -184,5 +167,116 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
   }
 
-  bodySection.innerHTML = generateDetailHTML(product);
+  /* Initial page render */
+  bodySection.innerHTML = generateDetailHTML();
+
+  /* Event handlers - select size */
+  document.querySelector(".size-buttons").addEventListener("click", (e) => {
+    const button = e.target.closest(".size-button.instock");
+    if (!button) return;
+
+    selectedSize = parseInt(button.value); // Update selected size
+    console.log("Selected size:", selectedSize);
+
+    // Remove 'active' from all buttons
+    document
+      .querySelectorAll(".size-button.instock")
+      .forEach((btn) => btn.classList.remove("active"));
+
+    // Add 'active' to the clicked button
+    button.classList.add("active");
+  });
+
+  /* Event handler - select shoes */
+  document.querySelector(".quantity-input").addEventListener("input", (e) => {
+    selectedShoes = parseInt(e.target.value, 10);
+    console.log("Selected quantity:", selectedShoes);
+  });
+
+  function checkAvailability(action) {
+    const user = JSON.parse(localStorage.getItem("user")) || null;
+
+    if (!user || isNaN(user.userId)) {
+      alert("Please login.");
+      location.href = "login.html";
+      return;
+    }
+
+    const newPurchase = {
+      shoeId: product.shoeId,
+      quantity: selectedShoes,
+      size: selectedSize,
+    };
+
+    // Get the quantity for the selected size
+    const sizeObj = product.sizes.find((s) => s.size === selectedSize);
+    const availableQty = sizeObj ? sizeObj.quantity : 0;
+
+    // Get existing cart object or default
+    const curCart = JSON.parse(localStorage.getItem("cart")) || {
+      userId: user.userId,
+      cart: [],
+    };
+
+    // Check cart ownership
+    if (curCart.userId !== user.userId) {
+      alert("Unauthorized access.");
+      console.log("User tried to access someone else's cart");
+      return;
+    }
+
+    // --- BUY NOW ---
+    if (action === "buy") {
+      if (newPurchase.quantity <= availableQty) {
+        console.log("Preparing for purchase:", newPurchase);
+        localStorage.setItem("purchase", JSON.stringify(newPurchase));
+        location.href = "payment.html";
+      } else {
+        console.log("Too much quantity requested");
+        alert("Cannot buy more than available stock.");
+      }
+    }
+
+    // --- ADD TO CART ---
+    else {
+      const existingItem = curCart.cart.find(
+        (item) =>
+          item.shoeId === newPurchase.shoeId && item.size === newPurchase.size
+      );
+
+      if (existingItem) {
+        const newQuantity = existingItem.quantity + newPurchase.quantity;
+
+        if (newQuantity <= availableQty) {
+          existingItem.quantity = newQuantity;
+          console.log("Updated quantity for existing item:", existingItem);
+        } else {
+          console.log("Too much quantity requested");
+          alert("Cannot add more than available stock.");
+        }
+      } else {
+        if (newPurchase.quantity <= availableQty) {
+          curCart.cart.push(newPurchase);
+          console.log("Added new item to cart:", newPurchase);
+        } else {
+          console.log("Too much quantity requested");
+          alert("Cannot add more than available stock.");
+        }
+      }
+
+      localStorage.setItem("cart", JSON.stringify(curCart));
+    }
+  }
+
+  /* Event handler - add to cart */
+  document
+    .querySelector(".add-to-cart-button")
+    .addEventListener("click", () => {
+      checkAvailability("add");
+    });
+
+  /* Event handler - buy now */
+  document.querySelector(".buy-now-button").addEventListener("click", () => {
+    checkAvailability("buy");
+  });
 });
