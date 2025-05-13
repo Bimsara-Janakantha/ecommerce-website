@@ -365,8 +365,17 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
 
+      const checkoutData = {
+        user: user?.userId || 1, // testing
+        subTotal,
+        shipping,
+        totalDiscount,
+        coupon,
+        cart: cartData,
+      };
+
       // Store cart as 'checkout'
-      localStorage.setItem("checkout", JSON.stringify(cartData));
+      localStorage.setItem("checkout", JSON.stringify(checkoutData));
 
       // Redirect to checkout page
       window.location.href = "checkout.html";

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logos/logo.svg" />
+    <title>Sole Heven</title>
+
+    <!-- Custom Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/checkout.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+
+    <!-- Google Pay -->
+    <script
+      async
+      src="https://pay.google.com/gp/p/js/pay.js"
+      onload="onGooglePayLoaded()"
+    ></script>
+  </head>
+
+  <body>
+    <!-- App Bar -->
+    <header id="header" class="header">
+      <a class="logo" href="home.html" data-link>
+        <img
+          src="../../assets/logos/logo.svg"
+          height="80px"
+          class="logo"
+          alt="Sole Haven Logo"
+        />
+        <h1>SOLE HAVEN</h1>
+      </a>
+
+      <nav>
+        <ul id="navbar" class="navbar"></ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="checkout-hero">
+        <h2>Checkout</h2>
+      </div>
+
+      <div class="checkout-container">
+        <section class="left-section">
+          <form novalidate>
+            <fieldset>
+              <legend>SHIPPING ADDRESS</legend>
+
+              <div class="input-row-2">
+                <input
+                  id="fName"
+                  type="text"
+                  placeholder="First Name *"
+                  required
+                />
+                <input
+                  id="lName"
+                  type="text"
+                  placeholder="Last Name *"
+                  required
+                />
+              </div>
+
+              <div class="input-row-3">
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Email Address *"
+                  required
+                />
+                <input
+                  id="mobile"
+                  type="tel"
+                  placeholder="Mobile Number *"
+                  required
+                  maxlength="12"
+                />
+              </div>
+
+              <div class="input-full">
+                <input
+                  id="street"
+                  type="text"
+                  placeholder="Street Name & Number *"
+                  required
+                />
+              </div>
+
+              <div class="input-full">
+                <input
+                  id="apt"
+                  type="text"
+                  placeholder="Apt / Suite / Unit (Optional)"
+                />
+              </div>
+
+              <div class="input-row-3-alt">
+                <input id="city" type="text" placeholder="City *" required />
+
+                <select id="province" required>
+                  <option value="" disabled selected>Province *</option>
+                  <option value="central">Central Province</option>
+                  <option value="eastern">Eastern Province</option>
+                  <option value="north-central">North Central Province</option>
+                  <option value="northern">Northern Province</option>
+                  <option value="north-western">North Western Province</option>
+                  <option value="sabaragamuwa">Sabaragamuwa Province</option>
+                  <option value="southern">Southern Province</option>
+                  <option value="uva">Uva Province</option>
+                  <option value="western">Western Province</option>
+                </select>
+
+                <input
+                  id="postal"
+                  type="text"
+                  placeholder="Postal Code *"
+                  required
+                />
+              </div>
+            </fieldset>
+
+            <fieldset class="special-notes">
+              <legend>SPECIAL INSTRUCTIONS</legend>
+
+              <label for="notes">
+                Let us know if you have any specific delivery or order
+                instructions:
+              </label>
+
+              <div class="text-area">
+                <textarea
+                  id="notes"
+                  name="notes"
+                  id="notes"
+                  maxlength="100"
+                  placeholder="E.g., Leave package at the front door, call on arrival..."
+                ></textarea>
+                <div class="note-hint">100/150</div>
+              </div>
+            </fieldset>
+          </form>
+        </section>
+
+        <aside class="right-section">
+          <h3 class="order-summary-title">ORDER SUMMARY</h3>
+
+          <div class="order-summary"></div>
+
+          <h3 class="order-summary-title" style="margin-bottom: 0">
+            BAG SUMMARY
+          </h3>
+          <p class="arrival-time">Arrives in 4-7 days</p>
+
+          <div class="bag-summary"></div>
+
+          <div class="action-section">
+            <button id="back-to-cart">back to cart</button>
+            <div id="google-pay"></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <img
+          style="width: 170px"
+          src="../assets/logos/logo.svg"
+          alt="Sole Haven Logo"
+        />
+      </div>
+
+      <div class="col">
+        <h3>Contact</h3>
+        <p><strong>Address:</strong> 456 Kandy Road, Street 23, Kurunegala</p>
+        <p><strong>Phone:</strong> 0723456788 / 0372234566</p>
+      </div>
+
+      <div class="col">
+        <h3>Follow Us</h3>
+        <div class="icon">
+          <a href="https://www.facebook.com" target="_blank"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="https://www.twitter.com" target="_blank"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="https://www.instagram.com" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://www.youtube.com" target="_blank"
+            ><i class="fab fa-youtube"></i
+          ></a>
+        </div>
+      </div>
+
+      <div class="col about">
+        <h3>About</h3>
+        <a href="about.html">About Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="support.html">Customer Support</a>
+      </div>
+
+      <div class="payment">
+        <p>Secured Payment Gateways</p>
+        <img src="../assets/logos/google_Pay.png" alt="Google Pay" />
+      </div>
+    </footer>
+
+    <script src="../js/header.js"></script>
+    <script src="../js/checkout.js"></script>
+    <script>
+      function onGooglePayLoaded() {
+        const paymentsClient = new google.payments.api.PaymentsClient({
+          environment: "TEST",
+        });
+
+        const isReadyToPayRequest = {
+          apiVersion: 2,
+          apiVersionMinor: 0,
+          allowedPaymentMethods: [
+            {
+              type: "CARD",
+              parameters: {
+                allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+                allowedCardNetworks: ["VISA", "MASTERCARD"],
+              },
+            },
+          ],
+        };
+
+        paymentsClient
+          .isReadyToPay(isReadyToPayRequest)
+          .then(function (response) {
+            if (response.result) {
+              const button = paymentsClient.createButton({
+                onClick: onGooglePaymentButtonClicked,
+                buttonColor: "default",
+                buttonType: "checkout",
+                buttonRadius: 5,
+                buttonSizeMode: "fill",
+                buttonLocale: "en",
+                buttonSize: "fill", // small | medium | large | fill (depending on buttonSizeMode)
+              });
+
+              document.getElementById("google-pay").appendChild(button);
+            }
+          })
+          .catch(function (err) {
+            console.error("Google Pay failed to load:", err);
+          });
+      }
+
+      function onGooglePaymentButtonClicked() {
+        const paymentDataRequest = {
+          apiVersion: 2,
+          apiVersionMinor: 0,
+          allowedPaymentMethods: [
+            {
+              type: "CARD",
+              parameters: {
+                allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+                allowedCardNetworks: ["VISA", "MASTERCARD"],
+              },
+              tokenizationSpecification: {
+                type: "PAYMENT_GATEWAY",
+                parameters: {
+                  gateway: "example",
+                  gatewayMerchantId: "exampleMerchantId",
+                },
+              },
+            },
+          ],
+          merchantInfo: {
+            merchantId: "01234567890123456789", // Optional in TEST
+            merchantName: "Example Merchant",
+          },
+          transactionInfo: {
+            totalPriceStatus: "FINAL",
+            totalPrice: "10.00",
+            currencyCode: "USD",
+            countryCode: "US",
+          },
+        };
+
+        const paymentsClient = new google.payments.api.PaymentsClient({
+          environment: "TEST",
+        });
+        paymentsClient
+          .loadPaymentData(paymentDataRequest)
+          .then(function (paymentData) {
+            // Handle successful payment
+            console.log("Payment successful:", paymentData);
+          })
+          .catch(function (err) {
+            // Handle error
+            console.error("Payment failed:", err);
+          });
+      }
+    </script>
+  </body>
+</html>
