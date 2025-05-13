@@ -372,7 +372,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
 
       const checkoutData = {
-        user: user?.userId || 1, // testing
+        user: user?.userId,
         subTotal,
         shipping,
         totalDiscount,
@@ -382,6 +382,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       // Store cart as 'checkout'
       localStorage.setItem("checkout", JSON.stringify(checkoutData));
+
+      // Remove current cart or the purchase
+      if (purchaseItem !== null) {
+        localStorage.removeItem("purchase");
+      } else {
+        localStorage.removeItem("cart");
+      }
 
       // Redirect to checkout page
       window.location.href = "checkout.html";
