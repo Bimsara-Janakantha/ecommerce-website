@@ -86,9 +86,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   /* Validate Page */
   if (!user || isNaN(user.userId)) {
-    // alert("Please login.");
-    // location.href = "login.html";
-    // return;
+    alert("Please login.");
+    location.href = "login.html";
+    return;
   }
 
   /* Cart Data (modifiable) */
