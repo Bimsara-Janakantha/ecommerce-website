@@ -1,37 +1,45 @@
 /* --------------------------- Google Pay Implementation ----------------------------- */
 let paymentsClient;
+let amountToPay = 0;
 
-// Google API configuration
+// Tokenization configuration
 const tokenizationSpecification = {
   type: "PAYMENT_GATEWAY",
   parameters: {
     gateway: "example",
-    gatewayMerchantId: "gatewayMerchantId",
+    gatewayMerchantId: "exampleMerchantId",
   },
 };
 
+// Card payment method configuration
 const cardPaymentMethod = {
   type: "CARD",
-  tokenizationSpecification: tokenizationSpecification,
+  tokenizationSpecification,
   parameters: {
     allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
     allowedCardNetworks: ["VISA", "MASTERCARD"],
   },
 };
 
-const googlePayConfigurartion = {
+// Base request configuration
+const baseRequest = {
   apiVersion: 2,
   apiVersionMinor: 0,
+};
+
+// Full Google Pay configuration
+const googlePayConfiguration = {
+  ...baseRequest,
   allowedPaymentMethods: [cardPaymentMethod],
 };
 
-// Google Pay - Merchant Information
+// Merchant information
 const merchantInfo = {
   merchantId: "01234567890123456789",
   merchantName: "Example Merchant",
 };
 
-// Fucntion to create google-pay-button
+// Function to create Google Pay button
 function createGooglePayButton() {
   const button = paymentsClient.createButton({
     onClick: onGooglePaymentButtonClicked,
@@ -39,64 +47,110 @@ function createGooglePayButton() {
     buttonType: "checkout",
     buttonRadius: 5,
     buttonSizeMode: "fill",
-    buttonLocale: "en",
-    buttonSize: "fill",
   });
 
   document.getElementById("google-pay").appendChild(button);
 }
 
-// Function to handle successfull payment
+// Collect shipping info from form
+function getShippingInfo() {
+  return {
+    fName: document.getElementById("fName").value.trim(),
+    lName: document.getElementById("lName").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    mobile: document.getElementById("mobile").value.trim(),
+    street: document.getElementById("street").value.trim(),
+    apt: document.getElementById("apt").value.trim(),
+    city: document.getElementById("city").value.trim(),
+    province: document.getElementById("province").value,
+    postal: document.getElementById("postal").value.trim(),
+    notes: document.getElementById("notes").value.trim(),
+  };
+}
+
+// Validate shipping info
+function validateShippingInfo(info) {
+  for (const [key, value] of Object.entries(info)) {
+    if (["apt", "notes"].includes(key)) continue;
+    if (!value) {
+      alert(`Please fill in the ${key} field.`);
+      return true;
+    }
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(info.email)) {
+    alert("Please enter a valid email address.");
+    return true;
+  }
+
+  const mobileRegex = /^(?:\+94|0)(7\d{8})$/;
+  if (!mobileRegex.test(info.mobile)) {
+    alert(
+      "Please enter a valid mobile number. (e.g., 0712345678 or +94712345678)"
+    );
+    return true;
+  }
+
+  return false;
+}
+
+// Handle payment success
 function handleSuccess(paymentData) {
   console.log("Payment successful:", paymentData);
 }
 
-// Function to handle payment
+// On Google Pay button click
 function onGooglePaymentButtonClicked() {
-  // API information
-  const paymentDataRequest = { ...googlePayConfigurartion };
+  const shippingInfo = getShippingInfo();
 
-  // Information for the merchant
-  paymentDataRequest.merchantInfo = merchantInfo;
+  if (validateShippingInfo(shippingInfo)) {
+    console.log("Invalid Billing Data");
+    return;
+  }
 
-  // Information for the transaction
-  paymentDataRequest.paymentDataRequest.transactionInfo = {
-    totalPriceStatus: "FINAL",
-    totalPrice: "10.00",
-    currencyCode: "LKR",
-    countryCode: "LK",
+  console.log("Billing info is valid:", shippingInfo);
+  console.log("Amount to pay: ", amountToPay);
+
+  // Create payment request object
+  const paymentDataRequest = {
+    ...baseRequest,
+    allowedPaymentMethods: [cardPaymentMethod],
+    transactionInfo: {
+      totalPriceStatus: "FINAL",
+      totalPrice: `${amountToPay}`,
+      currencyCode: "LKR",
+      countryCode: "LK",
+    },
+    merchantInfo,
   };
 
-  // Process Payment
+  // Load Google Pay dialog
   paymentsClient
     .loadPaymentData(paymentDataRequest)
-    .then(function (paymentData) {
-      handleSuccess(paymentData);
-    })
-    .catch(function (err) {
-      // Handle error
+    .then(handleSuccess)
+    .catch((err) => {
       console.error("Payment failed:", err);
     });
 }
 
-// Function to load google pay button to the UI
+// Initialize Google Pay
 function onGooglePayLoaded() {
   paymentsClient = new google.payments.api.PaymentsClient({
     environment: "TEST",
   });
 
   paymentsClient
-    .isReadyToPay(googlePayConfigurartion)
-    .then(function (response) {
+    .isReadyToPay(googlePayConfiguration)
+    .then((response) => {
       if (response.result) {
         createGooglePayButton();
       }
     })
-    .catch(function (err) {
+    .catch((err) => {
       console.error("Google Pay failed to load:", err);
     });
 }
-
 /* ------------------------------------------------------------------------------------ */
 
 /* -------------------------------- General Functions --------------------------------- */
@@ -112,7 +166,7 @@ function formatCurrency(value) {
 
 /* ------------------------------------ Page DOM -------------------------------------- */
 document.addEventListener("DOMContentLoaded", function () {
-  const checkoutItem = JSON.parse(localStorage.getItem("checkout")) || [];
+  const checkoutItem = JSON.parse(localStorage.getItem("checkout")) || null;
   const user = JSON.parse(localStorage.getItem("user")) || null;
 
   /* User validation */
@@ -123,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* Checkout List Validation */
-  if (!checkoutItem || checkoutItem.length === 0) {
+  if (!checkoutItem || checkoutItem.cart.length === 0) {
     alert("Nothing to checkout.");
     location.href = "shop.html";
     return;
@@ -169,7 +223,8 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Rendering - Cart Total Table Body */
   function generateOrderHTML() {
     const { subTotal, shipping, totalDiscount, coupon } = checkoutItem;
-    const finalPrice = subTotal + shipping - totalDiscount - coupon;
+    amountToPay = subTotal + shipping - totalDiscount - coupon;
+
     return `
 			<div><strong>Subtotal</strong><span>${formatCurrency(subTotal)}</span></div>
 			<div><strong>Shipping</strong><span>${formatCurrency(shipping)}</span></div>
@@ -179,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			<div><strong>Coupons</strong><span>- ${formatCurrency(coupon)}</span></div>
 			<hr />
 			<div class="total">
-				<span>TOTAL</span><span>${formatCurrency(finalPrice)}</span>
+				<span>TOTAL</span><span>${formatCurrency(amountToPay)}</span>
 			</div>
 		`;
   }
@@ -198,67 +253,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Back to cart");
     localStorage.removeItem("checkout");
     this.location.href = "cart.html";
-  });
-
-  /* Event handlers - Billing info */
-  function getBillingInfo() {
-    const billingInfo = {
-      fName: document.getElementById("fName").value.trim(),
-      lName: document.getElementById("lName").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      mobile: document.getElementById("mobile").value.trim(),
-      street: document.getElementById("street").value.trim(),
-      apt: document.getElementById("apt").value.trim(),
-      city: document.getElementById("city").value.trim(),
-      province: document.getElementById("province").value,
-      postal: document.getElementById("postal").value.trim(),
-      notes: document.getElementById("notes").value.trim(),
-    };
-
-    return billingInfo;
-  }
-
-  function validateBillingInfo(info) {
-    // Check required fields
-    for (const [key, value] of Object.entries(info)) {
-      if (["apt", "notes"].includes(key)) continue; // optional fields
-      if (!value) {
-        alert(`Please fill in the ${key} field.`);
-        return false;
-      }
-    }
-
-    // Email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(info.email)) {
-      alert("Please enter a valid email address.");
-      return false;
-    }
-
-    // Mobile number - digits only & length check (e.g., 10–12)
-    const mobileRegex = /^(?:\+94|0)(7\d{8})$/;
-    if (!mobileRegex.test(info.mobile)) {
-      alert(
-        "Please enter a valid mobile number. (e.g., 0712345678 or +94712345678)"
-      );
-      return false;
-    }
-
-    return true;
-  }
-
-  // Attach to form submit
-  document.querySelector("form").addEventListener("submit", function (e) {
-    e.preventDefault(); // prevent default form submission
-
-    const billingInfo = getBillingInfo();
-
-    if (validateBillingInfo(billingInfo)) {
-      // All good — proceed
-      console.log("Billing info is valid:", billingInfo);
-      alert("Billing info submitted successfully.");
-      // You can now send this data to a backend or continue
-    }
   });
 });
 
