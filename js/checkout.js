@@ -171,9 +171,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* User validation */
   if (!user || isNaN(user.userId)) {
-    // alert("Please login.");
-    // location.href = "login.html";
-    // return;
+    alert("Please login.");
+    location.href = "login.html";
+    return;
   }
 
   /* Checkout List Validation */
