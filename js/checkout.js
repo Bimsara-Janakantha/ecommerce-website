@@ -5,7 +5,7 @@ const formatCurrency = (value) =>
     currency: "LKR",
   }).format(value);
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", function () {
   const checkoutItem = JSON.parse(localStorage.getItem("checkout")) || [];
   const user = JSON.parse(localStorage.getItem("user")) || null;
 
@@ -24,19 +24,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   console.log("Checkout Items: ", checkoutItem);
-
-  let billingInfo = {
-    fName: "",
-    lName: "",
-    email: "",
-    mobile: "",
-    street: "",
-    apt: "",
-    city: "",
-    province: "",
-    postal: "",
-    notes: "",
-  };
 
   /* Rendering - Order Summary */
   function generateBagHTML(item) {
@@ -168,3 +155,91 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   });
 });
+
+function onGooglePayLoaded() {
+  const paymentsClient = new google.payments.api.PaymentsClient({
+    environment: "TEST",
+  });
+
+  const isReadyToPayRequest = {
+    apiVersion: 2,
+    apiVersionMinor: 0,
+    allowedPaymentMethods: [
+      {
+        type: "CARD",
+        parameters: {
+          allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+          allowedCardNetworks: ["VISA", "MASTERCARD"],
+        },
+      },
+    ],
+  };
+
+  paymentsClient
+    .isReadyToPay(isReadyToPayRequest)
+    .then(function (response) {
+      if (response.result) {
+        const button = paymentsClient.createButton({
+          onClick: onGooglePaymentButtonClicked,
+          buttonColor: "default",
+          buttonType: "checkout",
+          buttonRadius: 5,
+          buttonSizeMode: "fill",
+          buttonLocale: "en",
+          buttonSize: "fill", // small | medium | large | fill (depending on buttonSizeMode)
+        });
+
+        document.getElementById("google-pay").appendChild(button);
+      }
+    })
+    .catch(function (err) {
+      console.error("Google Pay failed to load:", err);
+    });
+}
+
+function onGooglePaymentButtonClicked() {
+  const paymentDataRequest = {
+    apiVersion: 2,
+    apiVersionMinor: 0,
+    allowedPaymentMethods: [
+      {
+        type: "CARD",
+        parameters: {
+          allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
+          allowedCardNetworks: ["VISA", "MASTERCARD"],
+        },
+        tokenizationSpecification: {
+          type: "PAYMENT_GATEWAY",
+          parameters: {
+            gateway: "example",
+            gatewayMerchantId: "exampleMerchantId",
+          },
+        },
+      },
+    ],
+    merchantInfo: {
+      merchantId: "01234567890123456789", // Optional in TEST
+      merchantName: "Example Merchant",
+    },
+    transactionInfo: {
+      totalPriceStatus: "FINAL",
+      totalPrice: "10.00",
+      currencyCode: "USD",
+      countryCode: "US",
+    },
+  };
+
+  const paymentsClient = new google.payments.api.PaymentsClient({
+    environment: "TEST",
+  });
+  paymentsClient
+    .loadPaymentData(paymentDataRequest)
+    .then(function (paymentData) {
+      // Handle successful payment
+      console.log("Payment successful:", paymentData);
+    })
+    .catch(function (err) {
+      // Handle error
+      console.error("Payment failed:", err);
+    });
+}

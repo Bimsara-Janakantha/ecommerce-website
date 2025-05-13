@@ -21,13 +21,6 @@
     <link rel="stylesheet" href="../css/checkout.css" />
     <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/footer.css" />
-
-    <!-- Google Pay -->
-    <script
-      async
-      src="https://pay.google.com/gp/p/js/pay.js"
-      onload="onGooglePayLoaded()"
-    ></script>
   </head>
 
   <body>
@@ -167,7 +160,7 @@
           <div class="bag-summary"></div>
 
           <div class="action-section">
-            <button id="back-to-cart">back to cart</button>
+            <button id="back-to-cart">Back To Cart</button>
             <div id="google-pay"></div>
           </div>
         </aside>
@@ -222,96 +215,15 @@
       </div>
     </footer>
 
+    <!-- Script fles -->
     <script src="../js/header.js"></script>
     <script src="../js/checkout.js"></script>
-    <script>
-      function onGooglePayLoaded() {
-        const paymentsClient = new google.payments.api.PaymentsClient({
-          environment: "TEST",
-        });
 
-        const isReadyToPayRequest = {
-          apiVersion: 2,
-          apiVersionMinor: 0,
-          allowedPaymentMethods: [
-            {
-              type: "CARD",
-              parameters: {
-                allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-                allowedCardNetworks: ["VISA", "MASTERCARD"],
-              },
-            },
-          ],
-        };
-
-        paymentsClient
-          .isReadyToPay(isReadyToPayRequest)
-          .then(function (response) {
-            if (response.result) {
-              const button = paymentsClient.createButton({
-                onClick: onGooglePaymentButtonClicked,
-                buttonColor: "default",
-                buttonType: "checkout",
-                buttonRadius: 5,
-                buttonSizeMode: "fill",
-                buttonLocale: "en",
-                buttonSize: "fill", // small | medium | large | fill (depending on buttonSizeMode)
-              });
-
-              document.getElementById("google-pay").appendChild(button);
-            }
-          })
-          .catch(function (err) {
-            console.error("Google Pay failed to load:", err);
-          });
-      }
-
-      function onGooglePaymentButtonClicked() {
-        const paymentDataRequest = {
-          apiVersion: 2,
-          apiVersionMinor: 0,
-          allowedPaymentMethods: [
-            {
-              type: "CARD",
-              parameters: {
-                allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-                allowedCardNetworks: ["VISA", "MASTERCARD"],
-              },
-              tokenizationSpecification: {
-                type: "PAYMENT_GATEWAY",
-                parameters: {
-                  gateway: "example",
-                  gatewayMerchantId: "exampleMerchantId",
-                },
-              },
-            },
-          ],
-          merchantInfo: {
-            merchantId: "01234567890123456789", // Optional in TEST
-            merchantName: "Example Merchant",
-          },
-          transactionInfo: {
-            totalPriceStatus: "FINAL",
-            totalPrice: "10.00",
-            currencyCode: "USD",
-            countryCode: "US",
-          },
-        };
-
-        const paymentsClient = new google.payments.api.PaymentsClient({
-          environment: "TEST",
-        });
-        paymentsClient
-          .loadPaymentData(paymentDataRequest)
-          .then(function (paymentData) {
-            // Handle successful payment
-            console.log("Payment successful:", paymentData);
-          })
-          .catch(function (err) {
-            // Handle error
-            console.error("Payment failed:", err);
-          });
-      }
-    </script>
+    <!-- Google Pay Script -->
+    <script
+      async
+      src="https://pay.google.com/gp/p/js/pay.js"
+      onload="onGooglePayLoaded()"
+    ></script>
   </body>
 </html>

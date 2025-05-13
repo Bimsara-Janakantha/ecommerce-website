@@ -194,6 +194,7 @@ textarea#notes:focus {
 	width: 100%;
 }
 .action-section #back-to-cart{
+	text-transform: none;
 	background: none;
 	border: 2px solid #088178;
 	color: #088178;

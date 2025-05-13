@@ -3,6 +3,7 @@ const dummyPurchases = [
     shoeId: "SH001",
     brand: "Nike",
     gender: "Men",
+    catagory: "sneekers",
     description: "Nike Air Zoom Pegasus 39",
     url: "../assets/men_shoes/shoe_13.jpeg",
     unitPrice: 17999,
@@ -15,6 +16,7 @@ const dummyPurchases = [
     shoeId: "SH002",
     brand: "Adidas",
     gender: "Women",
+    catagory: "sneekers",
     description: "Adidas Ultraboost Light Running Shoes",
     url: "../assets/women_shoes/shoe_11.jpeg",
     unitPrice: 20999,
@@ -27,6 +29,7 @@ const dummyPurchases = [
     shoeId: "SH003",
     brand: "Puma",
     gender: "Unisex",
+    catagory: "sneekers",
     description: "Puma Smash V2 Sneakers",
     url: "../assets/men_shoes/shoe_1.jpg",
     unitPrice: 12999,
@@ -39,6 +42,7 @@ const dummyPurchases = [
     shoeId: "SH004",
     brand: "Reebok",
     gender: "Men",
+    catagory: "sneekers",
     description: "Reebok Flexagon Energy TR 3.0",
     url: "../assets/boys_shoes/shoe_1.jpg",
     unitPrice: 14999,
@@ -51,6 +55,7 @@ const dummyPurchases = [
     shoeId: "SH005",
     brand: "Fila",
     gender: "Women",
+    catagory: "sneekers",
     description: "Fila Disruptor II Premium",
     url: "../assets/girls_shoes/shoe_4.jpg",
     unitPrice: 18999,
@@ -108,6 +113,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           <img class="product-image" src="${item.url}" alt="${item.shoeId}" />
           ${item.brand} ${item.gender} ${item.description} - Size ${item.size}
+          catagory:"sneekers", 
         </td>
 
         <td class="unit-price">${formatCurrency(item.unitPrice)}</td>
