@@ -25,10 +25,12 @@ if (!in_array($requestMethod, $allowedMethods)) {
 
 // Routing table: map request paths to handler files
 $routes = [
+    'test' => './controllers/test-db.php',
     'login'  => './routes/login.php',
     'user'   => './routes/user.php',
     'products' => './routes/products.php',
-    'update' => './routes/update.php'
+    'update' => './routes/update.php',
+    'auth' => './routes/auth.php'
 ];
 
 // Normalize path: remove everything up to and including '/api/app.php'
