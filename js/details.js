@@ -259,12 +259,14 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (existingItem) {
         const newQuantity = existingItem.quantity + newPurchase.quantity;
 
-        if (newQuantity <= availableQty) {
+        if (newQuantity <= availableQty && newQuantity < 11) {
           existingItem.quantity = newQuantity;
           console.log("Updated quantity for existing item:", existingItem);
         } else {
           console.log("Too much quantity requested");
-          alert("Cannot add more than available stock.");
+          alert(
+            "Cannot add more than 10 pairs or available stock. If you need more pairs please contact us"
+          );
         }
       } else {
         if (newPurchase.quantity <= availableQty) {
