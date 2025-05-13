@@ -101,15 +101,16 @@ function onGooglePayLoaded() {
 
 /* -------------------------------- General Functions --------------------------------- */
 // Numbering format
-const formatCurrency = (value) =>
-  new Intl.NumberFormat("en-LK", {
+function formatCurrency(value) {
+  return new Intl.NumberFormat("en-LK", {
     style: "currency",
     currency: "LKR",
   }).format(value);
+}
 
 /* ------------------------------------------------------------------------------------ */
 
-// Page DOM
+/* ------------------------------------ Page DOM -------------------------------------- */
 document.addEventListener("DOMContentLoaded", function () {
   const checkoutItem = JSON.parse(localStorage.getItem("checkout")) || [];
   const user = JSON.parse(localStorage.getItem("user")) || null;
@@ -260,3 +261,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+/* ------------------------------------------------------------------------------------ */
