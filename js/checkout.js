@@ -99,6 +99,13 @@ function validateShippingInfo(info) {
 function handleSuccess(paymentData) {
   console.log("Payment successful:", paymentData);
   localStorage.removeItem("checkout");
+
+  const purchaseData = localStorage.getItem("purchase") || null;
+  if (purchaseData === null) {
+    localStorage.removeItem("cart");
+  } else {
+    localStorage.removeItem("purchase");
+  }
 }
 
 // On Google Pay button click
