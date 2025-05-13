@@ -254,6 +254,16 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.removeItem("checkout");
     this.location.href = "cart.html";
   });
+
+  /* Event Handler - update word count */
+  const textarea = document.getElementById("notes");
+  const hint = document.getElementById("noteHint");
+  const maxLength = textarea.maxLength;
+
+  textarea.addEventListener("input", function () {
+    const currentLength = textarea.value.length;
+    hint.textContent = `${currentLength}/${maxLength}`;
+  });
 });
 
 /* ------------------------------------------------------------------------------------ */
