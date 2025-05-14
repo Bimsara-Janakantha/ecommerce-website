@@ -4,7 +4,7 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 // Route based on method
 if ($requestMethod === 'POST') {
-    require_once __DIR__ . '/../controllers/auth.add.php';
+    require_once __DIR__ . '/../controllers/users.add.php';
 } elseif ($requestMethod === 'GET') {
     require_once __DIR__ . '/../controllers/getInfo.php';
 } else {

@@ -27,10 +27,9 @@ if (!in_array($requestMethod, $allowedMethods)) {
 $routes = [
     'test' => './controllers/test-db.php',
     'login'  => './routes/login.php',
-    'user'   => './routes/user.php',
+    'users'   => './routes/users.php',
     'products' => './routes/products.php',
     'update' => './routes/update.php',
-    'auth' => './routes/auth.php'
 ];
 
 // Normalize path: remove everything up to and including '/api/app.php'

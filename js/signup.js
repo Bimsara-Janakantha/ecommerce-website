@@ -1,86 +1,91 @@
-addEventListener("DOMContentLoaded", async function () {
-  // Elements
-  const emailInput = document.querySelector("#signup-email");
-  const otpInput = document.querySelector("#signup-otp");
-  const passwordInput = document.querySelector("#signup-password");
-  const confirmPwdInput = document.querySelector("#signup-confirmPwd");
-  const agreedCheckbox = document.querySelector("#agreed");
+import { postData } from "../utils/connection.js";
 
-  const inputGroups = document.querySelectorAll(".input-group");
-  const headings = document.querySelectorAll("h4");
-  const checkboxLabel = document.querySelector(".checkbox-group");
-  const signupBtn = document.querySelector("button[type='submit']");
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+  const username = document.getElementById("signup-username");
+  const password = document.getElementById("signup-password");
+  const confirmPwd = document.getElementById("signup-confirmPwd");
+  const agreeCheckbox = document.getElementById("agreed");
+  const status_msg = document.querySelector("#status-message");
+  const spinner = form.querySelector(".fa-spinner");
+  const spinnerText = document.querySelector(".submit-btn span");
 
-  let currentStep = 1;
-
-  // Helper: Switch step
-  function goToStep(step) {
-    inputGroups.forEach(
-      (group, i) => (group.style.display = i === step - 1 ? "block" : "none")
-    );
-    headings.forEach(
-      (heading, i) =>
-        (heading.style.display = i === step - 1 ? "block" : "none")
-    );
-
-    if (step === 3) checkboxLabel.style.display = "block";
-    else checkboxLabel.style.display = "none";
-  }
-
-  // Step 1: Email submission
-  emailInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      // Add your validation/send email API logic here
-      goToStep(2);
-      updateStepper(2);
-    }
-  });
-
-  // Step 2: OTP submission
-  otpInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      // Add your OTP verification logic here
-      goToStep(3);
-      updateStepper(3);
-    }
-  });
-
-  // Step 3: Password setup + Submit
-  signupBtn.addEventListener("click", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (
-      passwordInput.value.length >= 6 &&
-      passwordInput.value === confirmPwdInput.value &&
-      agreedCheckbox.checked
-    ) {
-      signupBtn.disabled = true;
-      signupBtn.querySelector("i").style.display = "inline-block";
-      signupBtn.textContent = " Signing up...";
-      // Call API to complete registration
-    } else {
-      alert("Please check your inputs and agreement.");
+
+    // Clear previous errors
+    username.setCustomValidity("");
+    password.setCustomValidity("");
+    confirmPwd.setCustomValidity("");
+
+    // Function to display message
+    function notifyMe(message, type) {
+      const icon =
+        type === "error"
+          ? `<i class="fa-regular fa-circle-xmark"></i>`
+          : `<i class="fa-regular fa-circle-check"></i>`;
+      status_msg.innerHTML = ` ${icon} ${message} `;
+      status_msg.classList.add(type);
+      status_msg.style.display = "flex";
+
+      // Auto-hide after 3 seconds (optional)
+      setTimeout(() => {
+        status_msg.classList.remove(type);
+        status_msg.style.display = "none";
+      }, 3000);
     }
-  });
 
-  // Stepper update
-  function updateStepper(step) {
-    const circles = document.querySelectorAll(".signup-stepper .circle");
-    circles.forEach((circle, i) => {
-      if (i + 1 < step) {
-        circle.className = "circle completed";
-        circle.innerHTML = `<i class="fas fa-check"></i>`;
-      } else if (i + 1 === step) {
-        circle.className = "circle current";
-        circle.innerHTML = `${step}`;
-      } else {
-        circle.className = "circle upcoming";
-        circle.innerHTML = `${i + 1}`;
+    // Validate username
+    if (username.value.length < 5) {
+      username.setCustomValidity("Username should be more than 4 characters");
+      username.reportValidity();
+      return;
+    }
+
+    // Validate password match
+    if (password.value !== confirmPwd.value) {
+      confirmPwd.setCustomValidity("Passwords do not match.");
+      confirmPwd.reportValidity();
+      return;
+    }
+
+    // Validate terms acceptance
+    if (!agreeCheckbox.checked) {
+      notifyMe(
+        "Please accept the terms and conditions before signing up.",
+        "error"
+      );
+      return;
+    }
+
+    // Show spinner
+    spinner.style.display = "inline-block";
+
+    // Backend Verification Logic
+    const addUser = async (user) => {
+      //console.log("User: ", user);
+      spinner.style.display = "block";
+      spinnerText.style.display = "none";
+
+      try {
+        const serverResponse = await postData("users", user);
+
+        if (serverResponse.status === 201) {
+          console.log("User registered successfully.");
+          notifyMe("User registered successfully.", "success");
+          location.href = "/home.html";
+        } else if (serverResponse.status === 226) {
+          notifyMe("Username alredy taken", "error");
+        }
+      } catch (error) {
+        console.error("Signup Error: ", error);
+        notifyMe("Something went wrong.", "error");
+      } finally {
+        spinner.style.display = "none";
+        spinnerText.style.display = "block";
       }
-    });
-  }
+    };
 
-  // Initial setup
-  goToStep(1);
+    addUser({ username: username.value, password: password.value });
+  });
 });

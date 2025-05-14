@@ -8,11 +8,56 @@
     background-color: #e6f2f2;
     font-family: Arial, sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 1rem;
   }
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+.status-message {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #fff;
+  padding: 20px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: "Montserrat";
+  font-size: 18px;
+  gap: 12px;
+  animation: slideInFromRight 0.5s ease-out forwards;
+  z-index: 1000;
+  font-weight: 500;
+}
+.status-message.hide {
+  animation: fadeOut 0.5s ease forwards;
+}
+.status-message.success {
+  color: #088178;
+}
+.status-message.error {
+  color: #e20331;
+}
+
   a {
     color: inherit;
     text-decoration: underline;
@@ -89,6 +134,7 @@
     color: #088178;
     width: 100%;
     margin-bottom: 20px;
+    text-align: center;
   } 
   form {
     display: flex;
@@ -157,6 +203,9 @@
   /* Button */
   button[type="submit"] {
     background-color: #088178;
+    display: flex;
+    justify-content: center;
+    align-self: center;
     color: white;
     border-radius: 0.25rem;
     padding: 0.6rem 1.5rem;
@@ -165,12 +214,12 @@
     margin-top: 1.5rem;
     max-width: 200px;
     width: 100%;
-    align-self: center;
     transition: background-color 0.2s;
   }
   button[type="submit"]:hover {
     background-color: #066760;
   }
+  
 
   /* Bottom links container */
   .bottom-links {
