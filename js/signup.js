@@ -10,6 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const spinner = form.querySelector(".fa-spinner");
   const spinnerText = document.querySelector(".submit-btn span");
 
+  const user = JSON.parse(localStorage.getItem("user")) || null;
+
+  if (user !== null) {
+    console.log("already loged in");
+    location.href = "home.html";
+  }
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -73,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (serverResponse.status === 201) {
           console.log("User registered successfully.");
           notifyMe("User registered successfully.", "success");
-          location.href = "/home.html";
+          location.href = "home.html";
         } else if (serverResponse.status === 226) {
           notifyMe("Username alredy taken", "error");
         }
