@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const status_msg = document.querySelector("#status-message");
   const spinner = form.querySelector(".fa-spinner");
   const spinnerText = document.querySelector(".submit-btn span");
+  const toggleBtn = document.getElementById("password-toggle");
 
   const user = localStorage.getItem("user") || null;
 
@@ -84,5 +85,18 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     verifyUser({ username: username.value, password: password.value });
+  });
+
+  toggleBtn.addEventListener("click", () => {
+    const eyeIcon = toggleBtn.querySelector(".fa-eye");
+    const eyeSlashIcon = toggleBtn.querySelector(".fa-eye-slash");
+
+    console.log({ eyeIcon, eyeSlashIcon });
+
+    const isPasswordVisible = password.type === "text";
+
+    password.type = isPasswordVisible ? "password" : "text";
+    eyeIcon.style.display = isPasswordVisible ? "inline" : "none";
+    eyeSlashIcon.style.display = isPasswordVisible ? "none" : "inline";
   });
 });
