@@ -2,10 +2,9 @@ import { postData } from "../utils/connection.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
-  const username = document.getElementById("signup-username");
-  const password = document.getElementById("signup-password");
-  const confirmPwd = document.getElementById("signup-confirmPwd");
-  const agreeCheckbox = document.getElementById("agreed");
+  const username = document.getElementById("login-username");
+  const password = document.getElementById("login-password");
+  const remember = document.getElementById("remember");
   const status_msg = document.querySelector("#status-message");
   const spinner = form.querySelector(".fa-spinner");
   const spinnerText = document.querySelector(".submit-btn span");
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Clear previous errors
     username.setCustomValidity("");
     password.setCustomValidity("");
-    confirmPwd.setCustomValidity("");
 
     // Function to display message
     function notifyMe(message, type) {
@@ -39,6 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         status_msg.classList.remove(type);
         status_msg.style.display = "none";
+
+        if (type === "success") {
+          location.href = "home.html";
+        }
       }, 3000);
     }
 
@@ -49,50 +51,38 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Validate password match
-    if (password.value !== confirmPwd.value) {
-      confirmPwd.setCustomValidity("Passwords do not match.");
-      confirmPwd.reportValidity();
-      return;
-    }
-
     // Validate terms acceptance
-    if (!agreeCheckbox.checked) {
-      notifyMe(
-        "Please accept the terms and conditions before signing up.",
-        "error"
-      );
-      return;
+    if (!remember.checked) {
+      console.log("Remember Me");
     }
 
     // Show spinner
     spinner.style.display = "inline-block";
 
     // Backend Verification Logic
-    const addUser = async (user) => {
+    const verifyUser = async (user) => {
       //console.log("User: ", user);
       spinner.style.display = "block";
       spinnerText.style.display = "none";
 
       try {
-        const serverResponse = await postData("users", user);
-
-        if (serverResponse.status === 201) {
-          console.log("User registered successfully.");
-          notifyMe("User registered successfully.", "success");
-          location.href = "home.html";
-        } else if (serverResponse.status === 226) {
-          notifyMe("Username alredy taken", "error");
-        }
+        const serverResponse = await postData("login", user);
+        const { message, role, userId } = serverResponse.data;
+        notifyMe(message, "success");
+        localStorage.setItem("user", JSON.stringify({ userId, role }));
       } catch (error) {
-        console.error("Signup Error: ", error);
-        notifyMe("Something went wrong.", "error");
+        console.error("Login Error: ", error);
+        if (error.status === 404 || error.status === 401) {
+          notifyMe(error.message, "error");
+        } else {
+          notifyMe("Something went wrong", "error");
+        }
       } finally {
         spinner.style.display = "none";
         spinnerText.style.display = "block";
       }
     };
 
-    addUser({ username: username.value, password: password.value });
+    verifyUser({ username: username.value, password: password.value });
   });
 });

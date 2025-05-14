@@ -19,6 +19,8 @@
   </head>
 
   <body>
+    <div id="status-message" class="status-message" style="display: none"></div>
+
     <div class="login-page" role="main">
       <div class="left">
         <img
@@ -39,14 +41,14 @@
         <form>
           <div class="input-group">
             <span aria-hidden="true" class="input-icon-left">
-              <i class="fa fa-envelope" aria-hidden="true"></i>
+              <i class="fa fa-user-circle-o" aria-hidden="true"></i>
             </span>
             <input
-              id="login-email"
-              name="email"
-              placeholder="Email address"
+              id="login-username"
+              name="username"
+              placeholder="Username"
               type="text"
-              autocomplete="email"
+              autocomplete="username"
               required
             />
           </div>
@@ -73,9 +75,9 @@
             Remember me
           </label>
 
-          <button type="submit">
-            <i class="fa fa-spinner fa-spin fa-fw"></i>
-            LOGIN
+          <button type="submit" class="submit-btn">
+            <i class="fa fa-spinner fa-spin fa-fw" style="display: none"></i>
+            <span>LOGIN</span>
           </button>
         </form>
 
@@ -84,5 +86,7 @@
         </p>
       </div>
     </div>
+
+    <script type="module" src="../js/login.js"></script>
   </body>
 </html>

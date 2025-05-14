@@ -39,6 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         status_msg.classList.remove(type);
         status_msg.style.display = "none";
+
+        if (type === "success") {
+          location.href = "home.html";
+        }
       }, 3000);
     }
 
@@ -76,17 +80,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const serverResponse = await postData("users", user);
-
-        if (serverResponse.status === 201) {
-          console.log("User registered successfully.");
-          notifyMe("User registered successfully.", "success");
-          location.href = "home.html";
-        } else if (serverResponse.status === 226) {
-          notifyMe("Username alredy taken", "error");
-        }
+        const { message, role, userId } = serverResponse.data;
+        localStorage.setItem("user", JSON.stringify({ role, userId }));
+        notifyMe(message, "success");
       } catch (error) {
         console.error("Signup Error: ", error);
-        notifyMe("Something went wrong.", "error");
+        if (error.status === 409 || error.status === 400) {
+          notifyMe(error.message, "error");
+        } else {
+          notifyMe("Something went wrong", "error");
+        }
       } finally {
         spinner.style.display = "none";
         spinnerText.style.display = "block";

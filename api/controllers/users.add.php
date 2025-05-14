@@ -3,56 +3,62 @@ require_once __DIR__ . '/../utils/db.php';
 
 $db = Database::getInstance();
 
+header('Content-Type: application/json');
+
 try {
   // Ensure it's a POST request
   if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    throw new Exception("Method not allowed");
+    http_response_code(405);
+    echo json_encode(['error' => 'Method not allowed']);
+    exit;
   }
 
-  header('Content-Type: application/json');
+  // Parse JSON body
   $data = json_decode(file_get_contents("php://input"), true);
-  $username = $data['username'] ?? '';
-  $password = $data['password'] ?? '';
+  $username = trim($data['username'] ?? '');
+  $password = trim($data['password'] ?? '');
 
   if (empty($username) || empty($password)) {
     http_response_code(400);
-    echo json_encode(['error' => 'username and password are required']);
+    echo json_encode(['error' => 'Username and password are required']);
     exit;
   }
 
-  //echo "username: " . $username . "\n";
-  //echo "password: " . $password . "\n";
-
-  // Check if username already exists in USERS
-  $existingUser = $db->fetch("SELECT * FROM USERS WHERE username = :username", [':username' => $username]);
+  // Check if username already exists
+  $existingUser = $db->fetch("SELECT * FROM USERS WHERE username = :username", [
+    ':username' => $username
+  ]);
 
   if ($existingUser) {
-    http_response_code(226); // Conflict
-    echo json_encode(['error' => 'username already taken']);
+    http_response_code(409); // Conflict
+    echo json_encode(['error' => 'Username already taken']);
     exit;
   }
 
-  // Hashing
+  // Hash password and insert user
   $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-  //echo "Hashed Password: " . $hashedPassword . "\n";
-
-  // Insert USERS table
   $db->execute("
-    INSERT INTO USERS (username, password, role) 
+    INSERT INTO USERS (username, password, role)
     VALUES (:username, :password, :role)
   ", [
     ':username' => $username,
-    ':password'   => $hashedPassword,
-    ':role'   => "customer"
+    ':password' => $hashedPassword,
+    ':role' => 'customer'
   ]);
 
-  //echo "DB Updated!";
+  // Get the newly inserted user's ID
+  $userId = $db->lastInsertId();
 
-  // Success
-  http_response_code(201);
-  echo json_encode(['message' => 'User is added to the database']);
-} catch (Throwable $th) {
-  http_response_code(405);
-  header('Content-Type: application/json');
-  echo json_encode(['error' => $th->getMessage()]);
+  http_response_code(201); // Created
+  echo json_encode([
+    'message' => 'User registered successfully',
+    'userId' => $userId,
+    'role' => 'customer'
+  ]);
+} catch (PDOException $e) {
+  http_response_code(500);
+  echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
+} catch (Throwable $e) {
+  http_response_code(500);
+  echo json_encode(['error' => 'Server error: ' . $e->getMessage()]);
 }
