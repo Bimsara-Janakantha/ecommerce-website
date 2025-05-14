@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const spinner = form.querySelector(".fa-spinner");
   const spinnerText = document.querySelector(".submit-btn span");
 
-  const user = JSON.parse(localStorage.getItem("user")) || null;
+  const user = localStorage.getItem("user") || null;
 
   if (user !== null) {
     console.log("already loged in");
