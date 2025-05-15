@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (newPurchase.quantity <= availableQty) {
         console.log("Preparing for purchase:", newPurchase);
         localStorage.setItem("purchase", JSON.stringify(newPurchase));
-        notifyMe("Item added successfully", "success", "cart.html");
+        notifyMe("Preparing for purchase", "success", "cart.html");
       } else {
         console.log("Too much quantity requested");
         notifyMe("Cannot buy more than available stock.", "error");
