@@ -8,10 +8,10 @@ const getProductList = async (collection) => {
   try {
     const serverResponse = await getData(url);
 
-    console.log("Server Reponse: ", serverResponse);
-
     if (serverResponse.status === 200) {
-      return serverResponse.json();
+      const { message, products } = serverResponse.data;
+      console.log(message);
+      return products;
     }
     return [];
   } catch (error) {
