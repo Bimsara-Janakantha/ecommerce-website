@@ -41,10 +41,21 @@ export const getData = async (path) => {
       method: "GET",
     });
 
-    return response;
+    const resBody = await response.json();
+
+    if (!response.ok) {
+      // Throw a custom error object
+      throw {
+        status: response.status,
+        message: resBody.error || "Unknown error",
+      };
+    }
+    return {
+      status: response.status,
+      data: resBody,
+    };
   } catch (error) {
     console.error("GET Error:", error);
-    alert("Something went wrong. Please try again.");
     throw error;
   }
 };
@@ -61,10 +72,22 @@ export const deleteData = async (path, data) => {
       body: JSON.stringify(data),
     });
 
-    return response;
+    const resBody = await response.json();
+
+    if (!response.ok) {
+      // Throw a custom error object
+      throw {
+        status: response.status,
+        message: resBody.error || "Unknown error",
+      };
+    }
+
+    return {
+      status: response.status,
+      data: resBody,
+    };
   } catch (error) {
     console.error("DELETE Error:", error);
-    alert("Something went wrong. Please try again.");
     throw error;
   }
 };
@@ -81,10 +104,22 @@ export const patchData = async (path, data) => {
       body: JSON.stringify(data),
     });
 
-    return response;
+    const resBody = await response.json();
+
+    if (!response.ok) {
+      // Throw a custom error object
+      throw {
+        status: response.status,
+        message: resBody.error || "Unknown error",
+      };
+    }
+
+    return {
+      status: response.status,
+      data: resBody,
+    };
   } catch (error) {
     console.error("PATCH Error:", error);
-    alert("Something went wrong. Please try again.");
     throw error;
   }
 };

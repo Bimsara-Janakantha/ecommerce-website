@@ -1,3 +1,5 @@
+import { getData } from "../utils/connection.js";
+
 const imageList = [
   "../assets/carousel/crsl-sh1.jpg",
   "../assets/carousel/crsl-sh2.jpg",
@@ -15,58 +17,15 @@ const imageList = [
   "../assets/carousel/crsl-sh14.jpg",
 ];
 
-const productList = [
-  {
-    productId: 1,
-    brand: "Nike",
-    url: "../assets/men_shoes/shoe_1.jpg",
-    description: "Fashion Sneakers Breathable shoes",
-    rating: 5,
-    price: 5000.0,
-  },
-  {
-    productId: 2,
-    brand: "Nike",
-    url: "../assets/women_shoes/shoe_10.webp",
-    description: "Casual Footwear",
-    rating: 4.8,
-    price: 4000.0,
-  },
-  {
-    productId: 3,
-    brand: "Nike",
-    url: "../assets/men_shoes/shoe_12.jpeg",
-    description: "Snakers casual shoes",
-    rating: 4.5,
-    price: 5500.0,
-  },
-  {
-    productId: 4,
-    brand: "Salmon",
-    url: "../assets/men_shoes/shoe_5.jpg",
-    description: "Runing and Hikingshoe",
-    rating: 4.6,
-    price: 8000.0,
-  },
-  {
-    productId: 5,
-    brand: "Point",
-    url: "../assets/women_shoes/shoe_11.jpeg",
-    description: "Multi coloures sport shoes",
-    rating: 4.7,
-    price: 6500.0,
-  },
-  {
-    productId: 6,
-    brand: "New Balance",
-    url: "../assets/women_shoes/shoe_6.jpeg",
-    description: "Runing shoes",
-    rating: 4.4,
-    price: 7000.0,
-  },
-];
+document.addEventListener("DOMContentLoaded", async function () {
+  // Authentication
+  const user = localStorage.getItem("user") || null;
+  if (user === null) {
+    console.log("Not signed in");
+    this.location.href = "login.html";
+  }
 
-document.addEventListener("DOMContentLoaded", function () {
+  /* Carousel Section */
   let index = 0;
   let offset = 0;
   const carousel = document.querySelector(".carousel");
@@ -122,6 +81,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* Featured Items */
   const product = document.querySelector(".product-grid");
+  let productList = [];
+
+  async function getProducts() {
+    try {
+      const serverResponse = await getData("products/featured");
+      if (serverResponse.status === 200) {
+        const { message, products } = serverResponse.data;
+        console.log(message);
+        productList = products;
+      }
+    } catch (error) {
+      const { message } = error;
+      console.log(message);
+    }
+  }
 
   function generateProductHTML(item) {
     const maxStars = 5;
@@ -136,30 +110,47 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
+    const discount = item.discount
+      ? `<div class="discount-badge">${item.discount}% OFF</div>`
+      : "";
+
+    const oldPrice = item.discount
+      ? `<p class="product-old-price">LKR ${item.price.toFixed(2)}</p>`
+      : "";
+    const newPrice = item.discount
+      ? (item.price * (100 - item.discount) * 0.01).toFixed(2)
+      : item.price.toFixed(2);
+
     return `
-    <div class="grid-item">
-      <div class="product">
-        <img src="${item.url}" alt="${item.url.split("/").pop()}" />
-        <div class="description">
-          <h6>${item.brand}</h6>
-          <h5>${item.description}</h5>
-          
-          <div class="star">
-            ${starsHTML}
-          </div>
-          
-          <h4 style="color: #088178">LKR ${item.price}</h4>
+        <div class="grid-item">
+            <article class="product" onclick="location.href='details.html?id=${item.shoeId}'">
+                ${discount}
+                <img
+                  class="product-image"
+                  src="${item.url}"
+                  alt="${item.shoeId}"
+                />
+                <p class="product-title">
+                  ${item.brand} ${item.gender} ${item.description}
+                </p>
+                ${oldPrice}
+                <h5 class="product-new-price">LKR ${newPrice}</h5>
+                <div class="stars">
+                    ${starsHTML}                  
+                </div>
+            </article>
         </div>
-        
-        <button class="icon-button">
-          <i class="fa fa-cart-plus" aria-hidden="true"></i>
-        </button>  
-      </div>
-    </div>
-  `;
+    `;
   }
 
-  product.innerHTML = productList
-    .map((item) => generateProductHTML(item))
-    .join("");
+  await getProducts();
+
+  if (productList.length > 0) {
+    product.innerHTML = productList
+      .map((item) => generateProductHTML(item))
+      .join("");
+  } else {
+    document.querySelector(".product-container .no-data").style.display =
+      "flex";
+  }
 });

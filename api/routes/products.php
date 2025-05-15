@@ -8,6 +8,8 @@ $subDirectory = explode('/', $normalizedUri)[2];
 // Route based on method
 if ($requestMethod === 'GET' && $subDirectory === "item") {
     require_once __DIR__ . '/../controllers/products.getItem.php';
+} elseif ($requestMethod === 'GET' && $subDirectory === "featured") {
+    require_once __DIR__ . '/../controllers/products.featured.php';
 } elseif ($requestMethod === 'GET') {
     require_once __DIR__ . '/../controllers/products.shoeList.php';
 } else {
