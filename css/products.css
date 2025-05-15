@@ -45,8 +45,6 @@ main{
 	margin-top: 8px;
 	border: 1px solid #d1d5db;
 	padding: 8px 12px;
-	max-height: 150px;
-	overflow-y: auto;
 	border-radius: 5px;
 }
 .checkbox-group label{

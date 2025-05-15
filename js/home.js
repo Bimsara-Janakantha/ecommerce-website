@@ -17,6 +17,27 @@ const imageList = [
   "../assets/carousel/crsl-sh14.jpg",
 ];
 
+const getProductList = async () => {
+  const url = `products/featured`;
+
+  console.log("requesting: ", url);
+
+  try {
+    const serverResponse = await getData(url);
+    const { message, products } = serverResponse.data;
+
+    if (serverResponse.status === 200) {
+      console.log(message, products);
+      return products;
+    }
+    return [];
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Something went wrong. Please try again.");
+    return [];
+  }
+};
+
 document.addEventListener("DOMContentLoaded", async function () {
   // Authentication
   const user = localStorage.getItem("user") || null;
@@ -81,21 +102,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   /* Featured Items */
   const product = document.querySelector(".product-grid");
-  let productList = [];
-
-  async function getProducts() {
-    try {
-      const serverResponse = await getData("products/featured");
-      if (serverResponse.status === 200) {
-        const { message, products } = serverResponse.data;
-        console.log(message);
-        productList = products;
-      }
-    } catch (error) {
-      const { message } = error;
-      console.log(message);
-    }
-  }
+  const productList = await getProductList();
 
   function generateProductHTML(item) {
     const maxStars = 5;
@@ -142,8 +149,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         </div>
     `;
   }
-
-  await getProducts();
 
   if (productList.length > 0) {
     product.innerHTML = productList
