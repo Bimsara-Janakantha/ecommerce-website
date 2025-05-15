@@ -9,9 +9,9 @@ const getProductInfo = async (productId) => {
     const serverResponse = await getData(url);
 
     if (serverResponse.status === 200) {
-      const data = await serverResponse.json();
-      console.log("Server Reponse: ", data);
-      return data;
+      const { message, product } = serverResponse.data;
+      console.log(message);
+      return product;
     }
     return null;
   } catch (error) {
