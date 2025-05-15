@@ -79,6 +79,7 @@
 	background: rgb(255, 255, 255);
 	border: 1px solid #f3f4f6;
 	border-radius: 5px;
+  cursor: pointer;
 }
 
 .discount-badge {
