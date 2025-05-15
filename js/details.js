@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         icon = `<i class="fa-regular fa-circle-xmark"></i>`;
         break;
       case "info":
-        icon = `<i class="fa-regular fa-circle-info"></i>`;
+        icon = `<i class="fa fa-info-circle" aria-hidden="true"></i>`;
         break;
       default:
         icon = `<i class="fa-regular fa-bell"></i>`;
@@ -306,6 +306,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       } else {
         if (newPurchase.quantity <= availableQty) {
           curCart.push(newPurchase);
+          notifyMe("Cart is updated successfully", "success");
           console.log("Added new item to cart:", newPurchase);
         } else {
           console.log("Too much quantity requested");

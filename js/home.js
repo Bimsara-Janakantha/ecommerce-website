@@ -39,13 +39,6 @@ const getProductList = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", async function () {
-  // Authentication
-  const user = localStorage.getItem("user") || null;
-  if (user === null) {
-    console.log("Not signed in");
-    this.location.href = "login.html";
-  }
-
   /* Carousel Section */
   let index = 0;
   let offset = 0;

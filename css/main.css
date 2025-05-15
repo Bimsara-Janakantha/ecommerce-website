@@ -19,7 +19,7 @@
   }
 }
 .status-message {
-  position: absolute;
+  position: fixed;
   right: 10px;
   top: 10px;
   background-color: #fff;
@@ -45,6 +45,9 @@
 }
 .status-message.error {
   color: #e20331;
+}
+.status-message.info {
+  color: #ff6c37;
 }
 
 
