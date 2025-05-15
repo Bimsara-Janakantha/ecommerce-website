@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   let selectedShoes = 1;
 
   const bodySection = document.querySelector(".detail-page-body");
+  const status_msg = document.querySelector("#status-message");
 
   function generateDetailHTML() {
     if (product === null) {
@@ -208,12 +209,44 @@ document.addEventListener("DOMContentLoaded", async function () {
     console.log("Selected quantity:", selectedShoes);
   });
 
+  // Function to display message
+  function notifyMe(message, type, redirectUrl = null) {
+    let icon;
+
+    switch (type) {
+      case "success":
+        icon = `<i class="fa-regular fa-circle-check"></i>`;
+        break;
+      case "error":
+        icon = `<i class="fa-regular fa-circle-xmark"></i>`;
+        break;
+      case "info":
+        icon = `<i class="fa-regular fa-circle-info"></i>`;
+        break;
+      default:
+        icon = `<i class="fa-regular fa-bell"></i>`;
+    }
+
+    status_msg.innerHTML = ` ${icon} ${message} `;
+    status_msg.classList.add(type);
+    status_msg.style.display = "flex";
+
+    setTimeout(() => {
+      status_msg.classList.remove(type);
+      status_msg.style.display = "none";
+
+      // Redirect if a URL is provided
+      if (redirectUrl) {
+        location.href = redirectUrl;
+      }
+    }, 3000);
+  }
+
   function checkAvailability(action) {
     const user = JSON.parse(localStorage.getItem("user")) || null;
 
     if (!user || isNaN(user.userId)) {
-      alert("Please login.");
-      location.href = "login.html";
+      notifyMe("Please Login", "info", "login.html");
       return;
     }
 
@@ -242,10 +275,10 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (newPurchase.quantity <= availableQty) {
         console.log("Preparing for purchase:", newPurchase);
         localStorage.setItem("purchase", JSON.stringify(newPurchase));
-        location.href = "cart.html";
+        notifyMe("Item added successfully", "success", "cart.html");
       } else {
         console.log("Too much quantity requested");
-        alert("Cannot buy more than available stock.");
+        notifyMe("Cannot buy more than available stock.", "error");
       }
     }
 
@@ -261,11 +294,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (newQuantity <= availableQty && newQuantity < 11) {
           existingItem.quantity = newQuantity;
+          notifyMe("Cart is updated successfully", "success");
           console.log("Updated quantity for existing item:", existingItem);
         } else {
           console.log("Too much quantity requested");
-          alert(
-            "Cannot add more than 10 pairs or available stock. If you need more pairs please contact us"
+          notifyMe(
+            "Cannot add more than 10 pairs or available stock. If you need more pairs please contact us",
+            "error"
           );
         }
       } else {
@@ -274,7 +309,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           console.log("Added new item to cart:", newPurchase);
         } else {
           console.log("Too much quantity requested");
-          alert("Cannot add more than available stock.");
+          notifyMe("Cannot add more than available stock.", "error");
         }
       }
 

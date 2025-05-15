@@ -1,5 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
+/* Status Message */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+.status-message {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+  padding: 20px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: "Montserrat";
+  font-size: 18px;
+  gap: 12px;
+  animation: slideInFromRight 0.5s ease-out forwards;
+  z-index: 1000;
+  font-weight: 500;
+
+}
+.status-message.hide {
+  animation: fadeOut 0.5s ease forwards;
+}
+.status-message.success {
+  color: #088178;
+}
+.status-message.error {
+  color: #e20331;
+}
+
+
 /* Base styles */
 body {
   margin: 0;
