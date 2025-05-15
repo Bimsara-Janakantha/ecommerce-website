@@ -242,6 +242,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     }, 3000);
   }
 
+  // Function to update the cart
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItems = cart.length;
+    const cartButtonContainer = document.getElementById("cartButtonContainer");
+
+    if (cartButtonContainer) {
+      const badgeHTML =
+        cartItems > 0 ? `<div class="badge">${cartItems}</div>` : "";
+
+      cartButtonContainer.innerHTML = `
+      <button class="icon-container" onclick="location.href='cart.html'">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        ${badgeHTML}
+      </button>
+    `;
+    }
+  }
+
   function checkAvailability(action) {
     const user = JSON.parse(localStorage.getItem("user")) || null;
 
@@ -315,6 +334,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       }
 
       localStorage.setItem("cart", JSON.stringify(curCart));
+      updateCartBadge();
     }
   }
 
