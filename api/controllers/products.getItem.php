@@ -67,7 +67,7 @@ try {
 
     // Final format
     $result = [
-        'shoeId'     => (int) $product['shoeId'],
+        'shoeId'     => $product['shoeId'],
         'brand'      => $product['brand'],
         'gender'     => $product['gender'],
         'category'   => $product['category'],
