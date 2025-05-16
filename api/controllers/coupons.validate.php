@@ -61,7 +61,7 @@ try {
     http_response_code(200);
     echo json_encode([
         'message' => 'Coupon applied successfully',
-        'couponDiscount' => floatval($coupon['maxValue']),
+        'couponDiscount' => floatval($coupon['maxDiscount']),
     ]);
 } catch (PDOException $e) {
     http_response_code(500);
