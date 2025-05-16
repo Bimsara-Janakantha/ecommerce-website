@@ -1,9 +1,45 @@
+import { postData } from "../utils/connection.js";
+
 // Numbering format
 const formatCurrency = (value) =>
   new Intl.NumberFormat("en-LK", {
     style: "currency",
     currency: "LKR",
   }).format(value);
+
+/* Function to display message */
+function notifyMe(message, type, redirectUrl = null) {
+  const status_msg = document.querySelector("#status-message");
+  let icon;
+
+  switch (type) {
+    case "success":
+      icon = `<i class="fa-regular fa-circle-check"></i>`;
+      break;
+    case "error":
+      icon = `<i class="fa-regular fa-circle-xmark"></i>`;
+      break;
+    case "info":
+      icon = `<i class="fa fa-info-circle" aria-hidden="true"></i>`;
+      break;
+    default:
+      icon = `<i class="fa-regular fa-bell"></i>`;
+  }
+
+  status_msg.innerHTML = ` ${icon} ${message} `;
+  status_msg.classList.add(type);
+  status_msg.style.display = "flex";
+
+  setTimeout(() => {
+    status_msg.classList.remove(type);
+    status_msg.style.display = "none";
+
+    // Redirect if a URL is provided
+    if (redirectUrl) {
+      location.href = redirectUrl;
+    }
+  }, 3000);
+}
 
 document.addEventListener("DOMContentLoaded", async function () {
   const purchaseItem = JSON.parse(localStorage.getItem("purchase")) || null;
@@ -18,13 +54,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   /* Validate Page */
   if (!user || isNaN(user.userId)) {
-    alert("Please login.");
-    location.href = "login.html";
+    notifyMe("Please Login", "info", "login.html");
     return;
   }
 
   /* Cart Data (modifiable) */
   let cartList = purchaseItem === null ? cartItems : [purchaseItem];
+  console.log("Cart List: ", cartList);
 
   /* Rendering - Cart Table Body */
   function generateCartHTML(item) {
@@ -44,7 +80,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
           <img class="product-image" src="${item.url}" alt="${item.shoeId}" />
           ${item.brand} ${item.gender} ${item.description} - Size ${item.size}
-          catagory:"sneekers", 
         </td>
 
         <td class="unit-price">${formatCurrency(item.unitPrice)}</td>
@@ -157,8 +192,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   function attachRemoveListeners() {
     document.querySelectorAll(".remove").forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        const shoeId = e.currentTarget.getAttribute("name");
-        console.log("Request remove:", shoeId);
+        const shoeId = parseInt(e.currentTarget.getAttribute("name"));
+        console.log(
+          "Request remove:" + shoeId + " type(shoeId): " + typeof shoeId
+        );
 
         cartList = cartList.filter((shoe) => shoe.shoeId !== shoeId);
 
@@ -169,6 +206,7 @@ document.addEventListener("DOMContentLoaded", async function () {
           localStorage.setItem("cart", JSON.stringify(cartList));
         }
 
+        notifyMe("Item removed successfully.", "success");
         renderCartTable();
         renderCheckoutSummary();
       });
@@ -179,26 +217,28 @@ document.addEventListener("DOMContentLoaded", async function () {
   function attachQuantityListeners() {
     document.querySelectorAll(".dec").forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        const shoeId = e.currentTarget.getAttribute("name");
+        const shoeId = parseInt(e.currentTarget.getAttribute("name"));
         const item = cartList.find((shoe) => shoe.shoeId === shoeId);
         if (item && item.quantity > 1) {
           item.quantity -= 1;
           updateLocalStorage();
           renderCartTable();
           renderCheckoutSummary();
+          notifyMe("Cart updated successfully.", "success");
         }
       });
     });
 
     document.querySelectorAll(".inc").forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        const shoeId = e.currentTarget.getAttribute("name");
+        const shoeId = parseInt(e.currentTarget.getAttribute("name"));
         const item = cartList.find((shoe) => shoe.shoeId === shoeId);
         if (item && item.quantity < item.availableQty && item.quantity < 11) {
           item.quantity += 1;
           updateLocalStorage();
           renderCartTable();
           renderCheckoutSummary();
+          notifyMe("Cart updated successfully.", "success");
         }
       });
     });
@@ -229,20 +269,25 @@ document.addEventListener("DOMContentLoaded", async function () {
       btnText.style.display = "none";
       couponBtn.disabled = true;
 
+      const cpnData = { code, subTotal };
+
       try {
-        // Simulate async verification (e.g., server call)
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        console.log("Coupon applied:", code);
-        couponInput.disabled = true;
-        // TODO: Handle real coupon logic (apply discount, etc.)
-      } catch (err) {
-        console.error("Coupon verification failed", err);
+        const serverResponse = await postData("coupons/verify", cpnData);
+        const { message, couponDiscount } = serverResponse.data;
+        notifyMe(message, "success");
+        coupon = couponDiscount ?? 0;
+      } catch (error) {
+        console.error("Coupon Error: ", error);
+        if (error.status === 404 || error.status === 401) {
+          notifyMe(error.message, "error");
+        } else {
+          notifyMe("Something went wrong", "error");
+        }
       } finally {
         // Reset button state
         spinnerIcon.style.display = "none";
         btnText.style.display = "inline";
         couponInput.value = "";
-        couponBtn.disabled = couponInput.value.trim().length <= 8;
       }
     });
   }
@@ -298,7 +343,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       const cartData = cartList || [];
 
       if (cartData.length === 0) {
-        alert("Your cart is empty. Add items before proceeding.");
+        notifyMe(
+          "Your cart is empty. Add items before proceeding.",
+          "error",
+          "shop.html"
+        );
         return;
       }
 
