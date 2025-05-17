@@ -81,7 +81,7 @@ CREATE TABLE ORDERS (
   street VARCHAR(50) NOT NULL,
   apt VARCHAR(50) NOT NULL,
   city VARCHAR(30) NOT NULL,
-  province ENUM('Central', 'Eastern', 'North Central', 'Northern', 'North Western', 'Sabaragamuwa', 'Southern', 'Uva', 'Western'),
+  province ENUM('Central', 'Eastern', 'North Central', 'Northern', 'North Western', 'Sabaragamuwa', 'Southern', 'Uva', 'Western') NOT NULL,
   postal VARCHAR(8) NOT NULL,
   notes TEXT,
   status ENUM('PENDING', 'CONFIRMED', 'CANCELLED', 'SHIPPED', 'DELIVERED', 'FAILED') DEFAULT 'PENDING',
@@ -92,21 +92,17 @@ CREATE TABLE ORDERS (
   FOREIGN KEY (couponCode) REFERENCES COUPONS(couponCode)
 );
 
-
 -- PAYMENTS Table
 CREATE TABLE PAYMENTS (
   paymentId INT AUTO_INCREMENT PRIMARY KEY,
   userId INT NOT NULL,
   orderId INT NOT NULL,
   amount DECIMAL(10, 2) NOT NULL,
-  method ENUM('CARD', 'CASH') NOT NULL,
+  method ENUM('CARD', 'CASH') DEFAULT 'CARD',
   status ENUM('PENDING', 'SUCCESS', 'FAILED') DEFAULT 'PENDING',
   referenceId VARCHAR(100) DEFAULT NULL,
-  couponCode VARCHAR(20) DEFAULT NULL,
-  discount DECIMAL(10, 2) DEFAULT 0.00,
   paidAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
   FOREIGN KEY (userId) REFERENCES USERS(userId),
-  FOREIGN KEY (orderId) REFERENCES ORDERS(orderId),
-  FOREIGN KEY (couponCode) REFERENCES COUPONS(couponCode)
+  FOREIGN KEY (orderId) REFERENCES ORDERS(orderId)
 );
