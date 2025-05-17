@@ -107,6 +107,7 @@ function validateShippingInfo(info) {
 // Handle payment success
 function handleSuccess(paymentData) {
   console.log("Payment successful:", paymentData);
+  //sendPayment(paymentData);
   notifyMe("Payment Successful", "success");
   localStorage.removeItem("checkout");
 

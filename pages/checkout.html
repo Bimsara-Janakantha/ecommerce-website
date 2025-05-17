@@ -60,12 +60,14 @@
                   type="text"
                   placeholder="First Name *"
                   required
+                  maxlength="30"
                 />
                 <input
                   id="lName"
                   type="text"
                   placeholder="Last Name *"
                   required
+                  maxlength="30"
                 />
               </div>
 
@@ -75,6 +77,7 @@
                   type="email"
                   placeholder="Email Address *"
                   required
+                  maxlength="50"
                 />
                 <input
                   id="mobile"
@@ -91,6 +94,7 @@
                   type="text"
                   placeholder="Street Name & Number *"
                   required
+                  maxlength="50"
                 />
               </div>
 
@@ -99,23 +103,30 @@
                   id="apt"
                   type="text"
                   placeholder="Apt / Suite / Unit (Optional)"
+                  maxlength="50"
                 />
               </div>
 
               <div class="input-row-3-alt">
-                <input id="city" type="text" placeholder="City *" required />
+                <input
+                  id="city"
+                  type="text"
+                  placeholder="City *"
+                  required
+                  maxlength="30"
+                />
 
                 <select id="province" required>
                   <option value="" disabled selected>Province *</option>
-                  <option value="central">Central Province</option>
-                  <option value="eastern">Eastern Province</option>
-                  <option value="north-central">North Central Province</option>
-                  <option value="northern">Northern Province</option>
-                  <option value="north-western">North Western Province</option>
-                  <option value="sabaragamuwa">Sabaragamuwa Province</option>
-                  <option value="southern">Southern Province</option>
-                  <option value="uva">Uva Province</option>
-                  <option value="western">Western Province</option>
+                  <option value="Central">Central Province</option>
+                  <option value="Eastern">Eastern Province</option>
+                  <option value="North Central">North Central Province</option>
+                  <option value="Northern">Northern Province</option>
+                  <option value="North Western">North Western Province</option>
+                  <option value="Sabaragamuwa">Sabaragamuwa Province</option>
+                  <option value="Southern">Southern Province</option>
+                  <option value="Uva">Uva Province</option>
+                  <option value="Western">Western Province</option>
                 </select>
 
                 <input
@@ -123,6 +134,7 @@
                   type="text"
                   placeholder="Postal Code *"
                   required
+                  maxlength="8"
                 />
               </div>
             </fieldset>
