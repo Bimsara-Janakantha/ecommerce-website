@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   let shipping = 0;
   let totalDiscount = 0;
   let coupon = 0;
+  let couponCode = "";
 
   /* Validate Page */
   if (!user || isNaN(user.userId)) {
@@ -289,6 +290,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       couponBtn.disabled = true;
 
       const cpnData = { code, subTotal };
+      couponCode = code;
 
       try {
         const serverResponse = await postData("coupons/verify", cpnData);
@@ -379,6 +381,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         shipping,
         totalDiscount,
         coupon,
+        couponCode,
         cart: cartData,
       };
 
