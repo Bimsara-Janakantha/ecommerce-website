@@ -73,21 +73,22 @@ function validateShippingInfo(info) {
   for (const [key, value] of Object.entries(info)) {
     if (["apt", "notes"].includes(key)) continue;
     if (!value) {
-      alert(`Please fill in the ${key} field.`);
+      notifyMe(`Please fill in the ${key} field.`, "error");
       return true;
     }
   }
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(info.email)) {
-    alert("Please enter a valid email address.");
+    notifyMe("Please enter a valid email address.", "error");
     return true;
   }
 
   const mobileRegex = /^(?:\+94|0)(7\d{8})$/;
   if (!mobileRegex.test(info.mobile)) {
-    alert(
-      "Please enter a valid mobile number. (e.g., 0712345678 or +94712345678)"
+    notifyMe(
+      "Please enter a valid mobile number. (e.g., 0712345678 or +94712345678)",
+      "error"
     );
     return true;
   }
@@ -98,11 +99,13 @@ function validateShippingInfo(info) {
 // Handle payment success
 function handleSuccess(paymentData) {
   console.log("Payment successful:", paymentData);
+  notifyMe("Payment Successful", "success");
   localStorage.removeItem("checkout");
 
   const purchaseData = localStorage.getItem("purchase") || null;
   if (purchaseData === null) {
     localStorage.removeItem("cart");
+    updateCartBadge();
   } else {
     localStorage.removeItem("purchase");
   }
@@ -139,6 +142,7 @@ function onGooglePaymentButtonClicked() {
     .then(handleSuccess)
     .catch((err) => {
       console.error("Payment failed:", err);
+      notifyMe("Payment Failed", "error");
     });
 }
 
@@ -157,6 +161,7 @@ function onGooglePayLoaded() {
     })
     .catch((err) => {
       console.error("Google Pay failed to load:", err);
+      notifyMe("Google Pay failed to load", "error");
     });
 }
 /* ------------------------------------------------------------------------------------ */
@@ -170,6 +175,58 @@ function formatCurrency(value) {
   }).format(value);
 }
 
+// Function to display message
+function notifyMe(message, type, redirectUrl = null) {
+  const status_msg = document.querySelector("#status-message");
+  let icon;
+
+  switch (type) {
+    case "success":
+      icon = `<i class="fa-regular fa-circle-check"></i>`;
+      break;
+    case "error":
+      icon = `<i class="fa-regular fa-circle-xmark"></i>`;
+      break;
+    case "info":
+      icon = `<i class="fa fa-info-circle" aria-hidden="true"></i>`;
+      break;
+    default:
+      icon = `<i class="fa-regular fa-bell"></i>`;
+  }
+
+  status_msg.innerHTML = ` ${icon} ${message} `;
+  status_msg.classList.add(type);
+  status_msg.style.display = "flex";
+
+  setTimeout(() => {
+    status_msg.classList.remove(type);
+    status_msg.style.display = "none";
+
+    // Redirect if a URL is provided
+    if (redirectUrl) {
+      location.href = redirectUrl;
+    }
+  }, 3000);
+}
+
+// Function to update the cart
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const cartItems = cart.length;
+  const cartButtonContainer = document.getElementById("cartButtonContainer");
+
+  if (cartButtonContainer) {
+    const badgeHTML =
+      cartItems > 0 ? `<div class="badge">${cartItems}</div>` : "";
+
+    cartButtonContainer.innerHTML = `
+      <button class="icon-container" onclick="location.href='cart.html'">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        ${badgeHTML}
+      </button>
+    `;
+  }
+}
 /* ------------------------------------------------------------------------------------ */
 
 /* ------------------------------------ Page DOM -------------------------------------- */
@@ -179,15 +236,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* User validation */
   if (!user || isNaN(user.userId)) {
-    alert("Please login.");
-    location.href = "login.html";
+    notifyMe("Please Login First", "info", "login.html");
     return;
   }
 
   /* Checkout List Validation */
   if (!checkoutItem || checkoutItem.cart.length === 0) {
-    alert("Nothing to checkout.");
-    location.href = "shop.html";
+    notifyMe("Nothing to checkout.", "error", "shop.html");
     return;
   }
 
