@@ -297,7 +297,7 @@ async function sendPayment(paymentData) {
   console.log("Payment successful:", paymentData);
 
   try {
-    const serverResponse = await postData("order/pay", paymentData);
+    const serverResponse = await postData("orders/pay", paymentData);
     notifyMe(serverResponse.data.message, "success", "shop.html");
   } catch (error) {
     console.error("Payment Error: ", error);
