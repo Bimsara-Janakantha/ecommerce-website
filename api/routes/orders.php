@@ -6,8 +6,10 @@ $normalizedUri = str_replace('/api/app.php', '', $uri);
 $subDirectory = explode('/', $normalizedUri)[2];
 
 // Route based on method
-if ($requestMethod === 'POST' && $subDirectory === "verify") {
-    require_once __DIR__ . '/../controllers/coupons.validate.php';
+if ($requestMethod === 'POST' && $subDirectory === "coupon") {
+    require_once __DIR__ . '/../controllers/orders.coupon.php';
+} elseif ($requestMethod === 'POST' && $subDirectory === "new") {
+    require_once __DIR__ . '/../controllers/orders.new.php';
 } else {
     http_response_code(405);
     header('Content-Type: application/json');

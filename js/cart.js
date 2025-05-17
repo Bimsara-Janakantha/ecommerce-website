@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       couponCode = code;
 
       try {
-        const serverResponse = await postData("coupons/verify", cpnData);
+        const serverResponse = await postData("orders/coupon", cpnData);
         const { message, couponDiscount } = serverResponse.data;
         notifyMe(message, "success");
         coupon = couponDiscount ?? 0;

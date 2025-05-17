@@ -104,58 +104,82 @@ function validateShippingInfo(info) {
   return false;
 }
 
-// Handle payment success
-function handleSuccess(paymentData) {
-  console.log("Payment successful:", paymentData);
-  //sendPayment(paymentData);
-  notifyMe("Payment Successful", "success");
-  localStorage.removeItem("checkout");
-
-  const purchaseData = localStorage.getItem("purchase") || null;
-  if (purchaseData === null) {
-    localStorage.removeItem("cart");
-    updateCartBadge();
-  } else {
-    localStorage.removeItem("purchase");
-  }
-}
-
 // On Google Pay button click
-function onGooglePaymentButtonClicked() {
-  const shippingInfo = getShippingInfo();
+async function onGooglePaymentButtonClicked() {
+  const gpay = document.getElementById("google-pay");
+  const spinner = document.querySelector(".fa-spinner");
 
-  if (validateShippingInfo(shippingInfo)) {
-    console.log("Invalid Billing Data");
-    return;
+  gpay.style.display = "none";
+  spinner.style.display = "block";
+
+  try {
+    // Get shipping info
+    const shippingInfo = getShippingInfo();
+
+    if (validateShippingInfo(shippingInfo)) {
+      console.log("Invalid Billing Data");
+      throw new Error("Invalid Billing Data");
+    }
+
+    console.log("Billing info is valid:", shippingInfo);
+
+    // Get checkout info
+    const checkoutData = await (JSON.parse(localStorage.getItem("checkout")) ||
+      null);
+
+    if (checkoutData === null) {
+      console.log("No checkout data");
+      throw new Error("No checkout data");
+    }
+
+    console.log("Amount to pay: ", amountToPay);
+
+    // Make the order
+    const orderId = await sendOrder(shippingInfo, checkoutData);
+
+    if (orderId === null) {
+      console.log("Order failed");
+      throw new Error("Order failed");
+    }
+
+    // Create payment request object
+    const paymentDataRequest = {
+      ...baseRequest,
+      allowedPaymentMethods: [cardPaymentMethod],
+      transactionInfo: {
+        totalPriceStatus: "FINAL",
+        totalPrice: `${amountToPay}`,
+        currencyCode: "LKR",
+        countryCode: "LK",
+      },
+      merchantInfo,
+    };
+
+    // Load Google Pay dialog
+    const paymentData = await paymentsClient.loadPaymentData(
+      paymentDataRequest
+    );
+
+    const paymentInfo = {
+      userId: checkoutData.user,
+      orderId,
+      amount: amountToPay,
+      referenceId:
+        paymentData.paymentMethodData?.tokenizationData?.token || "testpayment",
+    };
+
+    await sendPayment(paymentInfo);
+  } catch (error) {
+    console.error("Payment Process Error:", error.message || error);
+    notifyMe(error.message || "Payment Failed", "error");
+  } finally {
+    gpay.style.display = "block";
+    spinner.style.display = "none";
   }
-
-  console.log("Billing info is valid:", shippingInfo);
-  console.log("Amount to pay: ", amountToPay);
-
-  // Create payment request object
-  const paymentDataRequest = {
-    ...baseRequest,
-    allowedPaymentMethods: [cardPaymentMethod],
-    transactionInfo: {
-      totalPriceStatus: "FINAL",
-      totalPrice: `${amountToPay}`,
-      currencyCode: "LKR",
-      countryCode: "LK",
-    },
-    merchantInfo,
-  };
-
-  // Load Google Pay dialog
-  paymentsClient
-    .loadPaymentData(paymentDataRequest)
-    .then(handleSuccess)
-    .catch((err) => {
-      console.error("Payment failed:", err);
-      notifyMe("Payment Failed", "error");
-    });
 }
 
 // Initialize Google Pay
+
 function onGooglePayLoaded() {
   paymentsClient = new google.payments.api.PaymentsClient({
     environment: "TEST",
@@ -237,17 +261,44 @@ function updateCartBadge() {
   }
 }
 
-// Function to send payment data
-async function sendPayment(data) {
-  const gpay = document.getElementById("google-pay");
-  const spinner = document.querySelector(".fa-spinner");
+// Function to send order data
+async function sendOrder(shippingInfo, checkoutData) {
+  const orderInfo = {
+    ...shippingInfo,
+    userId: checkoutData.user,
+    totalAmount: checkoutData.subTotal,
+    couponCode: checkoutData.couponCode,
+    coupon: checkoutData.coupon,
+    discount: checkoutData.totalDiscount,
+  };
 
-  gpay.style.display = "none";
-  spinner.style.display = "block";
+  //console.log("Order Info: ", orderInfo);
 
   try {
-    const serverResponse = await postData("payments/success", data);
-    notifyMe(serverResponse.data.message, "success");
+    const serverResponse = await postData("orders/new", orderInfo);
+    const { message, orderId } = serverResponse.data;
+    console.log({ message, orderId });
+    notifyMe(message, "success");
+    return orderId;
+  } catch (error) {
+    console.error("Order Error: ", error);
+    const { status, message } = error;
+    if (status === 400) {
+      notifyMe(message, "error");
+    } else {
+      notifyMe("Something went wrong", "error");
+    }
+    return null;
+  }
+}
+
+// Function to send payment data
+async function sendPayment(paymentData) {
+  console.log("Payment successful:", paymentData);
+
+  try {
+    const serverResponse = await postData("order/pay", paymentData);
+    notifyMe(serverResponse.data.message, "success", "shop.html");
   } catch (error) {
     console.error("Payment Error: ", error);
     const { status, message } = error;
@@ -258,11 +309,51 @@ async function sendPayment(data) {
       notifyMe("Something went wrong", "error");
     }
   } finally {
-    // Reset button state
-    spinner.style.display = "none";
-    gpay.style.display = "block";
+    localStorage.removeItem("checkout");
+
+    const purchaseData = localStorage.getItem("purchase") || null;
+    if (purchaseData === null) {
+      localStorage.removeItem("cart");
+      updateCartBadge();
+    } else {
+      localStorage.removeItem("purchase");
+    }
   }
 }
+
+// Function to build backend connection
+const postData = async (path, data) => {
+  const BASE_URL = "http://ecommerce.local/api/app.php";
+  const url = `${BASE_URL}/${path}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const resBody = await response.json();
+
+    if (!response.ok) {
+      // Throw a custom error object
+      throw {
+        status: response.status,
+        message: resBody.error || "Unknown error",
+      };
+    }
+
+    return {
+      status: response.status,
+      data: resBody,
+    };
+  } catch (error) {
+    console.error("POST Error:", error);
+    throw error; // let caller handle it
+  }
+};
 /* ------------------------------------------------------------------------------------ */
 
 /* ------------------------------------ Page DOM -------------------------------------- */
