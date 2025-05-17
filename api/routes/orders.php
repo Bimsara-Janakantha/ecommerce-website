@@ -10,6 +10,8 @@ if ($requestMethod === 'POST' && $subDirectory === "coupon") {
     require_once __DIR__ . '/../controllers/orders.coupon.php';
 } elseif ($requestMethod === 'POST' && $subDirectory === "new") {
     require_once __DIR__ . '/../controllers/orders.new.php';
+} elseif ($requestMethod === 'POST' && $subDirectory === "pay") {
+    require_once __DIR__ . '/../controllers/orders.pay.php';
 } else {
     http_response_code(405);
     header('Content-Type: application/json');
