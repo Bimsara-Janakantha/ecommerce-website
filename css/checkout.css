@@ -203,3 +203,13 @@ textarea#notes:focus {
 .action-section #back-to-cart:hover{
 	background-color: #e6f2f2;
 }
+.gpay-container{
+	background-color: #cccccc;
+	width: 100%;
+	height: 40px;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}

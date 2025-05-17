@@ -49,7 +49,15 @@ function createGooglePayButton() {
     buttonSizeMode: "fill",
   });
 
-  document.getElementById("google-pay").appendChild(button);
+  const container = document.getElementById("google-pay");
+  if (container) {
+    container.appendChild(button);
+    container.style.display = "block";
+  }
+
+  // Hide the loading spinner if it exists
+  const spinner = document.querySelector(".fa-spinner");
+  if (spinner) spinner.style.display = "none";
 }
 
 // Collect shipping info from form
@@ -225,6 +233,33 @@ function updateCartBadge() {
         ${badgeHTML}
       </button>
     `;
+  }
+}
+
+// Function to send payment data
+async function sendPayment(data) {
+  const gpay = document.getElementById("google-pay");
+  const spinner = document.querySelector(".fa-spinner");
+
+  gpay.style.display = "none";
+  spinner.style.display = "block";
+
+  try {
+    const serverResponse = await postData("payments/success", data);
+    notifyMe(serverResponse.data.message, "success");
+  } catch (error) {
+    console.error("Payment Error: ", error);
+    const { status, message } = error;
+    const knownErrors = [400, 403, 404, 410];
+    if (knownErrors.includes(status)) {
+      notifyMe(message, "error");
+    } else {
+      notifyMe("Something went wrong", "error");
+    }
+  } finally {
+    // Reset button state
+    spinner.style.display = "none";
+    gpay.style.display = "block";
   }
 }
 /* ------------------------------------------------------------------------------------ */
