@@ -60,7 +60,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   /* Cart Data (modifiable) */
   let cartList = purchaseItem === null ? cartItems : [purchaseItem];
-  console.log("Cart List: ", cartList);
 
   /* Rendering - Cart Table Body */
   function generateCartHTML(item) {
@@ -184,6 +183,25 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  /* Function to update the cart */
+  function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItems = cart.length;
+    const cartButtonContainer = document.getElementById("cartButtonContainer");
+
+    if (cartButtonContainer) {
+      const badgeHTML =
+        cartItems > 0 ? `<div class="badge">${cartItems}</div>` : "";
+
+      cartButtonContainer.innerHTML = `
+      <button class="icon-container" onclick="location.href='cart.html'">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        ${badgeHTML}
+      </button>
+    `;
+    }
+  }
+
   /* Initial Rendering */
   renderCartTable();
   renderCheckoutSummary();
@@ -209,6 +227,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         notifyMe("Item removed successfully.", "success");
         renderCartTable();
         renderCheckoutSummary();
+        updateCartBadge();
       });
     });
   }
@@ -276,10 +295,13 @@ document.addEventListener("DOMContentLoaded", async function () {
         const { message, couponDiscount } = serverResponse.data;
         notifyMe(message, "success");
         coupon = couponDiscount ?? 0;
+        renderCheckoutSummary();
       } catch (error) {
         console.error("Coupon Error: ", error);
-        if (error.status === 404 || error.status === 401) {
-          notifyMe(error.message, "error");
+        const { status, message } = error;
+        const knownErrors = [400, 403, 404, 410];
+        if (knownErrors.includes(status)) {
+          notifyMe(message, "error");
         } else {
           notifyMe("Something went wrong", "error");
         }
