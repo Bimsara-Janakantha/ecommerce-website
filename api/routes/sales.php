@@ -11,7 +11,7 @@ if ($requestMethod === 'GET' && $subDirectory === "summary") {
 } elseif ($requestMethod === 'GET' && $subDirectory === "transactions") {
     require_once __DIR__ . '/../controllers/sales.transactions.php';
 } elseif ($requestMethod === 'GET' && $subDirectory === "insights") {
-    require_once __DIR__ . '/../controllers/products.shoeList.php';
+    require_once __DIR__ . '/../controllers/sales.orders.php';
 } else {
     http_response_code(405);
     header('Content-Type: application/json');
