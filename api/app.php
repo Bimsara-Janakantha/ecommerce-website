@@ -30,6 +30,7 @@ $routes = [
     'users'   => './routes/users.php',
     'products' => './routes/products.php',
     'orders' => './routes/orders.php',
+    'sales' => './routes/sales.php'
 ];
 
 // Normalize path: remove everything up to and including '/api/app.php'

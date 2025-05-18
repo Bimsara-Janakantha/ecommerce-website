@@ -71,10 +71,10 @@
         <div class="breadcrumb">
           <h4>Welcome Back!</h4>
           <select aria-label="Time filter">
-            <option>Today</option>
-            <option>This Week</option>
-            <option>This Month</option>
-            <option>This Year</option>
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
           </select>
         </div>
 
@@ -83,130 +83,79 @@
             <div class="top">
               <div class="text-number">
                 <p class="text">New Orders</p>
-                <h3 class="number">35,673</h3>
-                <p class="subtext">Avg: 2,006 daily</p>
+                <h3 class="number">0</h3>
+                <p class="subtext"></p>
               </div>
               <div class="icon"><i class="fas fa-shopping-basket"></i></div>
             </div>
-            <div class="summary-chart-area"></div>
+          </div>
+
+          <div class="stat-card" id="stat-total-cancel">
+            <div class="top">
+              <div class="text-number">
+                <p class="text">CANCELED ORDERS</p>
+                <h3 class="number">0</h3>
+                <p class="subtext"></p>
+              </div>
+              <div class="icon"><i class="fa-solid fa-xmark"></i></div>
+            </div>
           </div>
 
           <div class="stat-card" id="stat-total-income">
             <div class="top">
               <div class="text-number">
                 <p class="text">Revenue (LKR)</p>
-                <h3 class="number">14,966</h3>
-                <p class="subtext">7.35% growth this month</p>
+                <h3 class="number">0</h3>
+                <p class="subtext"></p>
               </div>
               <div class="icon"><i class="fas fa-dollar-sign"></i></div>
             </div>
-            <div class="summary-chart-area"></div>
-          </div>
-
-          <div class="stat-card" id="stat-total-expense">
-            <div class="top">
-              <div class="text-number">
-                <p class="text">Products in Store</p>
-                <h3 class="number">26,526</h3>
-                <p class="subtext">Inventory status: Healthy</p>
-              </div>
-              <div class="icon"><i class="fa-solid fa-gift"></i></div>
-            </div>
-            <div class="summary-chart-area"></div>
           </div>
 
           <div class="stat-card" id="stat-new-users">
             <div class="top">
               <div class="text-number">
                 <p class="text">Total Customers</p>
-                <h3 class="number">32,566</h3>
-                <p class="subtext">14% growth this month</p>
+                <h3 class="number">0</h3>
+                <p class="subtext"></p>
               </div>
               <div class="icon"><i class="fa-solid fa-users"></i></div>
             </div>
-            <div class="summary-chart-area"></div>
           </div>
         </div>
 
         <div class="summary-topgrid">
           <section class="summary">
             <h5>Quick Summary</h5>
+
             <div class="stats">
               <div>
-                <p>12,920</p>
+                <p>0</p>
                 <p>Total Orders</p>
               </div>
+              <div>
+                <p>0</p>
+                <p>Canceled Orders</p>
+              </div>
               <div class="active">
-                <p>64.54M</p>
+                <p>0</p>
                 <p>Gross Income</p>
               </div>
               <div>
-                <p>2,438</p>
-                <p>Products</p>
-              </div>
-              <div>
-                <p>36.72M</p>
+                <p>0</p>
                 <p>Active Users</p>
               </div>
             </div>
-            <div class="dashboard-summary-chart"></div>
+
+            <div class="dashboard-summary-chart">
+              <canvas id="salesChart" height="200"></canvas>
+            </div>
           </section>
 
           <section class="top-selling">
             <h5>Top-Selling Products</h5>
 
-            <div class="product">
-              <div class="product-info">
-                <img src="../assets/women_shoes/shoe_11.jpeg" alt="shoe_11" />
-                <div>
-                  <p class="title">Homepod Mini</p>
-                  <p class="desc">Wireless speaker · White · 15% off</p>
-                </div>
-              </div>
-              <p class="price">LKR 129.00<br /><span>Discounted</span></p>
-            </div>
-
-            <div class="product">
-              <div class="product-info">
-                <img
-                  src="https://storage.googleapis.com/a1aa/image/df42b33d-3977-4e10-58c3-5178a4a7b568.jpg"
-                  alt="Macbook Pro"
-                />
-                <div>
-                  <p class="title">MacBook Pro 14”</p>
-                  <p class="desc">Performance beast · Fast shipping</p>
-                </div>
-              </div>
-              <p class="price">LKR 899.00<br /><span>Best Seller</span></p>
-            </div>
-
-            <div class="product">
-              <div class="product-info">
-                <img
-                  src="https://storage.googleapis.com/a1aa/image/135fcc0f-00e4-4d55-7af2-e12e0b724744.jpg"
-                  alt="Apple Watch"
-                />
-                <div>
-                  <p class="title">Apple Watch SE</p>
-                  <p class="desc">Popular wearable · Fast-moving</p>
-                </div>
-              </div>
-              <p class="price">LKR 399.00<br /><span>Hot Item</span></p>
-            </div>
-
-            <div class="product">
-              <div class="product-info">
-                <img
-                  src="https://storage.googleapis.com/a1aa/image/135fcc0f-00e4-4d55-7af2-e12e0b724744.jpg"
-                  alt="Apple Watch"
-                />
-                <div>
-                  <p class="title">Apple Watch SE</p>
-                  <p class="desc">Popular wearable · Limited stock</p>
-                </div>
-              </div>
-              <p class="price">LKR 399.00<br /><span>Trending</span></p>
-            </div>
+            <div>No Products to show</div>
           </section>
         </div>
       </div>
@@ -262,5 +211,6 @@
 
     <script src="../js/header.js"></script>
     <script type="module" src="../js/dashboard.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>
 </html>
