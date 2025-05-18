@@ -97,9 +97,10 @@ try {
     $result = $db->fetch("
         SELECT SUM(amount) AS revenue
         FROM PAYMENTS
-        WHERE status != 'FAILED' AND paidAt >= :startDate
+        WHERE status IN ('SUCCESS', 'PENDING') AND paidAt >= :startDate
     ", [':startDate' => $startDate]);
     $summary['basic']['revenue'] = $result['revenue'] ?? 0.0;
+
     //echo "revenue: " . $summary['basic']['revenue'] . "\n";
 
     // Revenue Growth (Placeholder)
