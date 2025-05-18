@@ -270,9 +270,14 @@ async function sendOrder(shippingInfo, checkoutData) {
     couponCode: checkoutData.couponCode,
     coupon: checkoutData.coupon,
     discount: checkoutData.totalDiscount,
+    items: checkoutData.cart.map((item) => ({
+      shoeId: item.shoeId,
+      size: item.size,
+      quantity: item.quantity,
+    })),
   };
 
-  //console.log("Order Info: ", orderInfo);
+  console.log("Order Info: ", orderInfo);
 
   try {
     const serverResponse = await postData("orders/new", orderInfo);
@@ -283,7 +288,8 @@ async function sendOrder(shippingInfo, checkoutData) {
   } catch (error) {
     console.error("Order Error: ", error);
     const { status, message } = error;
-    if (status === 400) {
+    const knownErrors = [400, 409];
+    if (knownErrors.includes(status)) {
       notifyMe(message, "error");
     } else {
       notifyMe("Something went wrong", "error");
