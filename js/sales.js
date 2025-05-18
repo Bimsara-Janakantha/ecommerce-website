@@ -89,26 +89,30 @@ function updateSummaryCounts(summary) {
   animateCount(cards[3].querySelector("h3"), summary.failed);
 }
 
-// Function to generate address
+// Function to generate address (HTML-safe line breaks)
 function generateAddress(order) {
-  const address = !order
-    ? ""
-    : `
-        ${order.fName} ${order.lName} \n${order.apt}, \n${order.street}, \n${order.city}, \n${order.province}, \n${order.postal}. \n${order.mobile}
-    `;
+  if (!order) return "";
 
-  return address;
+  return `
+    ${order.fName} ${order.lName}<br>
+    ${order.apt},<br>
+    ${order.street},<br>
+    ${order.city},<br>
+    ${order.province} Province,<br>
+    ${order.postal}<br>
+    ${order.mobile}
+  `;
 }
 
-// Function to generate item list
+// Function to generate item list (HTML-safe line breaks)
 function generateItemList(items) {
-  let itemsStr = "";
-  items.forEach((item) => {
-    const itemStr = `${item.sku} | size: ${item.size} | quantity: ${item.quantity}\n`;
-    itemsStr += itemStr;
-  });
+  if (!Array.isArray(items) || items.length === 0) return "";
 
-  return itemsStr;
+  return items
+    .map(
+      (item) => `${item.sku} | size: ${item.size} | quantity: ${item.quantity}`
+    )
+    .join("<br>");
 }
 
 // Render table rows
@@ -123,7 +127,7 @@ function populateTable(orders) {
       <td>#${order.orderId}</td>
       <td>${order.date}</td>
       <td>${generateItemList(order.items)}</td>
-      <td>${generateAddress(order)}</td>
+      <td style="text-align: left">${generateAddress(order)}</td>
       <td>${order.notes || "-"}</td>
       <td><span class="status ${order.status.toLowerCase()}">${
       order.status
