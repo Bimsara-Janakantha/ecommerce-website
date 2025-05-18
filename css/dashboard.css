@@ -148,7 +148,7 @@ aside nav a i{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  height: calc(100% - 190px);
+  min-height: calc(100% - 200px);
 }
 .summary, .top-selling {
   background: white;
