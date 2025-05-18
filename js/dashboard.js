@@ -2,7 +2,7 @@ import { getData } from "../utils/connection.js";
 
 // Numbering format
 function formatCurrency(value) {
-  new Intl.NumberFormat("en-LK", {
+  return new Intl.NumberFormat("en-LK", {
     style: "currency",
     currency: "LKR",
   }).format(value);
@@ -67,16 +67,19 @@ async function getInfo(seller, range) {
 
   try {
     const serverResponse = await getData(url);
-
-    if (serverResponse.status === 200) {
-      const { message, summary } = serverResponse.data;
-      console.log(message);
-      return summary;
-    }
-    return null;
+    const { message, summary } = serverResponse.data;
+    console.log({ message, summary });
+    notifyMe(message, "success");
+    return summary;
   } catch (error) {
-    console.error("Error:", error);
-    alert("Something went wrong. Please try again.");
+    console.error("Order Error: ", error);
+    const { status, message } = error;
+    const knownErrors = [400, 404];
+    if (knownErrors.includes(status)) {
+      notifyMe(message, "error");
+    } else {
+      notifyMe("Something went wrong", "error");
+    }
     return null;
   }
 }
@@ -85,6 +88,8 @@ async function getInfo(seller, range) {
 function populateDashboard(summary) {
   if (!summary) return;
 
+  console.log(summary);
+
   // Update stat cards
   animateCount(
     document.querySelector("#stat-new-orders .number"),
@@ -92,7 +97,7 @@ function populateDashboard(summary) {
   );
   document.querySelector(
     "#stat-new-orders .subtext"
-  ).textContent = `Avg: ${summary.avgDailyOrders} daily`;
+  ).textContent = `Avg: ${summary.avgDailyOrders.toFixed(0)} daily`;
 
   animateCount(
     document.querySelector("#stat-total-income .number"),
@@ -100,15 +105,15 @@ function populateDashboard(summary) {
   );
   document.querySelector(
     "#stat-total-income .subtext"
-  ).textContent = `${summary.revenueGrowth}% growth this month`;
+  ).textContent = `${summary.revenueGrowth.toFixed(0)}% growth this month`;
 
   animateCount(
     document.querySelector("#stat-total-cancel .number"),
-    summary.totalProducts
+    summary.cancelOrders
   );
   document.querySelector(
     "#stat-total-cancel .subtext"
-  ).textContent = `Avg: ${summary.avgDailyCancel} daily`;
+  ).textContent = `Avg: ${summary.avgDailyCancel.toFixed(0)} daily`;
 
   animateCount(
     document.querySelector("#stat-new-users .number"),
@@ -116,14 +121,14 @@ function populateDashboard(summary) {
   );
   document.querySelector(
     "#stat-new-users .subtext"
-  ).textContent = `${summary.customerGrowth}% growth this month`;
+  ).textContent = `${summary.customerGrowth.toFixed(0)}% growth this month`;
 
   // Update Quick Summary
   const summaryStats = document.querySelectorAll(".summary .stats > div");
-  animateCount(summaryStats[0].querySelector("p"), summary.totalOrders);
-  animateCount(summaryStats[2].querySelector("p"), summary.cancelOrders);
-  animateCount(summaryStats[1].querySelector("p"), summary.grossIncome);
-  animateCount(summaryStats[3].querySelector("p"), summary.activeUsers);
+  animateCount(summaryStats[0].querySelector("p"), summary.newOrders);
+  animateCount(summaryStats[1].querySelector("p"), summary.cancelOrders);
+  animateCount(summaryStats[2].querySelector("p"), summary.revenue);
+  animateCount(summaryStats[3].querySelector("p"), summary.activeCustomers);
 }
 
 // Populate top-selling products
@@ -134,25 +139,28 @@ function populateTopProducts(products) {
   // Clear current products
   existing.forEach((el) => el.remove());
 
-  products.forEach((product) => {
-    const div = document.createElement("div");
-    div.className = "product";
-    div.innerHTML = `
+  if (products) {
+    container.querySelector("div").style.display = "none";
+    products.forEach((product) => {
+      const div = document.createElement("div");
+      div.className = "product";
+      div.innerHTML = `
       <div class="product-info">
         <img src="${product.url}" alt="${product.shoeId}" />
         <div>
           <p class="title">
-            ${product.brand} ${product.gender} ${product.catagory}
+            ${product.brand} ${product.gender} ${product.category}
           </p>
           <p class="desc">${product.description}</p>
         </div>
       </div>
-      <p class="price">${formatCurrency(product.price)}<br /><span>${
-      product.tag
-    }</span></p>
+      <p class="price">${formatCurrency(product.price)}<br /></p>
     `;
-    container.appendChild(div);
-  });
+      container.appendChild(div);
+    });
+  } else {
+    container.querySelector("div").style.display = "block";
+  }
 }
 
 // Converts object data to Chart.js format
@@ -184,12 +192,78 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Function to update dashboard
   const updateDashboard = async () => {
     const summary = await getInfo(user.userId, currentRange);
+    /* const summary = {
+      basic: {
+        newOrders: 1000,
+        avgDailyOrders: 400,
+        revenue: 50000,
+        revenueGrowth: 19,
+        cancelOrders: 50,
+        avgDailyCancel: 2,
+        customers: 60000,
+        customerGrowth: 25.8855,
+      },
+      topProducts: [
+        {
+          shoeId: 41,
+          url: "../assets/women_shoes/shoe_11.jpeg",
+          brand: "NIKE",
+          gender: "WOMEN",
+          catagory: "BOOTS",
+          description: "tests tests tests",
+          price: 50000,
+        },
+        {
+          shoeId: 42,
+          url: "../assets/women_shoes/shoe_11.jpeg",
+          brand: "NIKE",
+          gender: "WOMEN",
+          catagory: "BOOTS",
+          description: "tests tests tests",
+          price: 50000,
+        },
+        {
+          shoeId: 43,
+          url: "../assets/women_shoes/shoe_11.jpeg",
+          brand: "NIKE",
+          gender: "WOMEN",
+          catagory: "BOOTS",
+          description: "tests tests tests",
+          price: 50000,
+        },
+        {
+          shoeId: 44,
+          url: "../assets/women_shoes/shoe_11.jpeg",
+          brand: "NIKE",
+          gender: "WOMEN",
+          catagory: "BOOTS",
+          description:
+            "tests tests teststests tests teststests tests teststests tests tests",
+          price: 50000,
+        },
+        {
+          shoeId: 45,
+          url: "../assets/women_shoes/shoe_11.jpeg",
+          brand: "NIKE",
+          gender: "WOMEN",
+          catagory: "BOOTS",
+          description: "tests tests tests",
+          price: 50000,
+        },
+      ],
+      chartDatasets: {
+        "New Orders": { sun: 120, mon: 300, tue: 180, wed: 250 },
+        "Canceled Orders": { sun: 2500, mon: 750, tue: 5852, wed: 4200 },
+        Revenue: { sun: 32, mon: 29, tue: 41, wed: 55 },
+        "ToTal Customers": { sun: 10, mon: 14, tue: 12, wed: 17 },
+      },
+    }; */
 
     if (summary) {
       populateDashboard(summary.basic);
       populateTopProducts(summary.topProducts);
-      chartDatasets = summary.chartData;
-      renderChart(chartDatasets["Gross Income"], "Gross Income");
+      chartDatasets = summary.chartDatasets;
+      renderChart(chartDatasets["Revenue"], "Revenue");
     }
   };
 
@@ -209,8 +283,8 @@ document.addEventListener("DOMContentLoaded", async function () {
           {
             label: label,
             data: values,
-            backgroundColor: "rgba(54, 162, 235, 0.7)",
-            borderColor: "rgba(54, 162, 235, 1)",
+            backgroundColor: "#5f9fe0",
+            borderColor: "#5f9fe0",
             borderWidth: 1,
             borderRadius: 5,
           },
