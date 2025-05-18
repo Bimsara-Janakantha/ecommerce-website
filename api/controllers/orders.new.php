@@ -27,8 +27,9 @@ try {
     $province = trim($data['province'] ?? '');
     $postal = trim($data['postal'] ?? '');
     $notes = trim($data['note'] ?? '');
+    $items = $data['items'] ?? [];
 
-    if ($userId < 1 || $totalAmount <= 0 || empty($email) || empty($fName) || empty($lName) || empty($mobile) || empty($street) || empty($city) || empty($province) || empty($postal)) {
+    if ($userId < 1 || $totalAmount <= 0 || empty($email) || empty($fName) || empty($lName) || empty($mobile) || empty($street) || empty($city) || empty($province) || empty($postal) || empty($items)) {
         http_response_code(400);
         echo json_encode(['error' => 'Missing required order fields']);
         exit;
@@ -98,8 +99,53 @@ try {
         ':notes' => $notes
     ]);
 
-
     $orderId = $db->lastInsertId();
+
+    // Step 3: Insert order items and update product stock
+    $orderItemSQL = "
+        INSERT INTO ORDER_ITEMS (orderId, shoeId, size, quantity)
+        VALUES (:orderId, :shoeId, :size, :quantity)
+    ";
+
+    $checkStockSQL = "
+        SELECT quantity FROM PRODUCTS WHERE shoeId = :shoeId
+    ";
+
+    $updateStockSQL = "
+        UPDATE PRODUCTS
+        SET quantity = quantity - :quantity
+        WHERE shoeId = :shoeId
+    ";
+
+    foreach ($items as $item) {
+        $shoeId = (int)($item['shoeId'] ?? 0);
+        $size = (int)($item['size'] ?? 0);
+        $quantity = (int)($item['quantity'] ?? 0);
+
+        if ($shoeId < 1 || $size < 1 || $quantity < 1) continue;
+
+        // Step 3a: Check stock
+        $stock = $db->fetch($checkStockSQL, [':shoeId' => $shoeId]);
+        if (!$stock || $stock['quantity'] < $quantity) {
+            http_response_code(409);
+            echo json_encode(['error' => "Insufficient stock for item ID $shoeId"]);
+            exit;
+        }
+
+        // Step 3b: Insert order item
+        $db->execute($orderItemSQL, [
+            ':orderId' => $orderId,
+            ':shoeId' => $shoeId,
+            ':size' => $size,
+            ':quantity' => $quantity
+        ]);
+
+        // Step 3c: Reduce stock
+        $db->execute($updateStockSQL, [
+            ':shoeId' => $shoeId,
+            ':quantity' => $quantity
+        ]);
+    }
 
     http_response_code(201);
     echo json_encode([
