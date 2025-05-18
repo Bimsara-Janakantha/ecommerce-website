@@ -176,8 +176,12 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // User Validation
   if (!user || isNaN(user.userId) || user.role !== "seller") {
-    //notifyMe("Unauthorized access. Please log in as a seller.", "info", "login.html");
-    //return;
+    notifyMe(
+      "Unauthorized access. Please log in as a seller.",
+      "info",
+      "login.html"
+    );
+    return;
   }
 
   // Find elements

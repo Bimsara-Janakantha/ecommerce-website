@@ -9,7 +9,7 @@ $subDirectory = explode('/', $normalizedUri)[2];
 if ($requestMethod === 'GET' && $subDirectory === "summary") {
     require_once __DIR__ . '/../controllers/sales.summary.php';
 } elseif ($requestMethod === 'GET' && $subDirectory === "transactions") {
-    require_once __DIR__ . '/../controllers/products.featured.php';
+    require_once __DIR__ . '/../controllers/sales.transactions.php';
 } elseif ($requestMethod === 'GET' && $subDirectory === "insights") {
     require_once __DIR__ . '/../controllers/products.shoeList.php';
 } else {

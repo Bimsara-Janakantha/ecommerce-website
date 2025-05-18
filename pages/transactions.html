@@ -24,6 +24,8 @@
   </head>
 
   <body>
+    <div id="status-message" class="status-message" style="display: none"></div>
+
     <!-- App Bar -->
     <header id="header" class="header">
       <a class="logo" href="home.html" data-link>
@@ -41,6 +43,7 @@
       </nav>
     </header>
 
+    <!-- Body -->
     <main>
       <aside>
         <nav>
@@ -74,7 +77,7 @@
           <div class="card">
             <div class="text-number">
               <h5>Total Sales (LKR)</h5>
-              <h3>12,560</h3>
+              <h3>0</h3>
             </div>
             <div class="icon"><i class="fa-solid fa-dollar-sign"></i></div>
           </div>
@@ -82,7 +85,7 @@
           <div class="card">
             <div class="text-number">
               <h5>Pending Orders</h5>
-              <h3>5</h3>
+              <h3>0</h3>
             </div>
             <div class="icon"><i class="fa-regular fa-hourglass-half"></i></div>
           </div>
@@ -90,7 +93,7 @@
           <div class="card">
             <div class="text-number">
               <h5>Completed</h5>
-              <h3>127</h3>
+              <h3>0</h3>
             </div>
             <div class="icon"><i class="fa-solid fa-check"></i></div>
           </div>
@@ -98,7 +101,7 @@
           <div class="card">
             <div class="text-number">
               <h5>Refunded</h5>
-              <h3>5</h3>
+              <h3>0</h3>
             </div>
             <div class="icon"><i class="fa-solid fa-rotate-left"></i></div>
           </div>
@@ -124,36 +127,7 @@
               </tr>
             </thead>
 
-            <tbody id="transactionTable">
-              <tr>
-                <td>2025-05-17</td>
-                <td>Alice Kim</td>
-                <td>Sneaker X</td>
-                <td><span class="status Completed">Completed</span></td>
-                <td>$89.99</td>
-              </tr>
-              <tr>
-                <td>2025-05-16</td>
-                <td>John Doe</td>
-                <td>Boot Pro</td>
-                <td><span class="status Pending">Pending</span></td>
-                <td>$120.00</td>
-              </tr>
-              <tr>
-                <td>2025-05-15</td>
-                <td>Sara Liu</td>
-                <td>Sandals Flex</td>
-                <td><span class="status Refunded">Refunded</span></td>
-                <td>$45.00</td>
-              </tr>
-              <tr>
-                <td>2025-05-17</td>
-                <td>Alice Kim</td>
-                <td>Sneaker X</td>
-                <td><span class="status Completed">Completed</span></td>
-                <td>$89.99</td>
-              </tr>
-            </tbody>
+            <tbody id="transactionTable"></tbody>
           </table>
         </div>
       </div>
@@ -208,5 +182,6 @@
     </footer>
 
     <script src="../js/header.js"></script>
+    <script type="module" src="../js/transactions.js"></script>
   </body>
 </html>

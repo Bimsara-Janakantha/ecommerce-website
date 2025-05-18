@@ -128,6 +128,7 @@ aside nav a i{
   padding: 8px 12px;
   font-size: 1rem;
   border: 1px solid #ccc;
+  outline: none;
   border-radius: 8px;
   min-width: 280px;
 }
@@ -167,6 +168,19 @@ tbody tr:nth-child(even) {
   text-align: center;
   display: inline-block;
 }
-.Completed { background: #d4edda; color: #155724; }
-.Pending   { background: #fff3cd; color: #856404; }
-.Refunded  { background: #f8d7da; color: #721c24; }
+.completed {
+  background-color: #e6f4ea; /* soft green */
+  color: #2e7d32;            /* dark green */
+}
+.pending {
+  background-color: #fff8e1; /* light yellow */
+  color: #ff8f00;            /* amber */
+}
+.refunded {
+  background-color: #fdecea; /* light red/pink */
+  color: #c62828;            /* strong red */
+}
+.failed {
+  background-color: #fce4ec; /* light pink */
+  color: #ad1457;            /* dark pink/maroon */
+}
