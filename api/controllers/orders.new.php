@@ -82,7 +82,7 @@ try {
         :fName, :lName, :email, :mobile,
         :street, :apt, :city, :province, :postal, :notes
     )
-", [
+    ", [
         ':userId' => $userId,
         ':totalAmount' => $totalAmount - $discount,
         ':couponCode' => $couponCode,
@@ -108,13 +108,13 @@ try {
     ";
 
     $checkStockSQL = "
-        SELECT quantity FROM PRODUCTS WHERE shoeId = :shoeId
+        SELECT quantity FROM PRODUCT_SIZES WHERE shoeId = :shoeId AND size = :size
     ";
 
     $updateStockSQL = "
-        UPDATE PRODUCTS
+        UPDATE PRODUCT_SIZES
         SET quantity = quantity - :quantity
-        WHERE shoeId = :shoeId
+        WHERE shoeId = :shoeId AND size = :size
     ";
 
     foreach ($items as $item) {
@@ -125,7 +125,7 @@ try {
         if ($shoeId < 1 || $size < 1 || $quantity < 1) continue;
 
         // Step 3a: Check stock
-        $stock = $db->fetch($checkStockSQL, [':shoeId' => $shoeId]);
+        $stock = $db->fetch($checkStockSQL, [':shoeId' => $shoeId, ':size' => $size]);
         if (!$stock || $stock['quantity'] < $quantity) {
             http_response_code(409);
             echo json_encode(['error' => "Insufficient stock for item ID $shoeId"]);
@@ -143,6 +143,7 @@ try {
         // Step 3c: Reduce stock
         $db->execute($updateStockSQL, [
             ':shoeId' => $shoeId,
+            'size' => $size,
             ':quantity' => $quantity
         ]);
     }
