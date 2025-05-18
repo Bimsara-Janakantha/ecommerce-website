@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/assets/logos/logo.svg" />
+    <title>Sole Heven</title>
+
+    <!-- Custom Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <!-- Global Styles -->
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/sales.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+  </head>
+
+  <body>
+    <div id="status-message" class="status-message" style="display: none"></div>
+
+    <!-- App Bar -->
+    <header id="header" class="header">
+      <a class="logo" href="home.html" data-link>
+        <img
+          src="../../assets/logos/logo.svg"
+          height="80px"
+          class="logo"
+          alt="Sole Haven Logo"
+        />
+        <h1>SOLE HAVEN</h1>
+      </a>
+
+      <nav>
+        <ul id="navbar" class="navbar"></ul>
+      </nav>
+    </header>
+
+    <!-- Body -->
+    <main>
+      <aside>
+        <nav>
+          <a href="dashboard.html">
+            <div class="icon-box">
+              <i class="fa fa-tachometer" aria-hidden="true"></i>
+            </div>
+            Dashboard
+          </a>
+          <a href="transactions.html">
+            <div class="icon-box"><i class="fas fa-exchange-alt"></i></div>
+            Transactions
+          </a>
+          <a href="sales.html" class="active">
+            <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+            Sales Insights
+          </a>
+          <a href="store.html">
+            <div class="icon-box"><i class="fa-solid fa-warehouse"></i></div>
+            Manage Products
+          </a>
+        </nav>
+      </aside>
+
+      <div class="dashboard-main">
+        <div class="breadcrumb">
+          <h4>Manage Sales Orders</h4>
+        </div>
+
+        <div class="summary-cards">
+          <div class="card">
+            <div class="text-number">
+              <h5>Pending</h5>
+              <h3>0</h3>
+            </div>
+            <div class="icon"><i class="fa-regular fa-hourglass-half"></i></div>
+          </div>
+
+          <div class="card">
+            <div class="text-number">
+              <h5>Shipped</h5>
+              <h3>0</h3>
+            </div>
+            <div class="icon"><i class="fa-solid fa-truck-fast"></i></div>
+          </div>
+
+          <div class="card">
+            <div class="text-number">
+              <h5>Completed</h5>
+              <h3>0</h3>
+            </div>
+            <div class="icon"><i class="fa-solid fa-check"></i></div>
+          </div>
+
+          <div class="card">
+            <div class="text-number">
+              <h5>Failed</h5>
+              <h3>0</h3>
+            </div>
+            <div class="icon"><i class="fa-solid fa-xmark"></i></div>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Items</th>
+                <th>Address</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody id="ordersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <img
+          style="width: 170px"
+          src="../assets/logos/logo.svg"
+          alt="Sole Haven Logo"
+        />
+      </div>
+
+      <div class="col">
+        <h3>Contact</h3>
+        <p><strong>Address:</strong> 456 Kandy Road, Street 23, Kurunegala</p>
+        <p><strong>Phone:</strong> 0723456788 / 0372234566</p>
+      </div>
+
+      <div class="col">
+        <h3>Follow Us</h3>
+        <div class="icon">
+          <a href="https://www.facebook.com" target="_blank"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="https://www.twitter.com" target="_blank"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a href="https://www.instagram.com" target="_blank"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://www.youtube.com" target="_blank"
+            ><i class="fab fa-youtube"></i
+          ></a>
+        </div>
+      </div>
+
+      <div class="col about">
+        <h3>About</h3>
+        <a href="about.html">About Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms & Conditions</a>
+        <a href="support.html">Customer Support</a>
+      </div>
+
+      <div class="payment">
+        <p>Secured Payment Gateways</p>
+        <img src="../assets/logos/google_Pay.png" alt="Google Pay" />
+      </div>
+    </footer>
+
+    <script src="../js/header.js"></script>
+    <script type="module" src="../js/sales.js"></script>
+  </body>
+</html>
