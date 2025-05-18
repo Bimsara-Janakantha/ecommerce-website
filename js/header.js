@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM fully loaded");
 
-  const isLoggedIn = !!localStorage.getItem("user");
+  const user = JSON.parse(localStorage.getItem("user")) || null;
+  const isLoggedIn = !!user;
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const cartItems = cart.length;
 
@@ -39,6 +40,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const badgeHTML =
       Number(cartItems) > 0 ? `<div class="badge">${cartItems}</div>` : "";
 
+    const dashboardHTML =
+      user.role.toLowerCase() === "seller"
+        ? `<a href="dashboard.html" data-link><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a>`
+        : "";
+
     userSection.innerHTML = `
       ${getNavItem("home.html", "Home")}
       ${getNavItem("shop.html", "Shop")}
@@ -59,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
           id="avatarBtn"
         />
         <div class="avatar-dropdown-menu" id="avatar-dropdown-menu">
+          ${dashboardHTML}
           <a href="settings.html" data-link>
             <i class="fa fa-cog"></i> Settings
           </a>
