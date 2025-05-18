@@ -16,12 +16,11 @@ try {
     $data = json_decode(file_get_contents("php://input"), true);
 
     $userId = $data['userId'] ?? null;
-    $orderId = $data['orderId'] ?? null;
-    $amount = $data['amount'] ?? null;
+    $paymentId = $data['paymentId'] ?? null;
     $referenceId = $data['referenceId'] ?? null;
 
     // Basic validation
-    if (!$userId || !$orderId || !$amount || !$referenceId) {
+    if (!$userId || !$paymentId || !$referenceId) {
         http_response_code(400);
         echo json_encode(['error' => 'Missing required payment fields']);
         exit;
@@ -29,14 +28,16 @@ try {
 
     // Insert into PAYMENTS table
     $db->execute("
-        INSERT INTO PAYMENTS (userId, orderId, amount, referenceId)
-        VALUES (:userId, :orderId, :amount, :referenceId)
+        UPDATE PAYMENTS
+        SET referenceId = :referenceId,
+            status = 'PENDING'
+        WHERE paymentId = :paymentId AND userId = :userId
     ", [
-        ':userId' => $userId,
-        ':orderId' => $orderId,
-        ':amount' => $amount,
-        ':referenceId' => $referenceId
+        ':referenceId' => $referenceId,
+        ':paymentId' => $paymentId,
+        ':userId' => $userId
     ]);
+
 
     http_response_code(201);
     echo json_encode([

@@ -135,9 +135,9 @@ async function onGooglePaymentButtonClicked() {
     console.log("Amount to pay: ", amountToPay);
 
     // Make the order
-    const orderId = await sendOrder(shippingInfo, checkoutData);
+    const paymentId = await sendOrder(shippingInfo, checkoutData);
 
-    if (orderId === null) {
+    if (paymentId === null) {
       console.log("Order failed");
       throw new Error("Order failed");
     }
@@ -162,8 +162,7 @@ async function onGooglePaymentButtonClicked() {
 
     const paymentInfo = {
       userId: checkoutData.user,
-      orderId,
-      amount: amountToPay,
+      paymentId,
       referenceId:
         paymentData.paymentMethodData?.tokenizationData?.token || "testpayment",
     };
@@ -281,10 +280,10 @@ async function sendOrder(shippingInfo, checkoutData) {
 
   try {
     const serverResponse = await postData("orders/new", orderInfo);
-    const { message, orderId } = serverResponse.data;
-    console.log({ message, orderId });
+    const { message, paymentId } = serverResponse.data;
+    console.log({ message, paymentId });
     notifyMe(message, "success");
-    return orderId;
+    return paymentId;
   } catch (error) {
     console.error("Order Error: ", error);
     const { status, message } = error;

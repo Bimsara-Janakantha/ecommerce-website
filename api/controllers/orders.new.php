@@ -148,10 +148,23 @@ try {
         ]);
     }
 
+    // Step 4: Insert into PAYMENTS table
+    $amount = $totalAmount - $discount - $couponAmnt;
+    $db->execute("
+        INSERT INTO PAYMENTS (userId, orderId, amount)
+        VALUES (:userId, :orderId, :amount)
+    ", [
+        ':userId' => $userId,
+        ':orderId' => $orderId,
+        ':amount' => $amount
+    ]);
+
+    $paymentId = $db->lastInsertId();
+
     http_response_code(201);
     echo json_encode([
         'message' => 'Order placed successfully',
-        'orderId' => $orderId
+        'paymentId' => $paymentId
     ]);
 } catch (PDOException $e) {
     http_response_code(500);
