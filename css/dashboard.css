@@ -192,11 +192,15 @@ aside nav a i{
 }
 .dashboard-summary-chart {
   width: 100%;
-  border-radius: 0.375rem;
   height: calc(100% - 140px);
-  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
+.dashboard-summary-chart canvas{
+  min-width: 100%;
+  min-height: 300px;
+}
 /* Top Selling Products */
 .top-selling .product {
   display: flex;
