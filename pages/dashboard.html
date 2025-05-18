@@ -18,7 +18,7 @@
 
     <!-- Global Styles -->
     <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/detail.css" />
+    <link rel="stylesheet" href="../css/dashboard.css" />
     <link rel="stylesheet" href="../css/header.css" />
     <link rel="stylesheet" href="../css/footer.css" />
   </head>
@@ -42,6 +42,181 @@
         <ul id="navbar" class="navbar"></ul>
       </nav>
     </header>
+
+    <main>
+      <aside>
+        <nav>
+          <a href="dashboard.html" class="active">
+            <div class="icon-box">
+              <i class="fa fa-tachometer" aria-hidden="true"></i>
+            </div>
+            Dashboard
+          </a>
+
+          <a href="transactions.html">
+            <div class="icon-box">
+              <i class="fas fa-exchange-alt"></i>
+            </div>
+            Transactions
+          </a>
+
+          <a href="sales.html">
+            <div class="icon-box">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            Sales
+          </a>
+
+          <a href="store.html">
+            <div class="icon-box">
+              <i class="fa-solid fa-warehouse"></i>
+            </div>
+            Store
+          </a>
+        </nav>
+      </aside>
+
+      <div class="dashboard-main">
+        <div class="breadcrumb">
+          <h4>Sole Haven Dashboard</h4>
+          <select aria-label="Time filter">
+            <option>Day</option>
+            <option>Week</option>
+            <option>Month</option>
+            <option>Annual</option>
+          </select>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card" id="stat-new-orders">
+            <div class="top">
+              <div class="text-number">
+                <p class="text">New Orders</p>
+                <h3 class="number">35673</h3>
+                <p class="subtext">2,006 per days</p>
+              </div>
+
+              <div class="icon"><i class="fas fa-shopping-basket"></i></div>
+            </div>
+
+            <div class="summary-chart-area"></div>
+          </div>
+
+          <div class="stat-card" id="stat-total-income">
+            <div class="top">
+              <div class="text-number">
+                <p class="text">Total Income</p>
+                <h3 class="number">LKR 14,966</h3>
+                <p class="subtext">Increased by 7.35%</p>
+              </div>
+              <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+            </div>
+
+            <div class="summary-chart-area"></div>
+          </div>
+
+          <div class="stat-card" id="stat-total-expense">
+            <div class="top">
+              <div class="text-number">
+                <p class="text">Total Expense</p>
+                <h3 class="number">26526</h3>
+                <p class="subtext">Increased by 7.35%</p>
+              </div>
+              <div class="icon"><i class="fas fa-file-invoice-dollar"></i></div>
+            </div>
+            <div class="summary-chart-area"></div>
+          </div>
+
+          <div class="stat-card" id="stat-new-users">
+            <div class="top">
+              <div class="text-number">
+                <p class="text">New Users</p>
+                <h3 class="number">32566</h3>
+                <p class="subtext">14% this month</p>
+              </div>
+              <div class="icon"><i class="fas fa-user-plus"></i></div>
+            </div>
+            <div class="summary-chart-area"></div>
+          </div>
+        </div>
+
+        <div class="summary-topgrid">
+          <section class="summary">
+            <h5>Summary</h5>
+            <div class="stats">
+              <div>
+                <p>$12,920</p>
+                <p>Products</p>
+              </div>
+              <div class="active">
+                <p>64.54 M</p>
+                <p>Sales</p>
+              </div>
+              <div>
+                <p>24.38 B</p>
+                <p>Cost</p>
+              </div>
+              <div>
+                <p>36.72 M</p>
+                <p>Revenue</p>
+              </div>
+            </div>
+
+            <div class="dashboard-summary-chart"></div>
+          </section>
+
+          <section class="top-selling">
+            <h5>Top Selling Products</h5>
+
+            <div class="product">
+              <div class="product-info">
+                <img src="../assets/women_shoes/shoe_11.jpeg" alt="shoe_11" />
+                <div>
+                  <p class="title">Homepod</p>
+                  <p class="desc">
+                    USBL wireless<br />White - Stable fabric - hands-free
+                  </p>
+                </div>
+              </div>
+
+              <p class="price">$129.00<br /><span>Discount 15%</span></p>
+            </div>
+
+            <div class="product">
+              <div class="product-info">
+                <img
+                  src="https://storage.googleapis.com/a1aa/image/df42b33d-3977-4e10-58c3-5178a4a7b568.jpg"
+                  alt="Macbook Pro laptop product image"
+                />
+                <div>
+                  <p class="title">Macbook Pro</p>
+                  <p class="desc">
+                    USBL wireless<br />White - Stable fabric - hands-free
+                  </p>
+                </div>
+              </div>
+              <p class="price">$899.00<br /><span>Sales</span></p>
+            </div>
+
+            <div class="product">
+              <div class="product-info">
+                <img
+                  src="https://storage.googleapis.com/a1aa/image/135fcc0f-00e4-4d55-7af2-e12e0b724744.jpg"
+                  alt="Black Apple Watch product image"
+                />
+                <div>
+                  <p class="title">Apple Watch</p>
+                  <p class="desc">
+                    USBL wireless<br />White - Stable fabric - hands-free
+                  </p>
+                </div>
+              </div>
+              <p class="price">$399.00<br /><span>Sales</span></p>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
 
     <!-- Footer -->
     <footer>
