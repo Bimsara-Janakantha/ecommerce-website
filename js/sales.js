@@ -149,6 +149,8 @@ function populateTable(orders) {
     const dateItems = order.date.trim().split(" ");
     const dateString = `${dateItems[0]} <br/> ${dateItems[1]}`;
 
+    console.log("status: ", order.status.toLowerCase());
+
     row.innerHTML = `
       <td>#${order.orderId}</td>
       <td>${dateString}</td>
