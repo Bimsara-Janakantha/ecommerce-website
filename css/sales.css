@@ -118,8 +118,8 @@ aside nav a i{
 
 /* Table */
 .table-container {
-    margin-top: 30px;
-  max-height: calc(100vh - 410px); 
+  margin-top: 30px;
+  max-height: calc(100vh - 310px); 
   overflow-y: auto;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
