@@ -116,7 +116,7 @@
                 <th>Items</th>
                 <th>Address</th>
                 <th>Notes</th>
-                <th>Status</th>
+                <th colspan="2">Status</th>
               </tr>
             </thead>
 
@@ -173,6 +173,39 @@
         <img src="../assets/logos/google_Pay.png" alt="Google Pay" />
       </div>
     </footer>
+
+    <!-- Status Change Dialog -->
+    <div id="statusDialog" class="mui-dialog">
+      <div class="mui-dialog-content">
+        <h4>Update Order Status</h4>
+        <p>Select the current status of the order</p>
+
+        <select id="statusSelect">
+          <option value="PENDING">Pending</option>
+          <option value="CONFIRMED">Confirmed</option>
+          <option value="CANCELLED">Cancelled</option>
+          <option value="SHIPPED">Shipped</option>
+          <option value="DELIVERED">Delivered</option>
+          <option value="FAILED">Failed</option>
+        </select>
+
+        <div class="mui-dialog-actions">
+          <button id="statusCancelBtn" class="mui-btn default">Cancel</button>
+          <button id="statusSaveBtn" class="mui-btn primary">Save</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Dialog -->
+    <div id="confirmDialog" class="mui-dialog">
+      <div class="mui-dialog-content">
+        <p>Are you sure you want to change the order status?</p>
+        <div class="mui-dialog-actions">
+          <button id="confirmCancelBtn" class="mui-btn default">No</button>
+          <button id="confirmYesBtn" class="mui-btn error">Yes</button>
+        </div>
+      </div>
+    </div>
 
     <script src="../js/header.js"></script>
     <script type="module" src="../js/sales.js"></script>

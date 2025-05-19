@@ -1,4 +1,4 @@
-import { getData } from "../utils/connection.js";
+import { getData, postData } from "../utils/connection.js";
 
 // Function to animate count
 function animateCount(el, endValue, duration = 1000) {
@@ -76,6 +76,29 @@ async function getInfo(seller) {
   }
 }
 
+// Function to update order status
+async function updateOrder(sellerId, orderId, currentStatus, newStatus) {
+  const data = { sellerId, orderId, currentStatus, newStatus };
+
+  try {
+    const serverResponse = await postData("sales/insights", data);
+    const { message, summary, orders } = serverResponse.data;
+    console.log(message);
+    notifyMe(message, "success");
+    return { summary: summary[0], orders };
+  } catch (error) {
+    console.error("Order Error: ", error);
+    const { status, message } = error;
+    const knownErrors = [400, 404];
+    if (knownErrors.includes(status)) {
+      notifyMe(message, "error");
+    } else {
+      notifyMe("Something went wrong", "error");
+    }
+    return null;
+  }
+}
+
 // Render summary card values
 function updateSummaryCounts(summary) {
   if (!summary) return;
@@ -123,15 +146,21 @@ function populateTable(orders) {
   orders.forEach((order) => {
     const row = document.createElement("tr");
 
+    const dateItems = order.date.trim().split(" ");
+    const dateString = `${dateItems[0]} <br/> ${dateItems[1]}`;
+
     row.innerHTML = `
       <td>#${order.orderId}</td>
-      <td>${order.date}</td>
+      <td>${dateString}</td>
       <td>${generateItemList(order.items)}</td>
       <td style="text-align: left">${generateAddress(order)}</td>
       <td>${order.notes || "-"}</td>
       <td><span class="status ${order.status.toLowerCase()}">${
       order.status
     }</span></td>
+    <td><div class="sales-more-info-btn" data-id="${
+      order.orderId
+    }"><i class="fa-solid fa-ellipsis-vertical"></i></div></td>
     `;
     tbody.appendChild(row);
   });
@@ -150,12 +179,73 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  const info = await getInfo(user.userId);
+  let info = await getInfo(user.userId);
 
   if (!info) return;
 
-  const { summary, orders } = info;
+  let { summary, orders } = info;
+  let selectedOrderId = null;
+  let selectedStatus = null;
 
   updateSummaryCounts(summary);
   populateTable(orders);
+
+  document
+    .getElementById("ordersTableBody")
+    .addEventListener("click", function (e) {
+      const moreBtn = e.target.closest(".sales-more-info-btn");
+      if (!moreBtn) return;
+
+      const row = moreBtn.closest("tr");
+
+      selectedOrderId = moreBtn.dataset.id;
+      selectedStatus = row.querySelector(".status").textContent.trim();
+
+      document.getElementById("statusDialog").style.display = "flex";
+      document.getElementById("statusSelect").value = selectedStatus;
+    });
+
+  // Handle Status Dialog Buttons
+  document.getElementById("statusCancelBtn").onclick = () => {
+    document.getElementById("statusDialog").style.display = "none";
+  };
+
+  document.getElementById("statusSaveBtn").onclick = () => {
+    document.getElementById("statusDialog").style.display = "none";
+    document.getElementById("confirmDialog").style.display = "flex";
+  };
+
+  // Handle Confirmation Dialog Buttons
+  document.getElementById("confirmCancelBtn").onclick = () => {
+    document.getElementById("confirmDialog").style.display = "none";
+  };
+
+  document.getElementById("confirmYesBtn").onclick = async () => {
+    const newStatus = document.getElementById("statusSelect").value;
+
+    if (newStatus === selectedStatus) {
+      notifyMe("No change detected in order status.", "info");
+      document.getElementById("confirmDialog").style.display = "none";
+      return;
+    }
+
+    console.log({ newStatus, selectedOrderId, selectedStatus });
+
+    const updatedInfo = await updateOrder(
+      user.userId,
+      selectedOrderId,
+      selectedStatus,
+      newStatus
+    );
+
+    if (updatedInfo) {
+      ({ summary, orders } = updatedInfo);
+      updateSummaryCounts(summary);
+      populateTable(orders);
+    } else {
+      notifyMe("Failed to update order. Please try again.", "error");
+    }
+
+    document.getElementById("confirmDialog").style.display = "none";
+  };
 });
