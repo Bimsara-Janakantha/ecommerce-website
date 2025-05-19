@@ -48,72 +48,17 @@ aside nav a i{
 
 /* Main content */
 .dashboard-main {
-	padding: 1.5rem;
-	overflow: auto;
 	flex-grow: 1;
-  min-height: 100%;
+	padding: 1.5rem;
+	min-height: 100%;
+	overflow: auto;
 }
 
-/* Cards */
-.summary-cards{
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin: 20px 0;
-}
-.card {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-width: 200px;
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  border-bottom: solid 10px;
-}
-.card .icon{
-  border-radius: 50%;
-  padding: 10px;
-  font-size: 40px;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.summary-cards .card:nth-child(1) {
-  border-bottom-color: #4891db;
-}
-.summary-cards .card:nth-child(2) {
-  border-bottom-color: #e9c250;
-}
-.summary-cards .card:nth-child(3) {
-  border-bottom-color: #088178;
-}
-.summary-cards .card:nth-child(4) {
-  border-bottom-color: #e7335e;
-}
-.summary-cards .card:nth-child(1) .icon{
-  background-color: #dae9f8;
-  color: #4891db;
-}
-.summary-cards .card:nth-child(2) .icon{
-  background-color: #f8edcb;
-  color: #e9c250;
-}
-.summary-cards .card:nth-child(3) .icon{
-  background-color: #cee6e4;
-  color: #088178;
-}
-.summary-cards .card:nth-child(4) .icon{
-  background-color: #fad6df;
-  color: #e7335e;
-}
-.card h5 {
-  margin-bottom: 5px;
-  color: #555;
+.breadcrumb{
+	display: flex;
+	align-items: end;
+	justify-content: space-between;
+	margin-bottom: 20px;
 }
 
 /* Table */
