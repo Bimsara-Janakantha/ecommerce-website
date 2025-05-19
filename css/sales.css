@@ -168,22 +168,31 @@ tbody td:last-child div:hover{
   text-align: center;
   display: inline-block;
 }
-.completed {
-  background-color: #e6f4ea; /* soft green */
-  color: #2e7d32;            /* dark green */
+.delivered {
+  background-color: #e0f7e9; /* soft green */
+  color: #2e7d32;            /* success green */
 }
 .pending {
-  background-color: #fff8e1; /* light yellow */
-  color: #ff8f00;            /* amber */
+  background-color: #fff9db; /* very light yellow */
+  color: #f9a825;            /* warm amber */
 }
-.refunded {
-  background-color: #fdecea; /* light red/pink */
+.shipped {
+  background-color: #e3f2fd; /* light blue */
+  color: #1565c0;            /* medium blue */
+}
+.cancelled {
+  background-color: #ffebee; /* very light red */
   color: #c62828;            /* strong red */
+}
+.confirmed {
+  background-color: #ede7f6; /* soft purple */
+  color: #5e35b1;            /* deep purple */
 }
 .failed {
   background-color: #fce4ec; /* light pink */
-  color: #ad1457;            /* dark pink/maroon */
+  color: #ad1457;            /* dark rose */
 }
+
 
 /* More info button */
 .mui-dialog {
