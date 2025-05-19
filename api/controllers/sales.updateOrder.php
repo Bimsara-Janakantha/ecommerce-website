@@ -6,22 +6,27 @@ header('Content-Type: application/json');
 $db = Database::getInstance();
 
 try {
-    if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    if ($_SERVER['REQUEST_METHOD'] !== 'PATCH') {
         http_response_code(405);
         echo json_encode(['error' => 'Method not allowed']);
         exit;
     }
 
-    $uri = $_SERVER['REQUEST_URI'];
-    $normalizedUri = str_replace('/api/app.php', '', $uri);
-    $parts = explode('/', $normalizedUri);
-    $sellerId = $parts[3] ?? null;
+    $data = json_decode(file_get_contents("php://input"), true);
+    $sellerId = $data['sellerId'] ?? '';
+    $orderId = $data['orderId'] ?? '';
+    $currentStatus = $data['currentStatus'] ?? '';
+    $newStatus = $data['newStatus'] ?? '';
 
-    //echo "Seller: " . $sellerId . " \t Range: " . $range . "\n";
-
-    if (!$sellerId) {
+    if (!$sellerId || !$orderId || !$currentStatus || !$newStatus) {
         http_response_code(400);
-        echo json_encode(['error' => 'Missing sellerId or range']);
+        echo json_encode(['error' => 'Missing required fields']);
+        exit;
+    }
+
+    if ($currentStatus === $newStatus) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Nothing to update!']);
         exit;
     }
 
@@ -32,6 +37,27 @@ try {
         echo json_encode(['error' => 'Seller not found']);
         exit;
     }
+
+    // Check current order status
+    $order = $db->fetch("SELECT status FROM ORDERS WHERE orderId = :oid", [':oid' => $orderId]);
+    if (!$order) {
+        http_response_code(404);
+        echo json_encode(['error' => 'Order not found']);
+        exit;
+    }
+
+    if ($order['status'] !== $currentStatus) {
+        http_response_code(400);
+        echo json_encode(['error' => 'Current status mismatch']);
+        exit;
+    }
+
+    // Update order status
+    $updateSql = "UPDATE ORDERS SET status = :newStatus WHERE orderId = :orderId";
+    $db->execute($updateSql, [
+        ':newStatus' => $newStatus,
+        ':orderId' => $orderId
+    ]);
 
     // Summary
     $sql = "

@@ -1,4 +1,4 @@
-import { getData, postData } from "../utils/connection.js";
+import { getData, postData, updateData } from "../utils/connection.js";
 
 // Function to animate count
 function animateCount(el, endValue, duration = 1000) {
@@ -81,7 +81,7 @@ async function updateOrder(sellerId, orderId, currentStatus, newStatus) {
   const data = { sellerId, orderId, currentStatus, newStatus };
 
   try {
-    const serverResponse = await postData("sales/insights", data);
+    const serverResponse = await updateData("sales/insights", data);
     const { message, summary, orders } = serverResponse.data;
     console.log(message);
     notifyMe(message, "success");

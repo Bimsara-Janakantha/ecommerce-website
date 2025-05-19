@@ -27,7 +27,7 @@ try {
     }
 
     // Validate seller
-    $seller = $db->fetch("SELECT * FROM USERS WHERE userId = :id", [':id' => $sellerId]);
+    $seller = $db->fetch("SELECT * FROM USERS WHERE userId = :id AND role = 'seller'", [':id' => $sellerId]);
     if (!$seller) {
         http_response_code(404);
         echo json_encode(['error' => 'Seller not found']);

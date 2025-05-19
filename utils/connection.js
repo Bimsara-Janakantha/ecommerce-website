@@ -93,7 +93,7 @@ export const deleteData = async (path, data) => {
 };
 
 /* Update Data in Backend */
-export const patchData = async (path, data) => {
+export const updateData = async (path, data) => {
   try {
     const url = `${BASE_URL}/${path}`;
     const response = await fetch(url, {
