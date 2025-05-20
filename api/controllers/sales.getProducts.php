@@ -17,33 +17,40 @@ try {
     $parts = explode('/', $normalizedUri);
     $sellerId = $parts[3] ?? null;
 
-    //echo "Seller: " . $sellerId . " \t Range: " . $range . "\n";
-
     if (!$sellerId) {
         http_response_code(400);
-        echo json_encode(['error' => 'Missing sellerId or range']);
+        echo json_encode(['error' => 'Missing sellerId']);
         exit;
     }
 
     // Validate seller
-    $seller = $db->fetch("SELECT * FROM USERS WHERE userId = :id AND role = 'seller'", [':id' => $sellerId]);
+    $seller = $db->fetch("SELECT * FROM USERS WHERE userId = :id AND role = 'seller'", [
+        ':id' => $sellerId
+    ]);
+
     if (!$seller) {
         http_response_code(404);
         echo json_encode(['error' => 'Seller not found']);
         exit;
     }
 
-    // Get all shoes
+    // Get all shoes for the seller
     $shoes = $db->fetchAll("
         SELECT shoeId, brand, gender, category, description, price, discount, sku, color, weight, url
         FROM PRODUCTS
+        WHERE productStatus = 'available' AND sellerId = :sellerId
         ORDER BY shoeId DESC
-    ");
+    ", [':sellerId' => $sellerId]);
 
-    // Get all stocks
-    $stocks = $db->fetchAll("SELECT shoeId, size, quantity FROM PRODUCT_SIZES");
+    // Get all stocks for those shoes
+    $stocks = $db->fetchAll("
+        SELECT ps.shoeId, ps.size, ps.quantity 
+        FROM PRODUCT_SIZES ps
+        JOIN PRODUCTS p ON p.shoeId = ps.shoeId
+        WHERE p.productStatus = 'available' AND p.sellerId = :sellerId
+    ", [':sellerId' => $sellerId]);
 
-    // Index stocks by shoeId
+    // Map stocks to their respective shoeId
     $stockMap = [];
     foreach ($stocks as $stock) {
         $id = $stock['shoeId'];
@@ -54,7 +61,7 @@ try {
         ];
     }
 
-    // Combine shoes with their stocks
+    // Attach stocks to each shoe
     foreach ($shoes as &$shoe) {
         $id = $shoe['shoeId'];
         $shoe['price'] = (int)$shoe['price'];
@@ -62,7 +69,10 @@ try {
         $shoe['stocks'] = $stockMap[$id] ?? [];
     }
 
-    echo json_encode(['shoeList' => $shoes, 'message' => "Data found successfully"], JSON_PRETTY_PRINT);
+    echo json_encode([
+        'shoeList' => $shoes,
+        'message' => 'Data found successfully'
+    ], JSON_PRETTY_PRINT);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
