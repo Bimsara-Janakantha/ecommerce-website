@@ -5,37 +5,6 @@ import {
   updateData,
 } from "../utils/connection.js";
 
-const PDCTS = [
-  {
-    shoeId: 1,
-    sku: "SNX001",
-    brand: "SneakerX",
-    gender: "Women",
-    description: "Running Shoes",
-    discount: 500,
-    price: 7999,
-    url: "../assets/women_shoes/shoe_11.jpeg",
-    stocks: [
-      { size: 36, quantity: 5 },
-      { size: 38, quantity: 3 },
-    ],
-  },
-  {
-    shoeId: 2,
-    sku: "BTX002",
-    brand: "BootPro",
-    gender: "Women",
-    description: "Hiking Boots",
-    discount: 800,
-    price: 9500,
-    url: "../assets/women_shoes/shoe_12.jpeg",
-    stocks: [
-      { size: 37, quantity: 2 },
-      { size: 39, quantity: 3 },
-    ],
-  },
-];
-
 const CATEGORIES = {
   men: ["Sneakers", "Boots", "Sandals", "Loafers"],
   women: ["Sneakers", "Boots", "Sandals", "Heels"],
