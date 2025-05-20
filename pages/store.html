@@ -141,26 +141,136 @@
     </footer>
 
     <!-- Product Form -->
-    <div class="form-container" id="productFormContainer" style="display: none">
-      <h3 id="formTitle">Add Product</h3>
-      <div class="form-group">
-        <label>Name</label>
-        <input type="text" id="productName" />
+    <div class="mui-dialog" id="productFormContainer" style="display: flex">
+      <div class="mui-dialog-content" style="align-items: start">
+        <h3 id="formTitle">Add Product</h3>
+        <hr style="width: 100%; margin: 10px 0" />
+
+        <div class="form-body">
+          <h5>General Information</h5>
+          <div class="mui-form">
+            <div class="form-group">
+              <label for="productBrand">Brand</label>
+              <select id="productBrand">
+                <option value="">Select Brand</option>
+                <option value="SneakerX">SneakerX</option>
+                <option value="BootPro">BootPro</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="productCategory">Category</label>
+              <select id="productCategory">
+                <option value="">Select Category</option>
+                <option value="Running Shoes">Running Shoes</option>
+                <option value="Hiking Boots">Hiking Boots</option>
+                <option value="Casual Wear">Casual Wear</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="productGender">Gender</label>
+              <select id="productGender">
+                <option value="">Select Gender</option>
+                <option value="MEN">Men</option>
+                <option value="WOMEN">Women</option>
+                <option value="UNISEX">Unisex</option>
+                <option value="BOYS">Boys</option>
+                <option value="GIRLS">Girls</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="productSKU">SKU</label>
+              <input type="text" id="productSKU" maxlength="20" />
+            </div>
+
+            <div class="form-group">
+              <label for="productColor">Color</label>
+              <input type="text" id="productColor" maxlength="50" />
+            </div>
+
+            <div class="form-group">
+              <label for="productWeight">Weight</label>
+              <input type="text" id="productWeight" maxlength="20" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="productDescription">Description</label>
+            <input type="text" id="productDescription" max="100" />
+          </div>
+
+          <div class="mui-form">
+            <div class="form-group">
+              <label for="productPrice">Unit Price (LKR)</label>
+              <input type="number" id="productPrice" min="0" max="100000" />
+            </div>
+
+            <div class="form-group">
+              <label for="productDiscount">Discount (LKR)</label>
+              <input type="number" id="productDiscount" min="0" />
+            </div>
+
+            <div class="form-group">
+              <label for="productImage">Image</label>
+              <input type="file" id="productImage" accept="image/*" />
+            </div>
+          </div>
+
+          <hr style="width: 100%; margin: 10px 0" />
+
+          <div class="add-new-section">
+            <h5>Stock Information</h5>
+            <button type="button" onclick="addStockRow()" class="secondary">
+              Add Stock
+            </button>
+          </div>
+          <div class="stock-section" id="stockSection"></div>
+        </div>
+
+        <div class="mui-dialog-actions">
+          <button class="mui-btn default" onclick="cancelForm()">Cancel</button>
+          <button class="mui-btn primary" onclick="saveProduct()">Save</button>
+        </div>
       </div>
-      <div class="form-group">
-        <label>Price</label>
-        <input type="number" id="productPrice" />
+    </div>
+
+    <script>
+      function addStockRow() {
+        const stockSection = document.getElementById("stockSection");
+
+        const stockDiv = document.createElement("div");
+        stockDiv.classList.add("form-group", "stock-entry");
+        stockDiv.innerHTML = `
+          <input type="number" placeholder="Size" style="width: 80px" />
+          <input type="number" placeholder="Quantity" style="width: 80px" />
+          <div class="icon-btn"><i class="fa-solid fa-xmark"></i></div>
+        `;
+
+        stockSection.appendChild(stockDiv);
+      }
+
+      // Optional: add one initial stock row when dialog opens
+      document.addEventListener("DOMContentLoaded", () => {
+        addStockRow();
+      });
+    </script>
+
+    <!-- Confirmation Dialog -->
+    <div id="confirmDialog" class="mui-dialog">
+      <div class="mui-dialog-content">
+        <h4>Delete Confirmation</h4>
+        <p>
+          Are you sure you want to delete the product? This action can't be
+          undone later.
+        </p>
+        <div class="mui-dialog-actions">
+          <button id="confirmCancelBtn" class="mui-btn default">No</button>
+          <button id="confirmYesBtn" class="mui-btn error">Yes</button>
+        </div>
       </div>
-      <div class="form-group">
-        <label>Stock</label>
-        <input type="number" id="productStock" />
-      </div>
-      <div class="form-group">
-        <label>Image URL</label>
-        <input type="text" id="productImage" />
-      </div>
-      <button class="btn-primary" onclick="saveProduct()">Save</button>
-      <button onclick="cancelForm()">Cancel</button>
     </div>
 
     <script src="../js/header.js"></script>

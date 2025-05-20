@@ -218,11 +218,11 @@ button.primary:hover {
 }
 
 button.secondary {
-  background-color: #333;
+  background-color: #1d82d2;
   color: #fff;
 }
 button.secondary:hover {
-  background-color: #1a1a1a;
+  background-color: #0468b9;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
 }
 

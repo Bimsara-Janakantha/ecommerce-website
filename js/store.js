@@ -184,23 +184,32 @@ function populateTable(products) {
 
     row.innerHTML = `
       <td>
-        <img class="product-image" src="${product.url}" alt="${
-      product.shoeId
-    }" />
-        ${product.sku}<br/>
-        ${product.brand} ${product.gender} ${product.description}
+        <div>
+          <img 
+            class="product-image" 
+            src="${product.url}" 
+            alt="${product.shoeId}" 
+          />
+          <div>
+            <p>${product.sku}<br/></p>
+            <strong>
+              ${product.brand} | ${product.gender} | ${product.category} <br/>
+            </strong>
+            <span>${product.description}</span>
+          </div>
+        </div>
       </td>
       <td>${product.discount}%</td>
       <td>${formatCurrency(product.price)}</td>
       <td>${generateStockList(product.stocks)}</td>
       <td>
-      <div>
-        <button class="error" onclick="deleteProduct(${
+      <div>        
+        <button class="secondary" data-action="edit" data-id="${
           product.shoeId
-        })">Delete</button>
-        <button class="primary" onclick="editProduct(${
-          product.shoeId
-        })">Edit</button>
+        }">Edit</button>
+          <button class="error" data-action="delete" data-id="${
+            product.shoeId
+          }">Delete</button>
         </div>
       </td>
       `;
@@ -221,9 +230,49 @@ addEventListener("DOMContentLoaded", async () => {
   }
 
   //let products = await getInfo(user.userId);
-  let products = await PDCTS;
+  let products = PDCTS;
+  let selectedShoe = null;
 
   if (!products) return;
 
   populateTable(products);
+
+  // DELETE + EDIT EVENT LISTENER
+  const tbody = document.getElementById("productList");
+  tbody.addEventListener("click", async (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+
+    const action = btn.dataset.action;
+    selectedShoe = parseInt(btn.dataset.id);
+
+    console.log("Button: " + action + "  shoeId: " + selectedShoe);
+
+    if (action === "delete") {
+      document.getElementById("productFormContainer").style.display = "none";
+      document.getElementById("confirmDialog").style.display = "flex";
+    }
+
+    if (action === "edit") {
+      document.getElementById("productFormContainer").style.display = "bloack";
+      document.getElementById("confirmDialog").style.display = "none";
+    }
+  });
+
+  // Handle Confirmation Dialog Buttons
+  document.getElementById("confirmCancelBtn").onclick = () => {
+    document.getElementById("confirmDialog").style.display = "none";
+  };
+
+  document.getElementById("confirmYesBtn").onclick = async () => {
+    document.getElementById("confirmDialog").style.display = "none";
+    const updatedInfo = await deleteStore(user.userId, selectedShoe);
+
+    if (updatedInfo) {
+      products = updatedInfo;
+      populateTable(products);
+    } else {
+      notifyMe("Failed to delete product. Please try again.", "error");
+    }
+  };
 });
