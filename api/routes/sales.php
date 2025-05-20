@@ -16,6 +16,8 @@ if ($requestMethod === 'GET' && $subDirectory === "summary") {
     require_once __DIR__ . '/../controllers/sales.updateOrder.php';
 } elseif ($requestMethod === 'GET' && $subDirectory === "store") {
     require_once __DIR__ . '/../controllers/sales.getProducts.php';
+} elseif ($requestMethod === 'DELETE' && $subDirectory === "store") {
+    require_once __DIR__ . '/../controllers/sales.deleteProduct.php';
 } else {
     http_response_code(405);
     header('Content-Type: application/json');
