@@ -62,23 +62,9 @@ aside nav a i{
 }
 
 /* Table */
-.filter-section {
-  margin: 30px 0 15px;
-  display: flex;
-  justify-content: end;
-  flex-wrap: wrap;
-}
 
-.filter-section input {
-  padding: 8px 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  outline: none;
-  border-radius: 8px;
-  min-width: 280px;
-}
 .table-container {
-  max-height: calc(100vh - 410px); 
+  max-height: calc(100vh - 200px); 
   overflow-y: auto;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
