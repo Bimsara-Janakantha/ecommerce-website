@@ -275,10 +275,27 @@ function fillProductForm(product = null) {
 
 // Function to verify the validity of the data
 function isInvalidData(data) {
-  const { brand, category, gender, price, discount, sku, stocks } = data;
+  const {
+    brand,
+    category,
+    gender,
+    color,
+    weight,
+    description,
+    sellerId,
+    price,
+    discount,
+    sku,
+    stocks,
+  } = data;
 
   // Normalize gender
   const g = gender?.toLowerCase();
+
+  if (isNaN(sellerId)) {
+    notifyMe("Invalid Seller", "error");
+    return true;
+  }
 
   // Check gender first
   if (!g || !CATEGORIES[g] || !BRANDS[g]) {
@@ -287,7 +304,7 @@ function isInvalidData(data) {
   }
 
   // Basic field presence checks
-  if (!sku || !brand || !category) {
+  if (!sku || !brand || !category || !color || !weight || !description) {
     notifyMe("Required fields are missing.", "error");
     return true;
   }
@@ -479,7 +496,7 @@ addEventListener("DOMContentLoaded", async () => {
         stocks,
       };
 
-      console.log(formData);
+      console.log(payload);
 
       if (isInvalidData(payload)) {
         console.log("Invalid Data");
