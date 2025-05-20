@@ -217,6 +217,48 @@ function populateTable(products) {
   });
 }
 
+// Add Empty Stock Rows
+function addStockRow(size = "", quantity = "") {
+  const stockSection = document.getElementById("stockSection");
+  const stockDiv = document.createElement("div");
+  stockDiv.classList.add("form-group", "stock-entry");
+
+  stockDiv.innerHTML = `
+    <input type="number" placeholder="Size" value="${size}" style="width: 80px" />
+    <input type="number" placeholder="Quantity" value="${quantity}" style="width: 80px" />
+    <div class="icon-btn remove-stock-btn"><i class="fa-solid fa-xmark"></i></div>
+  `;
+  stockSection.appendChild(stockDiv);
+}
+
+// Render Product form
+function fillProductForm(product = null) {
+  document.getElementById("formTitle").innerText = product
+    ? "Edit Product"
+    : "Add Product";
+  document.getElementById("productBrand").value = product?.brand || "";
+  document.getElementById("productCategory").value = product?.category || "";
+  document.getElementById("productGender").value = product?.gender || "MALE";
+  document.getElementById("productSKU").value = product?.sku || "";
+  document.getElementById("productColor").value = product?.color || "";
+  document.getElementById("productWeight").value = product?.weight || "";
+  document.getElementById("productDescription").value =
+    product?.description || "";
+  document.getElementById("productPrice").value = product?.price || "";
+  document.getElementById("productDiscount").value = product?.discount || 0;
+  document.getElementById("product-image-holder").src =
+    product?.url || "../assets/pageImages/placeholder.jpg";
+
+  const stockSection = document.getElementById("stockSection");
+  stockSection.innerHTML = "";
+
+  if (product) {
+    product.stocks.forEach((stock) => addStockRow(stock.size, stock.quantity));
+  } else {
+    addStockRow();
+  }
+}
+
 addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user")) || null;
 
@@ -244,9 +286,11 @@ addEventListener("DOMContentLoaded", async () => {
     if (!btn) return;
 
     const action = btn.dataset.action;
-    selectedShoe = parseInt(btn.dataset.id);
+    const shoeId = parseInt(btn.dataset.id);
 
-    console.log("Button: " + action + "  shoeId: " + selectedShoe);
+    selectedShoe = products.find((shoe) => shoe.shoeId === shoeId);
+
+    console.log({ action, shoeId, selectedShoe });
 
     if (action === "delete") {
       document.getElementById("productFormContainer").style.display = "none";
@@ -254,10 +298,17 @@ addEventListener("DOMContentLoaded", async () => {
     }
 
     if (action === "edit") {
-      document.getElementById("productFormContainer").style.display = "bloack";
+      fillProductForm(selectedShoe);
+      document.getElementById("productFormContainer").style.display = "flex";
       document.getElementById("confirmDialog").style.display = "none";
     }
   });
+
+  // Handle Add New Button
+  document.getElementById("add-new-product").onclick = () => {
+    fillProductForm();
+    document.getElementById("productFormContainer").style.display = "flex";
+  };
 
   // Handle Confirmation Dialog Buttons
   document.getElementById("confirmCancelBtn").onclick = () => {
@@ -266,7 +317,7 @@ addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("confirmYesBtn").onclick = async () => {
     document.getElementById("confirmDialog").style.display = "none";
-    const updatedInfo = await deleteStore(user.userId, selectedShoe);
+    const updatedInfo = await deleteStore(user.userId, selectedShoe.shoeId);
 
     if (updatedInfo) {
       products = updatedInfo;
@@ -275,4 +326,42 @@ addEventListener("DOMContentLoaded", async () => {
       notifyMe("Failed to delete product. Please try again.", "error");
     }
   };
+
+  // Handle Form Buttons
+  document.getElementById("form-cancel-btn").onclick = () => {
+    document.getElementById("productFormContainer").style.display = "none";
+  };
+
+  document.getElementById("add-stock-btn").onclick = () => {
+    addStockRow();
+  };
+
+  document.getElementById("stockSection").addEventListener("click", (e) => {
+    if (e.target.closest(".remove-stock-btn")) {
+      const stockSection = document.getElementById("stockSection");
+      const stockEntries = stockSection.querySelectorAll(".stock-entry");
+
+      // Only remove if more than one entry remains
+      if (stockEntries.length > 1) {
+        const stockDiv = e.target.closest(".stock-entry");
+        if (stockDiv) stockDiv.remove();
+      } else {
+        notifyMe("At least one stock entry is required.", "info");
+      }
+    }
+  });
+
+  document
+    .getElementById("product-image-holder")
+    .addEventListener("click", () => {
+      document.getElementById("productImage").click();
+    });
+
+  document.getElementById("productImage").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      document.getElementById("product-image-holder").src = imageUrl;
+    }
+  });
 });
