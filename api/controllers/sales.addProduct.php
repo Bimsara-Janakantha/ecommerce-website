@@ -13,7 +13,7 @@ try {
     }
 
     // Validate form inputs
-    $data = json_decode($_POST['data'], true); // decode as associative array
+    $data = json_decode($_POST['data'] ?? '[]', true);
 
     $brand = $data['brand'] ?? null;
     $gender = $data['gender'] ?? null;
@@ -28,8 +28,8 @@ try {
     $stocks = $data['stocks'] ?? [];
     $image = $_FILES['image'] ?? null;
 
-
-    if (!$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
+    // Validate required fields
+    if (!$shoeId || !$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
         http_response_code(400);
         echo json_encode(["error" => "Missing required fields"]);
         exit;
@@ -52,7 +52,7 @@ try {
         exit;
     }
 
-    // Select target and public directory based on gender
+    // Determine target directory based on gender
     switch (strtoupper($gender)) {
         case 'MEN':
             $targetDir = __DIR__ . "/../../assets/men_shoes/";
@@ -82,21 +82,19 @@ try {
         exit;
     }
 
-    // Generate unique image filename using current timestamp
+    // Generate a unique image filename
     $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
-    $timestamp = time();
-    $uniqueName = "shoe_" . $timestamp . '.' . $ext;
+    $uniqueName = "shoe_" . time() . '.' . $ext;
     $targetPath = $targetDir . $uniqueName;
     $publicPath = $publicDir . $uniqueName;
 
-    // Move the uploaded file
     if (!move_uploaded_file($image['tmp_name'], $targetPath)) {
         http_response_code(500);
         echo json_encode(["error" => "Failed to upload image"]);
         exit;
     }
 
-    // Insert product into database
+    // Insert into PRODUCTS
     $db->execute("
         INSERT INTO PRODUCTS 
         (brand, gender, category, description, price, discount, sku, color, weight, url, sellerId) 
@@ -115,6 +113,21 @@ try {
         ':url' => $publicPath,
         ':sellerId' => $sellerId
     ]);
+
+    // Get inserted shoeId
+    $shoeId = $db->lastInsertId();
+
+    // Insert stock sizes
+    $insertStockSql = "INSERT INTO PRODUCT_SIZES (shoeId, size, quantity) VALUES (:shoeId, :size, :quantity)";
+    foreach ($stocks as $stock) {
+        if (!isset($stock['size']) || !isset($stock['quantity'])) continue;
+
+        $db->execute($insertStockSql, [
+            ':shoeId' => $shoeId,
+            ':size' => $stock['size'],
+            ':quantity' => $stock['quantity']
+        ]);
+    }
 
     echo json_encode(['message' => 'Product added successfully']);
 } catch (PDOException $e) {
