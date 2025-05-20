@@ -252,7 +252,7 @@ function fillProductForm(product = null) {
     : "Add Product";
   document.getElementById("productBrand").value = product?.brand || "";
   document.getElementById("productCategory").value = product?.category || "";
-  document.getElementById("productGender").value = product?.gender || "MALE";
+  document.getElementById("productGender").value = product?.gender || "";
   document.getElementById("productSKU").value = product?.sku || "";
   document.getElementById("productColor").value = product?.color || "";
   document.getElementById("productWeight").value = product?.weight || "";
@@ -261,7 +261,7 @@ function fillProductForm(product = null) {
   document.getElementById("productPrice").value = product?.price || "";
   document.getElementById("productDiscount").value = product?.discount || 0;
   document.getElementById("product-image-holder").src =
-    product?.url || "../assets/pageImages/placeholder.jpg";
+    product?.url || "../assets/pageImages/placeholder.png";
 
   const stockSection = document.getElementById("stockSection");
   stockSection.innerHTML = "";
