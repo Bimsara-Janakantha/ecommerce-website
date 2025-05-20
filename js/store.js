@@ -68,10 +68,10 @@ async function getStore(seller) {
   try {
     const serverResponse = await getData(url);
     const { message, shoeList } = serverResponse.data;
-    console.log(message);
+    //console.log(message);
     return shoeList;
   } catch (error) {
-    console.error("Order Error: ", error);
+    //console.error("Order Error: ", error);
     const { status, message } = error;
     const knownErrors = [400, 404];
     if (knownErrors.includes(status)) {
@@ -88,10 +88,10 @@ async function updateStore(data) {
   try {
     const serverResponse = await updateData("sales/store", data);
     const { message } = serverResponse.data;
-    console.log(message);
+    //console.log(message);
     notifyMe(message, "success");
   } catch (error) {
-    console.error("Order Error: ", error);
+    //console.error("Order Error: ", error);
     const { status, message } = error;
     const knownErrors = [400, 404];
     if (knownErrors.includes(status)) {
@@ -109,10 +109,10 @@ async function addStore(data) {
   try {
     const serverResponse = await postData("sales/store", data);
     const { message } = serverResponse.data;
-    console.log(message);
+    //console.log(message);
     notifyMe(message, "success");
   } catch (error) {
-    console.error("Order Error: ", error);
+    //console.error("Order Error: ", error);
     const { status, message } = error;
     const knownErrors = [400, 404];
     if (knownErrors.includes(status)) {
