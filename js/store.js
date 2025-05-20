@@ -84,7 +84,7 @@ async function getStore(seller) {
 }
 
 // Function to update stocks
-async function updateStore(data) {
+async function updateStore(data, sellerId) {
   try {
     const serverResponse = await updateData("sales/store", data);
     const { message } = serverResponse.data;
@@ -100,12 +100,12 @@ async function updateStore(data) {
       notifyMe("Something went wrong", "error");
     }
   } finally {
-    return await getStore(data.sellerId);
+    return await getStore(sellerId);
   }
 }
 
 // Function to add new stocks
-async function addStore(data) {
+async function addStore(data, sellerId) {
   try {
     const serverResponse = await postData("sales/store", data);
     const { message } = serverResponse.data;
@@ -121,7 +121,7 @@ async function addStore(data) {
       notifyMe("Something went wrong", "error");
     }
   } finally {
-    return await getStore(data.sellerId);
+    return await getStore(sellerId);
   }
 }
 
@@ -483,7 +483,7 @@ addEventListener("DOMContentLoaded", async () => {
       // Determine whether we're updating or adding
       if (selectedShoe) {
         console.log("Updating");
-        const updatedList = await updateStore(formData);
+        const updatedList = await updateStore(formData, sellerId);
         if (updatedList) {
           products = updatedList;
           populateTable(products);
@@ -491,7 +491,7 @@ addEventListener("DOMContentLoaded", async () => {
         }
       } else {
         console.log("Adding new");
-        const newList = await addStore(formData);
+        const newList = await addStore(formData, sellerId);
         if (newList) {
           products = newList;
           populateTable(products);
