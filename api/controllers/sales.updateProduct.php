@@ -26,6 +26,7 @@ try {
     $color = $data['color'] ?? null;
     $weight = $data['weight'] ?? null;
     $sellerId = $data['sellerId'] ?? null;
+    $stocks = $data['stocks'] ?? [];
 
     if (!$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
         http_response_code(400);
@@ -131,6 +132,23 @@ try {
     }
 
     $db->execute($sql, $params);
+
+    // Clear old stocks
+    $db->execute("DELETE FROM PRODUCT_SIZES WHERE shoeId = :shoeId", [
+        ':shoeId' => $shoeId
+    ]);
+
+    // Insert updated stocks
+    $insertStockSql = "INSERT INTO PRODUCT_SIZES (shoeId, size, quantity) VALUES (:shoeId, :size, :quantity)";
+    foreach ($stocks as $stock) {
+        if (!isset($stock['size']) || !isset($stock['quantity'])) continue;
+
+        $db->execute($insertStockSql, [
+            ':shoeId' => $shoeId,
+            ':size' => $stock['size'],
+            ':quantity' => $stock['quantity']
+        ]);
+    }
 
     echo json_encode(['message' => 'Product updated successfully']);
 } catch (PDOException $e) {
