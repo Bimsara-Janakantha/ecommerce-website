@@ -36,6 +36,20 @@ const PDCTS = [
   },
 ];
 
+const CATEGORIES = {
+  men: ["Sneakers", "Boots", "Sandals", "Loafers"],
+  women: ["Sneakers", "Boots", "Sandals", "Heels"],
+  boys: ["Sneakers", "Boots", "Sandals", "School Shoes"],
+  girls: ["Sneakers", "Ballet", "Flats", "Sandals", "School Shoes"],
+};
+
+const BRANDS = {
+  men: ["AVI", "NIKE", "PUMA", "REEBOK"],
+  women: ["BATA", "NIKE", "PUMA", "CATWALK", "METRO", "HUSH PUPPIES"],
+  boys: ["BATA", "NIKE", "PUMA", "SPARX", "ACTION"],
+  girls: ["BATA", "NIKE", "PUMA", "SPARX", "LEE COOPER"],
+};
+
 // Numbering format
 function formatCurrency(value) {
   return new Intl.NumberFormat("en-LK", {
@@ -259,6 +273,71 @@ function fillProductForm(product = null) {
   }
 }
 
+// Function to verify the validity of the data
+function isInvalidData(data) {
+  const { brand, category, gender, price, discount, sku, stocks } = data;
+
+  // Normalize gender
+  const g = gender?.toLowerCase();
+
+  // Check gender first
+  if (!g || !CATEGORIES[g] || !BRANDS[g]) {
+    notifyMe("Please select a valid gender.", "error");
+    return true;
+  }
+
+  // Basic field presence checks
+  if (!sku) {
+    notifyMe("SKU is required.", "error");
+    return true;
+  }
+  if (!brand) {
+    notifyMe("Please select a brand.", "error");
+    return true;
+  }
+  if (!category) {
+    notifyMe("Please select a category.", "error");
+    return true;
+  }
+  if (price === undefined || isNaN(price) || price <= 0) {
+    notifyMe("Please enter a valid price greater than 0.", "error");
+    return true;
+  }
+  if (discount === undefined || isNaN(discount) || discount < 0) {
+    notifyMe("Please enter a valid discount (0 or more).", "error");
+    return true;
+  }
+
+  // Brand and category validation
+  if (!BRANDS[g].includes(brand)) {
+    notifyMe(`Invalid brand for ${gender}.`, "error");
+    return true;
+  }
+  if (!CATEGORIES[g].includes(category)) {
+    notifyMe(`Invalid category for ${gender}.`, "error");
+    return true;
+  }
+
+  // Stock checks
+  if (!Array.isArray(stocks) || stocks.length === 0) {
+    notifyMe("Please add at least one stock entry.", "error");
+    return true;
+  }
+
+  for (const s of stocks) {
+    if (!s || s.size === undefined || isNaN(s.size) || s.size <= 0) {
+      notifyMe("Each stock must have a valid size greater than 0.", "error");
+      return true;
+    }
+    if (s.quantity === undefined || isNaN(s.quantity) || s.quantity < 0) {
+      notifyMe("Each stock must have a valid quantity (0 or more).", "error");
+      return true;
+    }
+  }
+
+  return false; // data is valid
+}
+
 addEventListener("DOMContentLoaded", async () => {
   const user = JSON.parse(localStorage.getItem("user")) || null;
 
@@ -274,6 +353,7 @@ addEventListener("DOMContentLoaded", async () => {
   //let products = await getInfo(user.userId);
   let products = PDCTS;
   let selectedShoe = null;
+  let imageFile = null;
 
   if (!products) return;
 
@@ -306,6 +386,7 @@ addEventListener("DOMContentLoaded", async () => {
 
   // Handle Add New Button
   document.getElementById("add-new-product").onclick = () => {
+    selectedShoe = null;
     fillProductForm();
     document.getElementById("productFormContainer").style.display = "flex";
   };
@@ -327,30 +408,124 @@ addEventListener("DOMContentLoaded", async () => {
     }
   };
 
-  // Handle Form Buttons
+  /* Handle Form Buttons */
+
+  // Cancel Button
   document.getElementById("form-cancel-btn").onclick = () => {
     document.getElementById("productFormContainer").style.display = "none";
   };
 
+  // Add Stock Button
   document.getElementById("add-stock-btn").onclick = () => {
     addStockRow();
   };
 
+  // Remove Stock Button
   document.getElementById("stockSection").addEventListener("click", (e) => {
     if (e.target.closest(".remove-stock-btn")) {
       const stockSection = document.getElementById("stockSection");
       const stockEntries = stockSection.querySelectorAll(".stock-entry");
 
-      // Only remove if more than one entry remains
       if (stockEntries.length > 1) {
-        const stockDiv = e.target.closest(".stock-entry");
-        if (stockDiv) stockDiv.remove();
+        e.target.closest(".stock-entry").remove();
       } else {
-        notifyMe("At least one stock entry is required.", "info");
+        notifyMe("At least one stock entry is required", "info");
       }
     }
   });
 
+  // Save Button
+  document
+    .getElementById("form-submit-button")
+    .addEventListener("click", async () => {
+      const brand = document.getElementById("productBrand").value.trim();
+      const category = document.getElementById("productCategory").value.trim();
+      const gender = document.getElementById("productGender").value.trim();
+      const sku = document.getElementById("productSKU").value.trim();
+      const color = document.getElementById("productColor").value.trim();
+      const weight = parseFloat(document.getElementById("productWeight").value);
+      const description = document
+        .getElementById("productDescription")
+        .value.trim();
+      const price = parseFloat(document.getElementById("productPrice").value);
+      const discount = parseFloat(
+        document.getElementById("productDiscount").value
+      );
+      const url = document.getElementById("product-image-holder").src;
+
+      const sellerId = JSON.parse(localStorage.getItem("user"))?.userId;
+      if (!sellerId) {
+        notifyMe("Invalid seller ID", "error");
+        return;
+      }
+
+      const stockSection = document.getElementById("stockSection");
+      const stockEntries = Array.from(
+        stockSection.querySelectorAll(".stock-entry")
+      );
+      const stocks = stockEntries
+        .map((entry) => {
+          const size = parseInt(entry.children[0].value);
+          const quantity = parseInt(entry.children[1].value);
+          return { size, quantity };
+        })
+        .filter((s) => !isNaN(s.size) && !isNaN(s.quantity));
+
+      const payload = {
+        shoeId: selectedShoe ?? 0,
+        sellerId,
+        brand,
+        category,
+        gender,
+        sku,
+        color,
+        weight,
+        description,
+        price,
+        discount,
+        url,
+        stocks,
+      };
+
+      console.log(formData);
+
+      if (isInvalidData(payload)) {
+        console.log("Invalid Data");
+        return;
+      }
+
+      const formData = new FormData();
+
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+
+      formData.append("data", JSON.stringify(payload));
+
+      // Determine whether we're updating or adding
+      if (selectedShoe) {
+        console.log("Updating");
+        const updatedList = await updateStore(data);
+        if (updatedList) {
+          products = updatedList;
+          populateTable(products);
+          document.getElementById("productFormContainer").style.display =
+            "none";
+          selectedShoe = null;
+        }
+      } else {
+        console.log("Adding new");
+        const newList = await addStore(data);
+        if (newList) {
+          products = newList;
+          populateTable(products);
+          document.getElementById("productFormContainer").style.display =
+            "none";
+        }
+      }
+    });
+
+  // Image uploader
   document
     .getElementById("product-image-holder")
     .addEventListener("click", () => {
@@ -360,6 +535,7 @@ addEventListener("DOMContentLoaded", async () => {
   document.getElementById("productImage").addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file) {
+      imageFile = file;
       const imageUrl = URL.createObjectURL(file);
       document.getElementById("product-image-holder").src = imageUrl;
     }

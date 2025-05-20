@@ -183,8 +183,8 @@ img.product-image {
   cursor: pointer;
 }
 .left-side img {
-  width: 70%;
-  height: 70%;
+  width: 95%;
+  height: 95%;
   object-fit: cover;
   border-radius: 50%;
 }

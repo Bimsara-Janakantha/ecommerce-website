@@ -167,12 +167,12 @@
             <div class="middle-side">
               <div class="form-group">
                 <label for="productSKU">SKU</label>
-                <input type="text" id="productSKU" maxlength="20" />
+                <input type="text" id="productSKU" maxlength="20" required />
               </div>
 
               <div class="form-group">
                 <label for="productCategory">Category</label>
-                <select id="productCategory">
+                <select id="productCategory" required>
                   <option value="">Select Category</option>
                   <option value="Running Shoes">Running Shoes</option>
                   <option value="Hiking Boots">Hiking Boots</option>
@@ -182,19 +182,25 @@
 
               <div class="form-group">
                 <label for="productWeight">Weight</label>
-                <input type="text" id="productWeight" maxlength="20" />
+                <input type="text" id="productWeight" maxlength="20" required />
               </div>
 
               <div class="form-group">
                 <label for="productPrice">Unit Price (LKR)</label>
-                <input type="number" id="productPrice" min="0" max="100000" />
+                <input
+                  type="number"
+                  id="productPrice"
+                  min="0"
+                  max="100000"
+                  required
+                />
               </div>
             </div>
 
             <div class="right-side">
               <div class="form-group">
                 <label for="productBrand">Brand</label>
-                <select id="productBrand">
+                <select id="productBrand" required>
                   <option value="">Select Brand</option>
                   <option value="SneakerX">SneakerX</option>
                   <option value="BootPro">BootPro</option>
@@ -204,7 +210,7 @@
 
               <div class="form-group">
                 <label for="productGender">Gender</label>
-                <select id="productGender">
+                <select id="productGender" required>
                   <option value="">Select Gender</option>
                   <option value="MEN">Men</option>
                   <option value="WOMEN">Women</option>
@@ -216,19 +222,19 @@
 
               <div class="form-group">
                 <label for="productColor">Color</label>
-                <input type="text" id="productColor" maxlength="50" />
+                <input type="text" id="productColor" maxlength="50" required />
               </div>
 
               <div class="form-group">
                 <label for="productDiscount">Discount (LKR)</label>
-                <input type="number" id="productDiscount" min="0" />
+                <input type="number" id="productDiscount" min="0" required />
               </div>
             </div>
           </div>
 
           <div class="form-group">
             <label for="productDescription">Description</label>
-            <input type="text" id="productDescription" max="100" />
+            <input type="text" id="productDescription" max="100" required />
           </div>
 
           <hr style="width: 100%; margin: 10px 0" />
