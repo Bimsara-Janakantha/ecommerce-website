@@ -69,7 +69,6 @@ async function getStore(seller) {
     const serverResponse = await getData(url);
     const { message, shoeList } = serverResponse.data;
     console.log(message);
-    notifyMe(message, "success");
     return shoeList;
   } catch (error) {
     console.error("Order Error: ", error);
@@ -111,7 +110,7 @@ async function addStore(data) {
     const serverResponse = await postData("sales/store", data);
     const { message } = serverResponse.data;
     console.log(message);
-    notifyMe(message, "success", "shop.html");
+    notifyMe(message, "success");
   } catch (error) {
     console.error("Order Error: ", error);
     const { status, message } = error;
@@ -121,6 +120,8 @@ async function addStore(data) {
     } else {
       notifyMe("Something went wrong", "error");
     }
+  } finally {
+    return await getStore(data.sellerId);
   }
 }
 
