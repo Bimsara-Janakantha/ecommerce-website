@@ -29,7 +29,7 @@ try {
     $image = $_FILES['image'] ?? null;
 
     // Validate required fields
-    if (!$shoeId || !$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
+    if (!$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
         http_response_code(400);
         echo json_encode(["error" => "Missing required fields"]);
         exit;
