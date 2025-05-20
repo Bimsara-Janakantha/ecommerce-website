@@ -111,7 +111,7 @@ async function addStore(data) {
     const serverResponse = await postData("sales/store", data);
     const { message } = serverResponse.data;
     console.log(message);
-    notifyMe(message, "success");
+    notifyMe(message, "success", "shop.html");
   } catch (error) {
     console.error("Order Error: ", error);
     const { status, message } = error;
@@ -121,8 +121,6 @@ async function addStore(data) {
     } else {
       notifyMe("Something went wrong", "error");
     }
-  } finally {
-    return await getStore(data.sellerId);
   }
 }
 
@@ -483,7 +481,7 @@ addEventListener("DOMContentLoaded", async () => {
       // Determine whether we're updating or adding
       if (selectedShoe) {
         console.log("Updating");
-        const updatedList = await updateStore(data);
+        const updatedList = await updateStore(formData);
         if (updatedList) {
           products = updatedList;
           populateTable(products);
@@ -493,7 +491,7 @@ addEventListener("DOMContentLoaded", async () => {
         }
       } else {
         console.log("Adding new");
-        const newList = await addStore(data);
+        const newList = await addStore(formData);
         if (newList) {
           products = newList;
           populateTable(products);
