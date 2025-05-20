@@ -28,7 +28,7 @@ try {
     $sellerId = $data['sellerId'] ?? null;
     $stocks = $data['stocks'] ?? [];
 
-    if (!$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
+    if (!$shoeId || !$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
         http_response_code(400);
         echo json_encode(["error" => "Missing required fields"]);
         exit;
