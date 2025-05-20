@@ -359,8 +359,8 @@ addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  //let products = await getInfo(user.userId);
-  let products = PDCTS;
+  let products = await getStore(user.userId);
+  //let products = PDCTS;
   let selectedShoe = null;
   let imageFile = null;
 
