@@ -92,26 +92,14 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
   background-color: #e6f2f2;
 }
-.status {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 500;
-  text-align: center;
-  display: inline-block;
+tbody td:last-child{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
-.completed {
-  background-color: #e6f4ea; /* soft green */
-  color: #2e7d32;            /* dark green */
-}
-.pending {
-  background-color: #fff8e1; /* light yellow */
-  color: #ff8f00;            /* amber */
-}
-.refunded {
-  background-color: #fdecea; /* light red/pink */
-  color: #c62828;            /* strong red */
-}
-.failed {
-  background-color: #fce4ec; /* light pink */
-  color: #ad1457;            /* dark pink/maroon */
+tbody td button{
+  width: 80px;
+  padding: 12px 0;
 }

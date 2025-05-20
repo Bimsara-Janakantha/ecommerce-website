@@ -190,14 +190,14 @@ function populateTable(products) {
         ${product.sku}<br/>
         ${product.brand} ${product.gender} ${product.description}
       </td>
-      <td>${formatCurrency(product.discount)}</td>
+      <td>${product.discount}%</td>
       <td>${formatCurrency(product.price)}</td>
       <td>${generateStockList(product.stocks)}</td>
       <td>
-        <button class="btn-danger" onclick="deleteProduct(${
+        <button class="error" onclick="deleteProduct(${
           product.shoeId
         })">Delete</button>
-        <button class="btn-edit" onclick="editProduct(${
+        <button class="primary" onclick="editProduct(${
           product.shoeId
         })">Edit</button>
       </td>
