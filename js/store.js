@@ -109,7 +109,7 @@ async function addStore(data, sellerId) {
   try {
     const serverResponse = await postData("sales/store", data);
     const { message } = serverResponse.data;
-    //console.log(message);
+    console.log(message);
     notifyMe(message, "success");
   } catch (error) {
     //console.error("Order Error: ", error);
