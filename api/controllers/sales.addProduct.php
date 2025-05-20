@@ -29,7 +29,7 @@ try {
     $image = $_FILES['image'] ?? null;
 
 
-    if (!$brand || !$gender || !$category || !$price || !$sku || !$color || !$weight || !$sellerId) {
+    if (!$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
         http_response_code(400);
         echo json_encode(["error" => "Missing required fields"]);
         exit;
@@ -38,6 +38,17 @@ try {
     if (!$image) {
         http_response_code(400);
         echo json_encode(["error" => "Missing image"]);
+        exit;
+    }
+
+    // Validate seller
+    $seller = $db->fetch("SELECT * FROM USERS WHERE userId = :id AND role = 'seller'", [
+        ':id' => $sellerId
+    ]);
+
+    if (!$seller) {
+        http_response_code(404);
+        echo json_encode(['error' => 'Seller not found']);
         exit;
     }
 

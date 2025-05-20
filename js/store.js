@@ -478,6 +478,7 @@ addEventListener("DOMContentLoaded", async () => {
       }
 
       formData.append("data", JSON.stringify(payload));
+      document.getElementById("productFormContainer").style.display = "none";
 
       // Determine whether we're updating or adding
       if (selectedShoe) {
@@ -486,8 +487,6 @@ addEventListener("DOMContentLoaded", async () => {
         if (updatedList) {
           products = updatedList;
           populateTable(products);
-          document.getElementById("productFormContainer").style.display =
-            "none";
           selectedShoe = null;
         }
       } else {
@@ -496,8 +495,6 @@ addEventListener("DOMContentLoaded", async () => {
         if (newList) {
           products = newList;
           populateTable(products);
-          document.getElementById("productFormContainer").style.display =
-            "none";
         }
       }
     });
