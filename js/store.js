@@ -287,16 +287,8 @@ function isInvalidData(data) {
   }
 
   // Basic field presence checks
-  if (!sku) {
-    notifyMe("SKU is required.", "error");
-    return true;
-  }
-  if (!brand) {
-    notifyMe("Please select a brand.", "error");
-    return true;
-  }
-  if (!category) {
-    notifyMe("Please select a category.", "error");
+  if (!sku || !brand || !category) {
+    notifyMe("Required fields are missing.", "error");
     return true;
   }
   if (price === undefined || isNaN(price) || price <= 0) {
