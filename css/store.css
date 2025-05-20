@@ -92,7 +92,7 @@ tbody tr:nth-child(odd) {
 tbody tr:nth-child(even) {
   background-color: #e6f2f2;
 }
-tbody td:last-child{
+tbody td:last-child div{
   display: flex;
   flex-direction: column;
   gap: 10px;
