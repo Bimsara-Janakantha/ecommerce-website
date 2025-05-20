@@ -4,13 +4,13 @@ const BASE_URL = "http://ecommerce.local/api/app.php";
 export const postData = async (path, data) => {
   const url = `${BASE_URL}/${path}`;
 
+  const isFormData = data instanceof FormData;
+
   try {
     const response = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      headers: isFormData ? undefined : { "Content-Type": "application/json" },
+      body: isFormData ? data : JSON.stringify(data),
     });
 
     const resBody = await response.json();
@@ -96,12 +96,12 @@ export const deleteData = async (path, data) => {
 export const updateData = async (path, data) => {
   try {
     const url = `${BASE_URL}/${path}`;
+    const isFormData = data instanceof FormData;
+
     const response = await fetch(url, {
       method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      headers: isFormData ? undefined : { "Content-Type": "application/json" },
+      body: isFormData ? data : JSON.stringify(data),
     });
 
     const resBody = await response.json();
