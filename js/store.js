@@ -194,12 +194,14 @@ function populateTable(products) {
       <td>${formatCurrency(product.price)}</td>
       <td>${generateStockList(product.stocks)}</td>
       <td>
+      <div>
         <button class="error" onclick="deleteProduct(${
           product.shoeId
         })">Delete</button>
         <button class="primary" onclick="editProduct(${
           product.shoeId
         })">Edit</button>
+        </div>
       </td>
       `;
     tbody.appendChild(row);
