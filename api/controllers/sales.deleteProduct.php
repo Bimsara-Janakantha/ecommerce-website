@@ -40,7 +40,7 @@ try {
         ':sellerId' => $sellerId
     ]);
 
-    echo json_encode(['message' => 'Product marked as deleted successfully']);
+    echo json_encode(['message' => 'Product deleted successfully']);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);

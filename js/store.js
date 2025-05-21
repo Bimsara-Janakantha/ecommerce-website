@@ -455,10 +455,23 @@ addEventListener("DOMContentLoaded", async () => {
 
       formData.append("data", JSON.stringify(payload));
       document.getElementById("productFormContainer").style.display = "none";
+      const saveBtn = document.getElementById("form-submit-button");
+      const spinnerIcon = saveBtn.querySelector("i");
+      const btnText = saveBtn.querySelector("span");
 
       console.log("Updaing or Adding New");
 
+      spinnerIcon.style.display = "inline-block";
+      btnText.style.display = "none";
+      saveBtn.disabled = true;
+
       await addStore(formData);
+
+      spinnerIcon.style.display = "none";
+      btnText.style.display = "inline-block";
+      saveBtn.disabled = false;
+
+      return;
     });
 
   // Image uploader

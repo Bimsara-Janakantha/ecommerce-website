@@ -144,7 +144,7 @@
 
     <!-- Product Form -->
     <div class="mui-dialog" id="productFormContainer">
-      <form id="productForm" enctype="multipart/form-data">
+      <form id="productForm" method="post" enctype="multipart/form-data">
         <div class="mui-dialog-content" style="align-items: start">
           <h3 id="formTitle"></h3>
           <hr style="width: 100%; margin: 10px 0" />
@@ -277,7 +277,8 @@
               type="submit"
               id="form-submit-button"
             >
-              Save
+              <span class="btn-text">Save</span>
+              <i class="fa fa-spinner fa-spin fa-fw" style="display: none"></i>
             </button>
           </div>
         </div>
