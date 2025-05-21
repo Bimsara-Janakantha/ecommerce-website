@@ -25,9 +25,8 @@ function formatCurrency(value) {
 // Function to display message
 function notifyMe(message, type, redirectUrl = null) {
   const status_msg = document.querySelector("#status-message");
-  if (!status_msg) return;
-
   let icon;
+
   switch (type) {
     case "success":
       icon = `<i class="fa-regular fa-circle-check"></i>`;
@@ -42,22 +41,17 @@ function notifyMe(message, type, redirectUrl = null) {
       icon = `<i class="fa-regular fa-bell"></i>`;
   }
 
-  // Reset previous content and classes
-  status_msg.innerHTML = `${icon} ${message}`;
-  status_msg.className = "status-message";
+  status_msg.innerHTML = ` ${icon} ${message} `;
   status_msg.classList.add(type);
   status_msg.style.display = "flex";
 
-  // Clear previous timeout if still pending
-  if (status_msg.timeoutId) clearTimeout(status_msg.timeoutId);
-
-  // Set new timeout and store it
-  status_msg.timeoutId = setTimeout(() => {
+  setTimeout(() => {
     status_msg.classList.remove(type);
     status_msg.style.display = "none";
 
+    // Redirect if a URL is provided
     if (redirectUrl) {
-      window.location.href = redirectUrl;
+      location.href = redirectUrl;
     }
   }, 3000);
 }
@@ -90,7 +84,7 @@ async function addStore(data) {
     const serverResponse = await postData("sales/store", data);
     const { message } = serverResponse.data;
     console.log(message);
-    notifyMe(message, "success");
+    notifyMe(message, "success", "store.html");
   } catch (error) {
     //console.error("Order Error: ", error);
     const { status, message } = error;
@@ -306,7 +300,6 @@ addEventListener("DOMContentLoaded", async () => {
   }
 
   let products = await getStore(user.userId);
-  //let products = PDCTS;
   let selectedShoe = null;
   let imageFile = null;
 

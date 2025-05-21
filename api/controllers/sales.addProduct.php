@@ -119,6 +119,8 @@ try {
 
         // Get inserted shoeId
         $shoeId = $db->lastInsertId();
+
+        $message = "Product added successfully";
     }
     // Updating
     else {
@@ -181,6 +183,8 @@ try {
         $db->execute("DELETE FROM PRODUCT_SIZES WHERE shoeId = :shoeId", [
             ':shoeId' => $shoeId
         ]);
+
+        $message = "Product updated successfully";
     }
 
     // Insert stock sizes
@@ -195,7 +199,7 @@ try {
         ]);
     }
 
-    echo json_encode(['message' => 'Product added successfully']);
+    echo json_encode(['message' => $message]);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
