@@ -127,7 +127,7 @@ try {
     // Final result as a list of enriched orders
     $finalOrders = array_values($orderMap);
 
-    echo json_encode(['summary' => $summary, 'orders' => $finalOrders, 'message' => "Data found successfully"], JSON_PRETTY_PRINT);
+    echo json_encode(['summary' => $summary, 'orders' => $finalOrders, 'message' => "Order status updated successfully"], JSON_PRETTY_PRINT);
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
