@@ -96,12 +96,11 @@ export const deleteData = async (path, data) => {
 export const updateData = async (path, data) => {
   try {
     const url = `${BASE_URL}/${path}`;
-    const isFormData = data instanceof FormData;
 
     const response = await fetch(url, {
       method: "PATCH",
-      headers: isFormData ? undefined : { "Content-Type": "application/json" },
-      body: isFormData ? data : JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
 
     const resBody = await response.json();

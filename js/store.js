@@ -1,9 +1,4 @@
-import {
-  deleteData,
-  getData,
-  postData,
-  updateData,
-} from "../utils/connection.js";
+import { deleteData, getData, postData } from "../utils/connection.js";
 
 const CATEGORIES = {
   men: ["Sneakers", "Boots", "Sandals", "Loafers"],
@@ -30,8 +25,9 @@ function formatCurrency(value) {
 // Function to display message
 function notifyMe(message, type, redirectUrl = null) {
   const status_msg = document.querySelector("#status-message");
-  let icon;
+  if (!status_msg) return;
 
+  let icon;
   switch (type) {
     case "success":
       icon = `<i class="fa-regular fa-circle-check"></i>`;
@@ -46,17 +42,22 @@ function notifyMe(message, type, redirectUrl = null) {
       icon = `<i class="fa-regular fa-bell"></i>`;
   }
 
-  status_msg.innerHTML = ` ${icon} ${message} `;
+  // Reset previous content and classes
+  status_msg.innerHTML = `${icon} ${message}`;
+  status_msg.className = "status-message";
   status_msg.classList.add(type);
   status_msg.style.display = "flex";
 
-  setTimeout(() => {
+  // Clear previous timeout if still pending
+  if (status_msg.timeoutId) clearTimeout(status_msg.timeoutId);
+
+  // Set new timeout and store it
+  status_msg.timeoutId = setTimeout(() => {
     status_msg.classList.remove(type);
     status_msg.style.display = "none";
 
-    // Redirect if a URL is provided
     if (redirectUrl) {
-      location.href = redirectUrl;
+      window.location.href = redirectUrl;
     }
   }, 3000);
 }
@@ -83,29 +84,8 @@ async function getStore(seller) {
   }
 }
 
-// Function to update stocks
-async function updateStore(data, sellerId) {
-  try {
-    const serverResponse = await updateData("sales/store", data);
-    const { message } = serverResponse.data;
-    //console.log(message);
-    notifyMe(message, "success");
-  } catch (error) {
-    //console.error("Order Error: ", error);
-    const { status, message } = error;
-    const knownErrors = [400, 404];
-    if (knownErrors.includes(status)) {
-      notifyMe(message, "error");
-    } else {
-      notifyMe("Something went wrong", "error");
-    }
-  } finally {
-    return await getStore(sellerId);
-  }
-}
-
 // Function to add new stocks
-async function addStore(data, sellerId) {
+async function addStore(data) {
   try {
     const serverResponse = await postData("sales/store", data);
     const { message } = serverResponse.data;
@@ -120,8 +100,6 @@ async function addStore(data, sellerId) {
     } else {
       notifyMe("Something went wrong", "error");
     }
-  } finally {
-    return await getStore(sellerId);
   }
 }
 
@@ -206,8 +184,8 @@ function addStockRow(size = "", quantity = "") {
   stockDiv.classList.add("form-group", "stock-entry");
 
   stockDiv.innerHTML = `
-    <input type="number" placeholder="Size" value="${size}" style="width: 80px" />
-    <input type="number" placeholder="Quantity" value="${quantity}" style="width: 80px" />
+    <input type="number" placeholder="Size" value="${size}" style="width: 80px" min="1" max="60" />
+    <input type="number" placeholder="Quantity" value="${quantity}" style="width: 80px" min="0" max="10000"/>
     <div class="icon-btn remove-stock-btn"><i class="fa-solid fa-xmark"></i></div>
   `;
   stockSection.appendChild(stockDiv);
@@ -413,8 +391,10 @@ addEventListener("DOMContentLoaded", async () => {
 
   // Save Button
   document
-    .getElementById("form-submit-button")
-    .addEventListener("click", async () => {
+    .getElementById("productForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
       const brand = document.getElementById("productBrand").value.trim();
       const category = document.getElementById("productCategory").value.trim();
       const gender = document.getElementById("productGender").value.trim();
@@ -449,7 +429,7 @@ addEventListener("DOMContentLoaded", async () => {
         .filter((s) => !isNaN(s.size) && !isNaN(s.quantity));
 
       const payload = {
-        shoeId: selectedShoe ?? 0,
+        shoeId: selectedShoe?.shoeId ?? 0,
         sellerId,
         brand,
         category,
@@ -475,28 +455,17 @@ addEventListener("DOMContentLoaded", async () => {
 
       if (imageFile) {
         formData.append("image", imageFile);
+      } else if (payload.shoeId === 0) {
+        notifyMe("Image is required", "error");
+        return;
       }
 
       formData.append("data", JSON.stringify(payload));
       document.getElementById("productFormContainer").style.display = "none";
 
-      // Determine whether we're updating or adding
-      if (selectedShoe) {
-        console.log("Updating");
-        const updatedList = await updateStore(formData, sellerId);
-        if (updatedList) {
-          products = updatedList;
-          populateTable(products);
-          selectedShoe = null;
-        }
-      } else {
-        console.log("Adding new");
-        const newList = await addStore(formData, sellerId);
-        if (newList) {
-          products = newList;
-          populateTable(products);
-        }
-      }
+      console.log("Updaing or Adding New");
+
+      await addStore(formData);
     });
 
   // Image uploader

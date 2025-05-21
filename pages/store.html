@@ -144,124 +144,142 @@
 
     <!-- Product Form -->
     <div class="mui-dialog" id="productFormContainer">
-      <div class="mui-dialog-content" style="align-items: start">
-        <h3 id="formTitle"></h3>
-        <hr style="width: 100%; margin: 10px 0" />
-
-        <div class="form-body">
-          <h5>General Information</h5>
-          <div class="mui-form">
-            <div class="left-side" for="product-image-holder">
-              <img id="product-image-holder" />
-              <input
-                type="file"
-                id="productImage"
-                accept="image/*"
-                style="display: none"
-              />
-            </div>
-
-            <div class="middle-side">
-              <div class="form-group">
-                <label for="productSKU">SKU</label>
-                <input type="text" id="productSKU" maxlength="20" required />
-              </div>
-
-              <div class="form-group">
-                <label for="productCategory">Category</label>
-                <select id="productCategory" required>
-                  <option value="">Select Category</option>
-                  <option value="Sneakers">Sneakers</option>
-                  <option value="Boots">Boots</option>
-                  <option value="Sandals">Sandals</option>
-                  <option value="Loafers">Loafers</option>
-                  <option value="Heels">Heels</option>
-                  <option value="School Shoes">School Shoes</option>
-                  <option value="Ballet Flats">Ballet Flats</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="productWeight">Weight</label>
-                <input type="text" id="productWeight" maxlength="20" required />
-              </div>
-
-              <div class="form-group">
-                <label for="productPrice">Unit Price (LKR)</label>
-                <input
-                  type="number"
-                  id="productPrice"
-                  min="0"
-                  max="100000"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="right-side">
-              <div class="form-group">
-                <label for="productBrand">Brand</label>
-                <select id="productBrand" required>
-                  <option value="">Select Brand</option>
-                  <option value="AVI">AVI</option>
-                  <option value="NIKE">NIKE</option>
-                  <option value="PUMA">PUMA</option>
-                  <option value="REEBOK">REEBOK</option>
-                  <option value="BATA">BATA</option>
-                  <option value="CATWALK">CATWALK</option>
-                  <option value="HUSH PUPPIES">HUSH PUPPIES</option>
-                  <option value="METRO">METRO</option>
-                  <option value="SPARX">SPARX</option>
-                  <option value="ACTION">ACTION</option>
-                  <option value="LEE COOPER">LEE COOPER</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="productGender">Gender</label>
-                <select id="productGender" required>
-                  <option value="">Select Gender</option>
-                  <option value="MEN">Men</option>
-                  <option value="WOMEN">Women</option>
-                  <option value="BOYS">Boys</option>
-                  <option value="GIRLS">Girls</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="productColor">Color</label>
-                <input type="text" id="productColor" maxlength="50" required />
-              </div>
-
-              <div class="form-group">
-                <label for="productDiscount">Discount (%)</label>
-                <input type="number" id="productDiscount" min="0" required />
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="productDescription">Description</label>
-            <input type="text" id="productDescription" max="100" required />
-          </div>
-
+      <form id="productForm" enctype="multipart/form-data">
+        <div class="mui-dialog-content" style="align-items: start">
+          <h3 id="formTitle"></h3>
           <hr style="width: 100%; margin: 10px 0" />
 
-          <div class="add-new-section">
-            <h5>Stock Information</h5>
-            <button type="button" id="add-stock-btn" class="secondary">
-              Add Stock
-            </button>
+          <div class="form-body">
+            <h5>General Information</h5>
+            <div class="mui-form">
+              <div class="left-side" for="product-image-holder">
+                <img id="product-image-holder" />
+                <input
+                  type="file"
+                  id="productImage"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+
+              <div class="middle-side">
+                <div class="form-group">
+                  <label for="productSKU">SKU</label>
+                  <input type="text" id="productSKU" maxlength="20" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="productCategory">Category</label>
+                  <select id="productCategory" required>
+                    <option value="">Select Category</option>
+                    <option value="Sneakers">Sneakers</option>
+                    <option value="Boots">Boots</option>
+                    <option value="Sandals">Sandals</option>
+                    <option value="Loafers">Loafers</option>
+                    <option value="Heels">Heels</option>
+                    <option value="School Shoes">School Shoes</option>
+                    <option value="Ballet Flats">Ballet Flats</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="productWeight">Weight</label>
+                  <input
+                    type="text"
+                    id="productWeight"
+                    maxlength="20"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="productPrice">Unit Price (LKR)</label>
+                  <input
+                    type="number"
+                    id="productPrice"
+                    min="0"
+                    max="100000"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="right-side">
+                <div class="form-group">
+                  <label for="productBrand">Brand</label>
+                  <select id="productBrand" required>
+                    <option value="">Select Brand</option>
+                    <option value="AVI">AVI</option>
+                    <option value="NIKE">NIKE</option>
+                    <option value="PUMA">PUMA</option>
+                    <option value="REEBOK">REEBOK</option>
+                    <option value="BATA">BATA</option>
+                    <option value="CATWALK">CATWALK</option>
+                    <option value="HUSH PUPPIES">HUSH PUPPIES</option>
+                    <option value="METRO">METRO</option>
+                    <option value="SPARX">SPARX</option>
+                    <option value="ACTION">ACTION</option>
+                    <option value="LEE COOPER">LEE COOPER</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="productGender">Gender</label>
+                  <select id="productGender" required>
+                    <option value="">Select Gender</option>
+                    <option value="MEN">Men</option>
+                    <option value="WOMEN">Women</option>
+                    <option value="BOYS">Boys</option>
+                    <option value="GIRLS">Girls</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="productColor">Color</label>
+                  <input
+                    type="text"
+                    id="productColor"
+                    maxlength="50"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="productDiscount">Discount (%)</label>
+                  <input type="number" id="productDiscount" min="0" required />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="productDescription">Description</label>
+              <input type="text" id="productDescription" max="100" required />
+            </div>
+
+            <hr style="width: 100%; margin: 10px 0" />
+
+            <div class="add-new-section">
+              <h5>Stock Information</h5>
+              <button type="button" id="add-stock-btn" class="secondary">
+                Add Stock
+              </button>
+            </div>
+
+            <div class="stock-section" id="stockSection"></div>
           </div>
 
-          <div class="stock-section" id="stockSection"></div>
+          <div class="mui-dialog-actions">
+            <button class="mui-btn default" id="form-cancel-btn">Cancel</button>
+            <button
+              class="mui-btn primary"
+              type="submit"
+              id="form-submit-button"
+            >
+              Save
+            </button>
+          </div>
         </div>
-
-        <div class="mui-dialog-actions">
-          <button class="mui-btn default" id="form-cancel-btn">Cancel</button>
-          <button class="mui-btn primary" id="form-submit-button">Save</button>
-        </div>
-      </div>
+      </form>
     </div>
 
     <!-- Confirmation Dialog -->

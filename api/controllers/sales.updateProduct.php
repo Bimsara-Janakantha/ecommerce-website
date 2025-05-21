@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 $db = Database::getInstance();
 
 try {
-    if ($_SERVER['REQUEST_METHOD'] !== 'PATCH') {
+    if ($_SERVER['REQUEST_METHOD'] !== 'PUT') {
         http_response_code(405);
         echo json_encode(['error' => 'Method not allowed']);
         exit;
@@ -15,7 +15,7 @@ try {
     // Get JSON-encoded form data
     $data = json_decode($_POST['data'] ?? '{}', true);
 
-    $shoeId = $data['shoeId'] ?? null;
+    $shoeId = $_POST['shoeId'] ?? null;
     $brand = $data['brand'] ?? null;
     $gender = $data['gender'] ?? null;
     $category = $data['category'] ?? null;
@@ -27,8 +27,32 @@ try {
     $weight = $data['weight'] ?? null;
     $sellerId = $data['sellerId'] ?? null;
     $stocks = $data['stocks'] ?? [];
+    $image = $_FILES['image'] ?? null;
+    $response = [
+        "shoeId" => $shoeId,
+        "brand" => $brand,
+        "gender" => $gender,
+        "category" => $category,
+        "description" => $description,
+        "price" => $price,
+        "discount" => $discount,
+        "sku" => $sku,
+        "color" => $color,
+        "weight" => $weight,
+        "sellerId" => $sellerId,
+        "stocks" => $stocks,
+        "image" => $image ? [
+            "name" => $image['name'],
+            "type" => $image['type'],
+            "size" => $image['size'],
+            "tmp_name" => $image['tmp_name'],
+            "error" => $image['error']
+        ] : null
+    ];
 
-    if (!$shoeId || !$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
+    echo json_encode($response, JSON_PRETTY_PRINT);
+
+    /* if (!$shoeId || !$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
         http_response_code(400);
         echo json_encode(["error" => "Missing required fields"]);
         exit;
@@ -148,7 +172,7 @@ try {
             ':size' => $stock['size'],
             ':quantity' => $stock['quantity']
         ]);
-    }
+    } */
 
     echo json_encode(['message' => 'Product updated successfully']);
 } catch (PDOException $e) {

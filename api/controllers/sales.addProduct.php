@@ -15,6 +15,7 @@ try {
     // Validate form inputs
     $data = json_decode($_POST['data'] ?? '[]', true);
 
+    $shoeId = $data['shoeId'] ?? 0;
     $brand = $data['brand'] ?? null;
     $gender = $data['gender'] ?? null;
     $category = $data['category'] ?? null;
@@ -32,12 +33,6 @@ try {
     if (!$brand || !$gender || !$category || !$description || !$price || !$sku || !$color || !$weight || !$sellerId || empty($stocks)) {
         http_response_code(400);
         echo json_encode(["error" => "Missing required fields"]);
-        exit;
-    }
-
-    if (!$image) {
-        http_response_code(400);
-        echo json_encode(["error" => "Missing image"]);
         exit;
     }
 
@@ -82,40 +77,111 @@ try {
         exit;
     }
 
-    // Generate a unique image filename
-    $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
-    $uniqueName = "shoe_" . time() . '.' . $ext;
-    $targetPath = $targetDir . $uniqueName;
-    $publicPath = $publicDir . $uniqueName;
+    // Adding New
+    if ($shoeId === 0) {
+        if (!$image) {
+            http_response_code(400);
+            echo json_encode(["error" => "Missing image"]);
+            exit;
+        }
 
-    if (!move_uploaded_file($image['tmp_name'], $targetPath)) {
-        http_response_code(500);
-        echo json_encode(["error" => "Failed to upload image"]);
-        exit;
+        // Generate a unique image filename
+        $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+        $uniqueName = "shoe_" . time() . '.' . $ext;
+        $targetPath = $targetDir . $uniqueName;
+        $publicPath = $publicDir . $uniqueName;
+
+        if (!move_uploaded_file($image['tmp_name'], $targetPath)) {
+            http_response_code(500);
+            echo json_encode(["error" => "Failed to upload image"]);
+            exit;
+        }
+
+        // Insert into PRODUCTS
+        $db->execute("
+            INSERT INTO PRODUCTS 
+            (brand, gender, category, description, price, discount, sku, color, weight, url, sellerId) 
+            VALUES 
+            (:brand, :gender, :category, :description, :price, :discount, :sku, :color, :weight, :url, :sellerId)
+        ", [
+            ':brand' => $brand,
+            ':gender' => $gender,
+            ':category' => $category,
+            ':description' => $description,
+            ':price' => $price,
+            ':discount' => $discount,
+            ':sku' => $sku,
+            ':color' => $color,
+            ':weight' => $weight,
+            ':url' => $publicPath,
+            ':sellerId' => $sellerId
+        ]);
+
+        // Get inserted shoeId
+        $shoeId = $db->lastInsertId();
     }
+    // Updating
+    else {
+        $publicPath = null;
 
-    // Insert into PRODUCTS
-    $db->execute("
-        INSERT INTO PRODUCTS 
-        (brand, gender, category, description, price, discount, sku, color, weight, url, sellerId) 
-        VALUES 
-        (:brand, :gender, :category, :description, :price, :discount, :sku, :color, :weight, :url, :sellerId)
-    ", [
-        ':brand' => $brand,
-        ':gender' => $gender,
-        ':category' => $category,
-        ':description' => $description,
-        ':price' => $price,
-        ':discount' => $discount,
-        ':sku' => $sku,
-        ':color' => $color,
-        ':weight' => $weight,
-        ':url' => $publicPath,
-        ':sellerId' => $sellerId
-    ]);
+        if ($image) {
+            // Generate a unique image filename
+            $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+            $uniqueName = "shoe_" . time() . '.' . $ext;
+            $targetPath = $targetDir . $uniqueName;
+            $publicPath = $publicDir . $uniqueName;
 
-    // Get inserted shoeId
-    $shoeId = $db->lastInsertId();
+            if (!move_uploaded_file($image['tmp_name'], $targetPath)) {
+                http_response_code(500);
+                echo json_encode(["error" => "Failed to upload image"]);
+                exit;
+            }
+        }
+
+        // Build dynamic update query
+        $updateFields = [
+            'brand = :brand',
+            'gender = :gender',
+            'category = :category',
+            'description = :description',
+            'price = :price',
+            'discount = :discount',
+            'sku = :sku',
+            'color = :color',
+            'weight = :weight'
+        ];
+
+        if ($publicPath) {
+            $updateFields[] = 'url = :url';
+        }
+
+        $sql = "UPDATE PRODUCTS SET " . implode(', ', $updateFields) . " WHERE shoeId = :shoeId AND sellerId = :sellerId";
+
+        $params = [
+            ':brand' => $brand,
+            ':gender' => $gender,
+            ':category' => $category,
+            ':description' => $description,
+            ':price' => $price,
+            ':discount' => $discount,
+            ':sku' => $sku,
+            ':color' => $color,
+            ':weight' => $weight,
+            ':sellerId' => $sellerId,
+            ':shoeId' => $shoeId
+        ];
+
+        if ($publicPath) {
+            $params[':url'] = $publicPath;
+        }
+
+        $db->execute($sql, $params);
+
+        // Clear old stocks
+        $db->execute("DELETE FROM PRODUCT_SIZES WHERE shoeId = :shoeId", [
+            ':shoeId' => $shoeId
+        ]);
+    }
 
     // Insert stock sizes
     $insertStockSql = "INSERT INTO PRODUCT_SIZES (shoeId, size, quantity) VALUES (:shoeId, :size, :quantity)";
