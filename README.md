@@ -45,7 +45,7 @@ This project is a robust e-commerce platform that supports user registration, lo
 - Modular controllers for handling login, user, product, and cart operations.
 - Simulated authentication with JSON payload validation.
 - Proper HTTP response codes and error handling (`401`, `404`, `405`, `500`, etc).
-- Debugging enabled for development with error logging and request inspection.
+- Debugging is enabled for development with error logging and request inspection.
 - JSON output consistency to avoid frontend parse errors.
 - Secure file uploads for product images with unique filenames and directory management.
 - Robust product management API supporting multiple stock entries per size.
@@ -70,10 +70,10 @@ This project is a robust e-commerce platform that supports user registration, lo
 
 - Google Pay API integration using official JS client.
 - Support for card payments (Visa, Mastercard).
-- Merchant info and tokenization configured.
+- Merchant info and tokenisation configured.
 - Dynamic Google Pay button rendering based on environment readiness.
 - Billing/shipping validation before payment initiation.
-- Handling of success and error payment responses.
+- Handling of successful and error payment responses.
 - Tested on secure contexts (HTTPS/localhost).
 
 ---
@@ -82,8 +82,8 @@ This project is a robust e-commerce platform that supports user registration, lo
 
 - Central router: `app.php` parses incoming HTTP requests.
 - Routes mapped in associative array, e.g. `/login`, `/product`.
-- Each route linked to a dedicated controller file for logic separation.
-- Request methods strictly validated for each endpoint.
+- Each route is linked to a dedicated controller file for logic separation.
+- Request methods are strictly validated for each endpoint.
 - Fallback 404 response for unknown routes.
 - JSON-based request/response format with appropriate headers.
 - Controllers handle CRUD operations for users and products.
@@ -94,12 +94,12 @@ This project is a robust e-commerce platform that supports user registration, lo
 ## Frontend Architecture
 
 - Static HTML pages with dynamic JavaScript for interactivity.
-- AJAX `fetch()` calls connect to backend API.
+- AJAX `fetch()` calls connect to the backend API.
 - Modular JavaScript functions for product list rendering, form validation, and notifications.
-- LocalStorage used to maintain cart state and session data.
+- LocalStorage is used to maintain cart state and session data.
 - CSS organized into a main stylesheet plus page-specific stylesheets.
-- Google Fonts dynamically loaded and applied site-wide.
-- Event delegation used for dynamic UI elements like product table buttons.
+- Google Fonts are dynamically loaded and applied site-wide.
+- Event delegation is used for dynamic UI elements like product table buttons.
 - Responsive design principles applied for usability on multiple devices.
 
 ---
@@ -112,7 +112,7 @@ This project is a robust e-commerce platform that supports user registration, lo
 - Supports image uploads, renaming, and storage under gender-based directories.
 - Includes detailed error handling and logging for server-side debugging.
 - Secure validation of input data to prevent malformed requests.
-- JSON encoding used for all responses to frontend.
+- JSON encoding is used for all responses to the frontend.
 
 ---
 
@@ -129,5 +129,23 @@ This project is a robust e-commerce platform that supports user registration, lo
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/ecommerce-webapp.git
-   cd ecommerce-webapp
+   git clone https://github.com/Bimsara-Janakantha/ecommerce-website.git
+   cd ecommerce-website
+
+2. Set up your MySQL database and import the schema:
+
+```sql
+-- Example: create database 
+CREATE DATABASE SOLE_HAVEN;
+USE SOLE_HAVEN;
+
+-- Run provided SQL schema scripts here
+```
+
+3. Configure database credentials in the `api/utils/db.php` PHP configuration file.
+
+4. Place the project under the web server’s document root (e.g. XAMPP `htdocs`).
+
+5. Ensure the asserts/ directory is writable by the web server for uploads.
+
+6. Start the web server and access the application via a web browser.
