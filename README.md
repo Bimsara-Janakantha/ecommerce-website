@@ -134,13 +134,13 @@ This project is a robust e-commerce platform that supports user registration, lo
 
 2. Set up your MySQL database and import the schema:
 
-```sql
--- Example: create database 
-CREATE DATABASE SOLE_HAVEN;
-USE SOLE_HAVEN;
-
--- Run provided SQL schema scripts here
-```
+   ```sql
+   -- Example: create database 
+   CREATE DATABASE SOLE_HAVEN;
+   USE SOLE_HAVEN;
+   
+   -- Run provided SQL schema scripts here
+   ```
 
 3. Configure database credentials in the `api/utils/db.php` PHP configuration file.
 
@@ -149,3 +149,35 @@ USE SOLE_HAVEN;
 5. Ensure the asserts/ directory is writable by the web server for uploads.
 
 6. Start the web server and access the application via a web browser.
+
+---
+
+## Testing
+
+- Use Postman to test API endpoints with various HTTP methods and JSON payloads.
+
+- Frontend forms and AJAX requests have been validated against the backend.
+
+- Google Pay API tested in test environment with valid SSL (HTTPS) or localhost.
+
+- Debugging outputs enabled during development for error tracing.
+
+
+---
+
+## Known Issues & Debugging
+
+- Google Pay API requires a secure context; it will not work on HTTP or IP-based localhost in some setups.
+
+- JSON parse errors in the frontend were fixed by removing unwanted PHP echoes.
+
+- File path issues resolved by using PHP __DIR__ in includes.
+
+- Debugging tools: error_reporting(), ini_set(), error_log(), print_r() are used during development.
+
+- Backend returns appropriate HTTP status codes to guide frontend handling.
+
+--- 
+
+Thank you for checking out this project!
+Feel free to open issues or contribute via pull requests.
