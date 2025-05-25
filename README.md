@@ -1,10 +1,10 @@
-# E-Commerce Web Application
+# SOLE HAVEN: an e-Commerce Web Application
 
 A fully functional multi-page e-commerce web application built with **HTML**, **CSS**, **JavaScript (AJAX)** for the frontend, **PHP** for the backend, and **MySQL** as the database.
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Project Overview](#project-overview)  
 - [Tech Stack](#tech-stack)  
@@ -16,7 +16,6 @@ A fully functional multi-page e-commerce web application built with **HTML**, **
 - [Setup & Installation](#setup--installation)  
 - [Testing](#testing)  
 - [Known Issues & Debugging](#known-issues--debugging)  
-- [License](#license)
 
 ---
 
@@ -45,7 +44,7 @@ This project is a robust e-commerce platform that supports user registration, lo
 - Clean URI parsing and normalized routing table.
 - Modular controllers for handling login, user, product, and cart operations.
 - Simulated authentication with JSON payload validation.
-- Proper HTTP response codes and error handling (`401`, `404`, `405`).
+- Proper HTTP response codes and error handling (`401`, `404`, `405`, `500`, etc).
 - Debugging enabled for development with error logging and request inspection.
 - JSON output consistency to avoid frontend parse errors.
 - Secure file uploads for product images with unique filenames and directory management.
@@ -58,7 +57,6 @@ This project is a robust e-commerce platform that supports user registration, lo
 - Modular sections: header, footer, dynamic main content.
 - Navigation with pages: Home, Products, Cart, About, Contact, Login, Register.
 - Shopping cart using JavaScript and `localStorage` for persistence.
-- Multi-step signup with email & OTP verification.
 - Dynamic product form for add/edit with stock management.
 - Frontend-only cart checkout logic with subtotal, shipping, discount, and coupon calculations.
 - Product list table with dynamic updates, notifications, and validation.
@@ -125,7 +123,6 @@ This project is a robust e-commerce platform that supports user registration, lo
 - PHP 7.x or above
 - MySQL Server
 - Apache or compatible web server (e.g., XAMPP, WAMP)
-- Composer (optional, if dependencies used)
 
 ### Installation Steps
 
