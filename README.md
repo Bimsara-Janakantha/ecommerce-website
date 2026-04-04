@@ -3,6 +3,7 @@
 A fully functional multi-page e-commerce web application built with **HTML**, **CSS**, **JavaScript (AJAX)** for the frontend, **PHP** for the backend, and **MySQL** as the database.
 
 ---
+![MIT License](https://img.shields.io/badge/License-MIT-green)
 
 ## Table of Contents
 
@@ -178,6 +179,9 @@ This project is a robust e-commerce platform that supports user registration, lo
 - Backend returns appropriate HTTP status codes to guide frontend handling.
 
 --- 
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
 Thank you for checking out this project!
 Feel free to open issues or contribute via pull requests.
